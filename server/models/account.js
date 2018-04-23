@@ -9,7 +9,8 @@ export const account = {
         firstName: 'Noël', // Server side only and optional
         dateOfBirth: 'DATE', // Server side only and optional
         username: 'nFlantier',
-        accountType: 'ADMIN, EDITOR, GAMER'
+        accountType: 'ADMIN, EDITOR, GAMER',
+        idEditor: '' // null for a gamer
     },
     dates: {
         createdAt: '',
