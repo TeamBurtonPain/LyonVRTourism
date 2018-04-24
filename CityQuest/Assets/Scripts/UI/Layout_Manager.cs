@@ -9,7 +9,7 @@ public class Layout_Manager : MonoBehaviour {
     public GameObject layout;
     public GameObject menuDeroulant;
 
-    public void Awake()
+    private void Awake()
     {
         menuDeroulant.SetActive(false);
         ColorManager();
