@@ -7,8 +7,8 @@ public class GeoManager : MonoBehaviour {
 
     public GeoManager instance;
 
-    private Coordonates userLocation;
-    private Coordonates targetLocation;
+    //private Coordonates userLocation;
+    //private Coordonates targetLocation;
 
     void Awake()
     {
