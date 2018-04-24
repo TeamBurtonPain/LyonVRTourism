@@ -5,9 +5,13 @@ using System.Text;
 
 namespace Assets.Scripts.Model
 {
-    class Creator : Account
+    public class Creator : Account
     {
         private List<Quest> creations;
 
+        public Creator(Account a) : base(a.User,a.Mail,a.Password)
+        {
+            this.creations = new List<Quest>();
+        }
     }
 }

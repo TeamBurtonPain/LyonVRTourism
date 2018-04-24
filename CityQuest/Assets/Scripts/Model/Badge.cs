@@ -5,11 +5,17 @@ using System.Text;
 
 namespace Assets.Scripts.Model
 {
-    class Badge
+    public class Badge
     {
         private string name;
         private string description;
         private long value;
 
+        public Badge(string n, string d, long v)
+        {
+            name = n;
+            description = d;
+            value = v;
+        }
     }
 }

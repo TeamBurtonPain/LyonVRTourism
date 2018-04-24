@@ -5,17 +5,32 @@ using System.Text;
 
 namespace Assets.Scripts.Model
 {
-    enum StatusCheckPoint
+    public enum StatusCheckPoint
     {
         FINISHED,
         BEGUN,
         UNINIT
     }
 
-    class StateCheckPoint
+    public class StateCheckPoint
     {
-        private long idCheckPoint;
+        private CheckPoint checkpoint;
         private StatusCheckPoint status;
 
+        public StateCheckPoint(CheckPoint cp, StatusCheckPoint status){
+            this.checkpoint = cp;
+            this.status = status;
+        }
+
+        public CheckPoint Checkpoint
+        {
+            get { return checkpoint; }
+        }
+
+        public StatusCheckPoint Status
+        {
+            get { return status; }
+            set { status = value; }
+        }
     }
 }

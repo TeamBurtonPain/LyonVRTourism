@@ -1,20 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
+using NUnit.Framework.Constraints;
 
 namespace Assets.Scripts.Model
 {
-    enum RoleAccount
+    public enum RoleAccount
     {
         USER,
         CREATOR,
         ADMIN
     }
-    class Account : User
+    public class Account : User
     {
+        private User user;
         private string mail;
         private string password;
         private RoleAccount role;
+
+         public Account(User u, string mail,string password) : base(u.Username,u.Id,u.Xp,u.Badges,u.Quests)
+        {
+            this.user = u;
+            this.mail=mail;
+            this.password=password;
+        }
+        
+        public User User
+        {
+            get { return user; }
+        }
+
+        public string Mail
+        {
+            get { return mail; }
+        }
+
+        public string Password
+        {
+            get { return password; }
+        }
     }
 }
