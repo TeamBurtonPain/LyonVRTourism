@@ -8,7 +8,8 @@ public class Creator : Account
 {
     private List<Quest> creations;
 
-    public Creator(Account a) : base(a.User, a.Mail, a.Password, RoleAccount.CREATOR)
+    public Creator(Account a) 
+        : base(new User(a.Username, a.Id, a.Xp, a.Badges, a.Quests), a.Mail, a.Password, RoleAccount.CREATOR)
     {
         this.creations = new List<Quest>();
     }
@@ -18,7 +19,7 @@ public class Creator : Account
         get { return creations; }
     }
 
-    public void create(Quest q)
+    public void Create(Quest q)
     {
         if (Equals(q.Creator))
         {

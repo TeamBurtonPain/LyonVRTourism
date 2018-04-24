@@ -6,8 +6,8 @@ using System.Text;
 
 public class CheckPoint
 {
-    private long id;
     private static long instanceCounter = 0;
+    private long id;
     private string picture;
     private string text;
     private List<string> choices;
@@ -26,7 +26,6 @@ public class CheckPoint
     {
         get { return id; }
     }
-
 
     public string Picture
     {

@@ -25,8 +25,28 @@ public class StateQuest
         checkpoints = new List<StateCheckPoint>(quest.Checkpoints.Count);
         for (int i = 0; i < quest.Checkpoints.Count; ++i)
         {
-            checkpoints[i] = new StateCheckPoint(q.Checkpoints[i], StatusCheckPoint.UNINIT);
+            checkpoints[i] = new StateCheckPoint(q.Checkpoints[i]);
         }
+    }
+
+    /// <summary>
+    /// Checks the quest and set the attribute donce to true if the quest is finished.
+    /// </summary>
+    /// <returns>
+    /// true if the quest is finished, false else.
+    /// </returns>
+    public bool CheckQuest()
+    {
+        foreach (var checkpoint in Checkpoints)
+        {
+            if (checkpoint.Status != StatusCheckPoint.FINISHED)
+            {
+                done = false;
+                return false;
+            }
+        }
+        done = true;
+        return true;
     }
 
     public Quest Quest

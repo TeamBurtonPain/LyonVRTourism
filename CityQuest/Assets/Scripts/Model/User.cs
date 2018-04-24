@@ -27,13 +27,56 @@ public class User
         quests = new Dictionary<long, StateQuest>();
     }
 
-    internal User(string name, string id, long xp, List<Badge> badges, Dictionary<long, StateQuest> quests)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="User"/> class based on a previous instance.
+    /// </summary>
+    /// <param name="n">The name.</param>
+    /// <param name="id">The identifier.</param>
+    /// <param name="xp">The xp.</param>
+    /// <param name="b">The badges.</param>
+    /// <param name="q">The quests.</param>
+    public User(string n, string id, long xp, List<Badge> b, Dictionary<long, StateQuest> q)
     {
-        this.username = name;
+        this.username = n;
         this.id = id;
         this.xp = xp;
-        this.badges = badges;
-        this.quests = quests;
+        this.badges = b;
+        this.quests = q;
+    }
+
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="User"/> class based on a previous instance.
+    /// </summary>
+    /// <param name="u">The user.</param>
+    public User(User u)
+    {
+        this.username = u.Username;
+        this.id = u.Id;
+        this.xp = u.Xp;
+        this.badges = u.Badges;
+        this.quests = u.Quests;
+    }
+
+    /// <summary>
+    /// Checks the quest and modifies the users xp accordingly to the status of the quest.
+    /// </summary>
+    /// <param name="q">The quest.</param>
+    public void CheckQuest(Quest q)
+    {
+        if (quests.ContainsKey(q.Id))
+        //if the quest has begun
+        {
+            StateQuest sq = quests[q.Id];
+            //if the quest is currently done we can lose xp if it has changed (x-1)
+            //if the quest is unaccomplished, we can win xp by finishing it (x1)
+            int done_coeff = sq.Done ? -1 : 1;
+            if (sq.Done != sq.CheckQuest())
+            //if the status has changed xp must change
+            {
+                xp += sq.Quest.Value * done_coeff;
+            }
+        }
     }
 
     public string Id
@@ -44,6 +87,7 @@ public class User
     public string Username
     {
         get { return username; }
+        set { username = value; }
     }
 
     public long Xp
@@ -54,12 +98,29 @@ public class User
     public List<Badge> Badges
     {
         get { return badges; }
-        set { badges = value; }
     }
 
     public Dictionary<long, StateQuest> Quests
     {
         get { return quests; }
-        set { quests = value; }
     }
+
+    protected bool Equals(User other)
+    {
+        return string.Equals(id, other.id);
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals((User) obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return (id != null ? id.GetHashCode() : 0);
+    }
+
 }

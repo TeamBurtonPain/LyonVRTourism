@@ -16,6 +16,12 @@ public class StateCheckPoint
     private CheckPoint checkpoint;
     private StatusCheckPoint status;
 
+    public StateCheckPoint(CheckPoint cp)
+    {
+        this.checkpoint = cp;
+        status = StatusCheckPoint.UNINIT;
+    }
+
     public StateCheckPoint(CheckPoint cp, StatusCheckPoint status)
     {
         this.checkpoint = cp;
