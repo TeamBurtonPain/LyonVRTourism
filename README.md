@@ -22,16 +22,18 @@ The main goal is to provide a mobile video game to promote tourism and culture o
 
 - A devlopper preconfigured android mobile phone. More information (TODO)
 - A computer as a server which the following tools:
-    - NodeJS > ?
-    - MongoDB > ?
+    - NodeJS >= v9.10.0
+    - MongoDB >= v3.6.4
 
 **The mobile phone and the computer (server) have to be on the same local network**
 
 ### BackEnd
 
+First, install dependies by running the following command: `cd server/ && yarn install`
+
 You have to run:
-1. MongoDB database by typing `TODO`
-2. NodeJS server by typing this command `TODO`
+1. MongoDB database by typing `mongod --dbpath <path-to-your-database>`
+2. NodeJS server by typing this command `cd server/ && yarn run prod`
 
 ### Android application
 
