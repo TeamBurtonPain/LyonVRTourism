@@ -1,0 +1,35 @@
+{
+  "name": "urban-quest-api",
+  "version": "0.1",
+  "description": "The API source code for UrbanQuest game",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TeamBurtonPain/UrbanQuest.git"
+  },
+  "keywords": [
+    "API",
+    "game"
+  ],
+  "author": "Corentin GIRAUD <corentin.giraud@insa-lyon.fr>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/TeamBurtonPain/UrbanQuest/issues"
+  },
+  "homepage": "https://github.com/TeamBurtonPain/UrbanQuest#readme",
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "nodemon": "^1.17.3"
+  },
+  "dependencies": {
+    "argon2": "0.16.2",
+    "body-parser": "^1.18.2",
+    "chalk": "^2.4.0",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0"
+  }
+}

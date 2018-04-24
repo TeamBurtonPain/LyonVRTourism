@@ -1,4 +1,4 @@
-export const account = {
+const account = {
     id: 'idAccount',
     connexion: {
         email: 'noel.flantier@insa-lyon.fr', // Optional
@@ -10,7 +10,7 @@ export const account = {
         dateOfBirth: 'DATE', // Server side only and optional
         username: 'nFlantier',
         accountType: 'ADMIN, EDITOR, GAMER',
-        idEditor: '' // null for a gamer
+        idEditor: '' // Null for a gamer
     },
     dates: {
         createdAt: '',
@@ -32,6 +32,8 @@ export const account = {
             }
         ],
         xp: 0,
-        elapsedTime: 123 //sec
+        elapsedTime: 123 //Sec
     }
-}
+};
+
+module.export = account;
