@@ -39,9 +39,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ExCSS.Unity">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Unity\Editor\Data\Managed\ExCSS.Unity.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.XML" />
     <Reference Include="System.Core" />
@@ -55,6 +52,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Controller\Controller.cs" />
+    <Compile Include="Assets\Scripts\Controller\DefaultState.cs" />
+    <Compile Include="Assets\Scripts\Controller\GeoManager.cs" />
+    <Compile Include="Assets\Scripts\Controller\HistoricState.cs" />
+    <Compile Include="Assets\Scripts\Controller\LoginState.cs" />
+    <Compile Include="Assets\Scripts\Controller\MapState.cs" />
+    <Compile Include="Assets\Scripts\Controller\QuestState.cs" />
+    <Compile Include="Assets\Scripts\Controller\State.cs" />
     <Compile Include="Assets\Scripts\Model\Account.cs" />
     <Compile Include="Assets\Scripts\Model\Badge.cs" />
     <Compile Include="Assets\Scripts\Model\CheckPoint.cs" />

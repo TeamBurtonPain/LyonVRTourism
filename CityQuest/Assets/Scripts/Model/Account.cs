@@ -13,6 +13,7 @@ namespace Assets.Scripts.Model
         CREATOR,
         ADMIN
     }
+
     public class Account : User
     {
         private User user;
@@ -20,13 +21,13 @@ namespace Assets.Scripts.Model
         private string password;
         private RoleAccount role;
 
-         public Account(User u, string mail, string password) : base(u.Username, u.Id, u.Xp,u.Badges, u.Quests)
+        public Account(User u, string mail, string password) : base(u.Username, u.Id, u.Xp, u.Badges, u.Quests)
         {
             this.user = u;
             this.mail = mail;
             this.password = password;
         }
-        
+
         public User User
         {
             get { return user; }
@@ -40,6 +41,11 @@ namespace Assets.Scripts.Model
         public string Password
         {
             get { return password; }
+        }
+
+        public RoleAccount Role
+        {
+            get { return role; }
         }
     }
 }
