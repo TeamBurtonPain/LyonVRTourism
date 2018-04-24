@@ -7,11 +7,14 @@ using UnityEngine.UI;
 public class GeoManager : MonoBehaviour
 {
 
-    public Text t; 
+    public Text positionText;
+    public Text resultText;
+    public float radius;
+
     protected static GeoManager instance;
 
-    //private Coordonates userLocation;
-    //private Coordonates targetLocation;
+    private Coordinates userPosition;
+    private Coordinates targetPosition;
 
     void Awake()
     {
@@ -26,25 +29,22 @@ public class GeoManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        t.text = "nifrebkbdskf";
+        positionText.text = "";
+        resultText.text = "";
 
+        userPosition = new Coordinates();
+
+        //target = Marseille
+        targetPosition = new Coordinates();
+        targetPosition.x = 43.296482f;
+        targetPosition.y = 5.36978f;
 
         Start();
-        /*
-        userLocation = new LocationInfo();
-        userLocation.
-        userLocation.latitude = 48.856614f;
-        userLocation.longitude = 2.3522219f;
 
-        targetLocation = new LocationInfo();
-        targetLocation.latitude = ;
-        targetLocation.longitude = ;
-        */
+        InvokeRepeating("Tester", 10, 5);
+
     }
 
-
-
-    
     void Start()
     {
 
@@ -74,12 +74,13 @@ public class GeoManager : MonoBehaviour
             {
                 gpsInit = true;
                 // We start the timer to check each tick (every 3 sec) the current gps position
-                InvokeRepeating("RetrieveGPSData",0,3);
+                //InvokeRepeating("RetrieveGPSData",0,3);
+                //Invoke("RetrieveGPSData", 0);
             }
         }
         else
         {
-            t.text = "GPS not available";
+            positionText.text = "GPS not available";
         }
 #endif
     }
@@ -87,52 +88,55 @@ public class GeoManager : MonoBehaviour
     void RetrieveGPSData()
     {
         LocationInfo currentGPSPosition = Input.location.lastData;
-        string gpsString = currentGPSPosition.latitude + " / " + currentGPSPosition.longitude;
-        t.text = gpsString;
+        userPosition.x = currentGPSPosition.latitude;
+        userPosition.y = currentGPSPosition.longitude;
+        //string gpsString = userPosition.x + " / " + userPosition.y;
+        //string gpsString = currentGPSPosition.latitude + " / " + currentGPSPosition.longitude;
+        //positionText.text = gpsString;
     }
 
+    private void Tester()
+    {
+        IsUserNear(targetPosition, radius);
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
-
-    bool IsNear (LocationInfo user, LocationInfo target, float radius)
+    private bool IsUserNear(Coordinates target, float radius)
     {
         bool isNear = false;
 
-        float userLat = user.latitude * Mathf.PI / 180;
-        float userLong = user.longitude * Mathf.PI / 180;
+        userPosition.x = Input.location.lastData.latitude;
+        userPosition.y = Input.location.lastData.longitude;
 
-        float targetLat = target.latitude * Mathf.PI / 180;
-        float targetLong = target.longitude * Mathf.PI / 180;
+        //positionText.text += "lat =" + userPosition.x + ",  long =" + userPosition.y + "||";
 
-        float R = 6371f;
-
-        float distance = R * Mathf.Acos(Mathf.Cos(userLat) * Mathf.Cos(targetLat) * 
-            Mathf.Cos(targetLong - userLong) + Mathf.Sin(userLat) * Mathf.Sin(targetLat));
-
-        if(distance <= radius)
+        float distance = Distance(userPosition, target, radius);
+        positionText.text = "distance = " + distance;
+        if (distance <= radius)
         {
             isNear = true;
         }
 
+        resultText.text += "result = " + isNear + "||";
+
         return isNear;
     }
+
+    private float Distance(Coordinates coord1, Coordinates coord2, float radius)
+    {
+        float coord1Lat = coord1.x * Mathf.PI / 180;
+        float coord1Long = coord1.y * Mathf.PI / 180;
+
+        float coord2Lat = coord2.x * Mathf.PI / 180;
+        float coord2Long = coord2.y * Mathf.PI / 180;
+
+        float R = 6371f;
+
+        float distance = R * Mathf.Acos(Mathf.Cos(coord1Lat) * Mathf.Cos(coord2Lat) *
+            Mathf.Cos(coord2Long - coord1Long) + Mathf.Sin(coord1Lat) * Mathf.Sin(coord2Lat));
+
+        return distance;
+    }
+
 
     IEnumerator rechargeLocation()
     {
