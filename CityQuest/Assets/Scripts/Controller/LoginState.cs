@@ -3,25 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Assets.Scripts.Controller
+
+public class LoginState : DefaultState
 {
-    public class LoginState : DefaultState
+    public LoginState(Controller c) : base(c)
     {
-        public LoginState(Controller c) : base(c)
-        {
-        }
-        /// <summary>
-        /// Closes the app
-        /// </summary>
-        //TODO : Close the app
-        public new void ReturnAction()
-        {
+    }
 
-        }
+    /// <summary>
+    /// Closes the app
+    /// </summary>
+    //TODO : Close the app
+    public new void ReturnAction()
+    {
+    }
 
-        public new void OptionAction()
-        {
-
-        }
+    public new void OptionAction()
+    {
     }
 }

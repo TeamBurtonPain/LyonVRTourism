@@ -64,10 +64,10 @@
      <Compile Include="Assets\Scripts\Model\CheckPoint.cs" />
      <Compile Include="Assets\Scripts\Model\Creator.cs" />
      <Compile Include="Assets\Scripts\Model\Quest.cs" />
+     <Compile Include="Assets\Scripts\Model\QuestStatistics.cs" />
+     <Compile Include="Assets\Scripts\Model\QuestStatisticsUnit.cs" />
      <Compile Include="Assets\Scripts\Model\StateCheckPoint.cs" />
      <Compile Include="Assets\Scripts\Model\StateQuest.cs" />
-     <Compile Include="Assets\Scripts\Model\StatsQuest.cs" />
-     <Compile Include="Assets\Scripts\Model\StatsQuestUnit.cs" />
      <Compile Include="Assets\Scripts\Model\User.cs" />
      <Compile Include="Assets\Scripts\UI\Layout_Manager.cs" />
  <Reference Include="Vuforia.UnityExtensions">

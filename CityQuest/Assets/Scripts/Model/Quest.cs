@@ -3,61 +3,82 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Assets.Scripts.Model
+
+public class Coordinates
 {
-    public class Coordinates
+    public float x;
+    public float y;
+}
+
+public class Quest
+{
+    private long id;
+    private static long instanceCounter = 0;
+    private Coordinates geolocalisation;
+    private string description;
+    private QuestStatistics statistics;
+    private bool open;
+    private Creator creator;
+    private List<CheckPoint> checkpoints;
+
+    Quest(Coordinates geolocalisation, string description, QuestStatistics statistics, Creator creator,
+        List<CheckPoint> checkpoints)
     {
-        public float x;
-        public float y;
+        this.id = instanceCounter++;
+        this.geolocalisation = geolocalisation;
+        this.description = description;
+        this.statistics = statistics;
+        this.creator = creator;
+        this.checkpoints = checkpoints;
     }
-    public class Quest
+
+    public Coordinates Geolocalisation
     {
-        private long id;
-        private static long instanceCounter = 0;
-        private Coordinates geolocalisation;
-        private string description;
-        private StatsQuest statistics;
-        private bool open;
-        private Creator creator;
-        private List<CheckPoint> checkpoints;
+        get { return geolocalisation; }
+    }
 
-        Quest(Coordinates geolocalisation,string description,StatsQuest statistics,Creator creator,List<CheckPoint> checkpoints){
-            this.id = instanceCounter++;
-            this.geolocalisation = geolocalisation;
-            this.description = description;
-            this.statistics = statistics;
-            this.creator = creator;
-            this.checkpoints = checkpoints;
-        }
+    public string Description
+    {
+        get { return description; }
+    }
 
-        public Coordinates Geolocalisation
-        {
-            get { return geolocalisation; }
-        }
+    public bool Open
+    {
+        get { return open; }
+        set { open = value; }
+    }
 
-        public string Description
-        {
-            get { return description; }
-        }
+    public QuestStatistics Statistics
+    {
+        get { return statistics; }
+    }
 
-        public bool Open
-        {
-            get { return open; }
-        }
+    public Creator Creator
+    {
+        get { return creator; }
+    }
 
-        public StatsQuest Statistics
-        {
-            get { return statistics; }
-        }
+    public List<CheckPoint> Checkpoints
+    {
+        get { return checkpoints; }
+    }
 
-        public Creator Creator
-        {
-            get { return creator; }
-        }
+    protected bool Equals(Quest other)
+    {
+        return id == other.id;
+    }
 
-        public List<CheckPoint> Checkpoints
-        {
-            get { return checkpoints; }
-        }
+    public override bool Equals(object obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals((Quest) obj);
+    }
+
+
+    public override int GetHashCode()
+    {
+        return id.GetHashCode();
     }
 }
