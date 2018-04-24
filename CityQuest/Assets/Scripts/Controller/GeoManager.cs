@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net.Mime;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class GeoManager : MonoBehaviour {
+public class GeoManager : MonoBehaviour
+{
 
-    public GeoManager instance;
+    public Text t; 
+    protected static GeoManager instance;
 
     //private Coordonates userLocation;
     //private Coordonates targetLocation;
@@ -22,6 +26,10 @@ public class GeoManager : MonoBehaviour {
 
         DontDestroyOnLoad(gameObject);
 
+        t.text = "nifrebkbdskf";
+
+
+        Start();
         /*
         userLocation = new LocationInfo();
         userLocation.
@@ -33,9 +41,73 @@ public class GeoManager : MonoBehaviour {
         targetLocation.longitude = ;
         */
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+
+
+    
+    void Start()
+    {
+
+#if PC
+        Debug.Log("On PC / Don't have GPS");
+#elif !PC
+        bool gpsInit = false;
+        //Starting the Location service before querying location
+        Input.location.Start(0.5f); // Accuracy of 0.5 m
+
+        int wait = 1000; // Per default
+
+        // Checks if the GPS is enabled by the user (-> Allow location )
+        if (Input.location.isEnabledByUser)
+        {
+            while (Input.location.status == LocationServiceStatus.Initializing && wait > 0)
+            {
+                wait--;
+            }
+
+
+            if (Input.location.status == LocationServiceStatus.Failed)
+            {
+
+            }
+            else
+            {
+                gpsInit = true;
+                // We start the timer to check each tick (every 3 sec) the current gps position
+                InvokeRepeating("RetrieveGPSData",0,3);
+            }
+        }
+        else
+        {
+            t.text = "GPS not available";
+        }
+#endif
+    }
+
+    void RetrieveGPSData()
+    {
+        LocationInfo currentGPSPosition = Input.location.lastData;
+        string gpsString = currentGPSPosition.latitude + " / " + currentGPSPosition.longitude;
+        t.text = gpsString;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 
