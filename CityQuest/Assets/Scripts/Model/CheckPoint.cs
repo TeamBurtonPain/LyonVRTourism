@@ -14,8 +14,12 @@ namespace Assets.Scripts.Model
         private List<string> choices;
         private string answer;
 
-        CheckPoint(){
+        CheckPoint(string pic, string text, List<string> choices, string answer){
             this.id = instanceCounter++;
+            this.picture = pic;
+            this.text = text;
+            this.choices = choices;
+            this.answer = answer;
         }
 
         public long Id

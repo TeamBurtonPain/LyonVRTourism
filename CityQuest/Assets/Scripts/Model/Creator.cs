@@ -13,5 +13,10 @@ namespace Assets.Scripts.Model
         {
             this.creations = new List<Quest>();
         }
+
+        public List<Quest> Creations
+        {
+            get { return creations; }
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace Assets.Scripts.Model
         private List<Badge> badges;
         private Dictionary<long, StateQuest> quests;
 
-        public User(string name)
+        public User(string name) 
         {
             username = name;
             id = instanceCounter++.ToString() + "@" + username;
@@ -24,7 +24,7 @@ namespace Assets.Scripts.Model
             quests = new Dictionary<long, StateQuest>();
         }
 
-        internal User(string name, string id, long xp, List<Badge> badges, Dictionary<long, StateQuest> quests)
+        internal User(string name, string id, long xp, List<Badge> badges, Dictionary<long, StateQuest> quests) 
         {
             this.username = name;
             this.id = id;

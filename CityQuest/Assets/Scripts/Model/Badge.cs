@@ -17,5 +17,17 @@ namespace Assets.Scripts.Model
             description = d;
             value = v;
         }
+        public string Name
+        {
+            get { return name; }
+        }
+        public string Description
+        {
+            get { return description; }
+        }
+        public long Value
+        {
+            get { return value; }
+        }
     }
 }

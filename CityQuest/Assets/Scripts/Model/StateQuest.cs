@@ -13,9 +13,11 @@ namespace Assets.Scripts.Model
 
 
 
+
+
         /// <summary>
         /// Initializes a new instance of the <see cref="StateQuest"/> class.
-        /// Quest is initialized to 0% advancement 
+        /// The quest is 0% initialized
         /// </summary>
         /// <param name="q">The q.</param>
         public StateQuest(Quest q)
@@ -25,7 +27,7 @@ namespace Assets.Scripts.Model
 
             //init checkpoints state to 0%
             checkpoints = new List<StateCheckPoint>(quest.Checkpoints.Count);
-            for(int i = 0; i < quest.Checkpoints.Count; ++i)
+            for (int i = 0; i < quest.Checkpoints.Count; ++i)
             {
                 checkpoints[i] = new StateCheckPoint(q.Checkpoints[i], StatusCheckPoint.UNINIT);
             }
@@ -46,5 +48,6 @@ namespace Assets.Scripts.Model
         {
             get { return checkpoints; }
         }
+
     }
 }

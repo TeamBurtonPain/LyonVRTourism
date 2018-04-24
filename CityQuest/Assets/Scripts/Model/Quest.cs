@@ -5,27 +5,32 @@ using System.Text;
 
 namespace Assets.Scripts.Model
 {
-    public class Coordonates
+    public class Coordinates
     {
-        private Decimal x;
-        private Decimal y;
+        public float x;
+        public float y;
     }
     public class Quest
     {
         private long id;
         private static long instanceCounter = 0;
-        private Coordonates geolocalisation;
+        private Coordinates geolocalisation;
         private string description;
         private StatsQuest statistics;
         private bool open;
         private Creator creator;
         private List<CheckPoint> checkpoints;
 
-        Quest(){
+        Quest(Coordinates geolocalisation,string description,StatsQuest statistics,Creator creator,List<CheckPoint> checkpoints){
             this.id = instanceCounter++;
+            this.geolocalisation = geolocalisation;
+            this.description = description;
+            this.statistics = statistics;
+            this.creator = creator;
+            this.checkpoints = checkpoints;
         }
 
-        public Coordonates Geolocalisation
+        public Coordinates Geolocalisation
         {
             get { return geolocalisation; }
         }

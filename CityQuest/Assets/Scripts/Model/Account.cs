@@ -20,11 +20,11 @@ namespace Assets.Scripts.Model
         private string password;
         private RoleAccount role;
 
-         public Account(User u, string mail,string password) : base(u.Username,u.Id,u.Xp,u.Badges,u.Quests)
+         public Account(User u, string mail, string password) : base(u.Username, u.Id, u.Xp,u.Badges, u.Quests)
         {
             this.user = u;
-            this.mail=mail;
-            this.password=password;
+            this.mail = mail;
+            this.password = password;
         }
         
         public User User
