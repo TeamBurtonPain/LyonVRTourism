@@ -138,9 +138,6 @@ public class User
 
     public override string ToString()
     {
-        id = "b";
-        username = "kbde";
-        xp = 0L;
         return "User : id : " + id + ", name : " + username + ", xp : " + xp;
     }
 }
