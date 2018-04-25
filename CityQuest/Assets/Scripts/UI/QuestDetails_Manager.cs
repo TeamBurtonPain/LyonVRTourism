@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using Assets.Scripts.Model;
 using System.Collections.Generic;
 
 public class QuestDetails_Manager : MonoBehaviour {
