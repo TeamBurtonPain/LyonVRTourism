@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum ConnexionState
 {
@@ -10,11 +12,33 @@ public enum ConnexionState
     DISCONNECTED
 }
 
-public class Controller
+public class Controller : MonoBehaviour
 {
+    protected static Controller instance;
+
     private State currentState;
     private ConnexionState currentConnexion;
     private User user;
+    private Quest selectedQuest;
+
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
+
+        user = null;
+        selectedQuest = null;
+        currentConnexion = ConnexionState.DISCONNECTED;
+    }
 
     /// <summary>
     /// Transitions to the specified state s
@@ -31,18 +55,26 @@ public class Controller
 
     public void LoginLocal()
     {
+        currentState.LoginLocalAction();
+        currentConnexion = ConnexionState.CONNEXION_LOCAL;
     }
 
     public void LoginServer()
     {
+        currentState.LoginServerAction();
+        currentConnexion = ConnexionState.CONNEXION_SERVER;
     }
 
     public void Inscription()
     {
+        currentState.InscriptionAction();
+        currentConnexion = ConnexionState.CONNEXION_SERVER;
     }
 
     public void SelectionQuestInHistoric()
     {
+       // selectedQuest = ? Assigner selected quest à quête sélectionnée
+        currentState.SelectionQuestInHistoricAction();
     }
 
     public void StartNewQuest()
@@ -51,10 +83,12 @@ public class Controller
 
     public void GoQuest()
     {
+        currentState.GoQuestAction();
     }
 
     public void SelectionQuestInMap()
     {
+       
     }
 
     public void Menu()
@@ -62,4 +96,14 @@ public class Controller
     }
 
     /*********** FIN BOUTONS ***********/
+
+    public Quest GetSelectedQuest()
+    {
+        return selectedQuest;
+    }
+
+    public void SetSelectedQuest(Quest newSelectedQuest)
+    {
+        selectedQuest = newSelectedQuest;
+    }
 }

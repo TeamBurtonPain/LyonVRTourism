@@ -16,31 +16,51 @@ public class Quest
     private static long instanceCounter = 0;
     private long id;
     private Coordinates geolocalisation;
+    private string title;
     private string description;
     private long value;
+    private double timeLength;
     private QuestStatistics statistics;
     private bool open;
     private Creator creator;
     private List<CheckPoint> checkpoints;
 
+
+    public Quest()
+    {
+        timeLength = -1;
+        geolocalisation = new Coordinates();
+        statistics = new QuestStatistics(this);
+        checkpoints = new List<CheckPoint>();
+        creator = new Creator();
+        
+    }
     /// <summary>
     /// Initializes a new fully initialized instance of the <see cref="Quest"/> class.
     /// </summary>
     /// <param name="geolocalisation">The geolocalisation.</param>
     /// <param name="description">The description.</param>
-    /// <param name="statistics">The statistics.</param>
     /// <param name="creator">The creator.</param>
     /// <param name="checkpoints">The checkpoints.</param>
-    Quest(Coordinates geolocalisation, string description, long value, QuestStatistics statistics, 
-        Creator creator, List<CheckPoint> checkpoints)
+    public Quest(Coordinates geolocalisation, string title, string description, long value, 
+         Creator creator, List<CheckPoint> checkpoints)
     {
+        this.title = title;
         this.id = instanceCounter++;
         this.geolocalisation = geolocalisation;
         this.description = description;
         this.value = value;
-        this.statistics = statistics;
+        timeLength = -1;
+        statistics = new QuestStatistics(this);
         this.creator = creator;
         this.checkpoints = checkpoints;
+
+    }
+
+    //TODO : Request API time length
+    public void EstimateTimeLength()
+    {
+
     }
 
     public long Id
@@ -54,6 +74,12 @@ public class Quest
         set { geolocalisation = value; }
     }
 
+    public string Title
+    {
+        get { return title; }
+        set { title = value; }
+    }
+
     public string Description
     {
         get { return description; }
@@ -64,6 +90,11 @@ public class Quest
     public long Value
     {
         get { return this.value; }
+    }
+
+    public double TimeLength
+    {
+        get { return timeLength; }
     }
 
     public bool Open
@@ -80,6 +111,7 @@ public class Quest
     public Creator Creator
     {
         get { return creator; }
+        set { creator = value; }
     }
 
     public List<CheckPoint> Checkpoints
@@ -104,5 +136,11 @@ public class Quest
     public override int GetHashCode()
     {
         return id.GetHashCode();
+    }
+
+    public override string ToString()
+    {
+        return "Quest : id : " + id + ", title : " + title + ", at (" + geolocalisation.x + ", " + geolocalisation.y + "), description : " +
+               description + "\n\t" +  string.Join(",\n\t", checkpoints.Select(x => x.ToString()).ToArray());
     }
 }

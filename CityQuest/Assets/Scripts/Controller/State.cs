@@ -12,4 +12,10 @@ public interface State
 {
     void ReturnAction();
     void OptionAction();
+    void LoginLocalAction();
+    void LoginServerAction();
+    void InscriptionAction();
+    void SelectionQuestInHistoricAction();
+
+    void GoQuestAction();
 }

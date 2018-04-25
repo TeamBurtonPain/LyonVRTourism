@@ -8,6 +8,8 @@ public class StateQuest
 {
     private Quest quest;
     private bool done;
+    private double score;
+    private double timeElapsed;
     private List<StateCheckPoint> checkpoints;
 
 
@@ -49,6 +51,22 @@ public class StateQuest
         return true;
     }
 
+    public void refreshTime()
+    {
+        double sum = 0;
+        foreach (var checkPoint in Checkpoints)
+        {
+            sum += checkPoint.TimeElapsed;
+        }
+
+        if (sum != timeElapsed)
+        {
+            //TODO ? log
+        }
+        timeElapsed = sum;
+
+    }
+
     public Quest Quest
     {
         get { return quest; }
@@ -58,6 +76,18 @@ public class StateQuest
     {
         get { return done; }
         set { done = value; }
+    }
+
+    public double Score
+    {
+        get { return score; }
+        set { score = value; }
+    }
+
+    public double TimeElapsed
+    {
+        get { return timeElapsed; }
+        set { timeElapsed = value; }
     }
 
     public List<StateCheckPoint> Checkpoints

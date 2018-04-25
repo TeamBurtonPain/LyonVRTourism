@@ -290,7 +290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionText: {fileID: 91890361}
   resultText: {fileID: 237981614}
-  radius: 200
+  radius: 0
 --- !u!4 &568662058
 Transform:
   m_ObjectHideFlags: 0
