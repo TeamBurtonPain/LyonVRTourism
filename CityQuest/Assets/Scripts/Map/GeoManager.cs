@@ -10,9 +10,16 @@ public class GeoManager : MonoBehaviour
     public Text x;
     public Text resultText;
     public Text positionText;
-    public float radius;
+    public float radius = 1;
+
+    protected bool loaded = false;
+    protected bool failed = false;
 
     protected static GeoManager instance;
+    public static GeoManager Instance
+    {
+        get { return instance; }
+    }
 
     private Coordinates userPosition;
     private Coordinates targetPosition;// A retirer plus tard (test V1)
@@ -40,9 +47,7 @@ public class GeoManager : MonoBehaviour
         targetPosition.x = 43.296482f;
         targetPosition.y = 5.36978f;
 
-        Start();
-
-        InvokeRepeating("Tester", 10, 5);// A retirer plus tard (test V1)
+        //InvokeRepeating("Tester", 10, 5);// A retirer plus tard (test V1)
 
     }
 
@@ -55,7 +60,6 @@ public class GeoManager : MonoBehaviour
 #if PC
         Debug.Log("On PC / Don't have GPS");
 #elif !PC
-        bool gpsInit = false;
         //Starting the Location service before querying location
         Input.location.Start(0.5f); // Accuracy of 0.5 m
 
@@ -72,11 +76,12 @@ public class GeoManager : MonoBehaviour
 
             if (Input.location.status == LocationServiceStatus.Failed)
             {
+                failed = true;
                 //latitude and longitude equals to 0
             }
             else
             {
-                gpsInit = true;
+                loaded = true;
                 // We start the timer to check each tick (every 3 sec) the current gps position
                 //InvokeRepeating("RetrieveGPSData",0,3); // A retirer plus tard (test V1)
                 //Invoke("RetrieveGPSData", 0); // A retirer plus tard (test V1)
@@ -85,8 +90,18 @@ public class GeoManager : MonoBehaviour
         else
         {
             positionText.text = "GPS not available";
+            failed = true;
         }
 #endif
+    }
+
+    public bool IsLoaded()
+    {
+        return loaded;
+    }
+    public bool HasFailed()
+    {
+        return failed;
     }
 
     // A retirer plus tard (test V1)
@@ -101,7 +116,7 @@ public class GeoManager : MonoBehaviour
     /// <param name="target">Represents the location targeted by the user</param>
     /// <param name="radius">Parameter that represents the minimum perimeter in which the user must be to begin its quest. radius in kilometers.</param>
     /// <returns> A boolean that represents the validation of the user's presence nearby the location targeted.</returns>
-    private bool IsUserNear(Coordinates target, float radius)
+    public bool IsUserNear(Coordinates target, float radius)
     {
         bool isNear = false;
 
@@ -120,6 +135,11 @@ public class GeoManager : MonoBehaviour
         resultText.text = "result = " + isNear;
 
         return isNear;
+    }
+    public Vector2 GetUserPosition()
+    {
+        resultText.text = Input.location.lastData.latitude + "/" + Input.location.lastData.longitude;
+        return new Vector2(Input.location.lastData.latitude, Input.location.lastData.longitude);
     }
 
     /// <summary>

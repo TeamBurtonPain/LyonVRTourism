@@ -12,9 +12,15 @@ public class BingMapsTexture : OnlineTexture {
 	public float latitude = 28.127222f;
 	public float longitude = -15.431389f;
 	public int initialZoom = 0;
+    public Vector2 origin;
+    public Vector2 size;
 
+    private new void Start()
+    {
+        ComputeInitialSector();
+    }
 
-	public void ComputeInitialSector()
+    public void ComputeInitialSector()
 	{
 		float sinLatitude = Mathf.Sin (latitude * Mathf.PI / 180.0f);
 
@@ -24,7 +30,24 @@ public class BingMapsTexture : OnlineTexture {
 		int tileX = Mathf.FloorToInt (pixelX / 256);
 		int tileY = Mathf.FloorToInt (pixelY / 256);
 
-		initialSector = TileXYToQuadKey (tileX, tileY, initialZoom + 1);
+
+        // Explications ? hahahaha hahaha
+        // haha... j'ai pleuré... bon, en gros, Bing coupe cest map en faisant le cast + "floor" (partie entiere) juste au dessus... donc pour 
+        // retrouver le coin de la map, bah on reprends la valeur arrondie, on applique les calculs dans l'autre sens et on prie, et hop, coord de l'origin de la map !
+
+        float tempX = (0.5f - tileY / Mathf.Pow(2, initialZoom + 1)) * (4 * Mathf.PI);
+        float latOrigin = Mathf.Asin((Mathf.Exp(tempX) - 1) / (Mathf.Exp(tempX) + 1)) / Mathf.PI * 180.0f;
+        float longOrigin = tileX / Mathf.Pow(2, initialZoom + 1) * 360 - 180;
+        this.origin = new Vector2(latOrigin, longOrigin);
+
+        // size = différence avec la tile suivante, 
+        float longSize = 1 / Mathf.Pow(2, initialZoom + 1) * 360;
+        float tempX2 = (0.5f - (tileY + 1) / Mathf.Pow(2, initialZoom + 1)) * (4 * Mathf.PI);
+        float latOrigin2 = Mathf.Asin((Mathf.Exp(tempX2) - 1) / (Mathf.Exp(tempX2) + 1)) / Mathf.PI * 180.0f;
+        float latSize = -latOrigin2 + latOrigin;
+        this.size = new Vector2(latSize, longSize);
+
+        initialSector = TileXYToQuadKey (tileX, tileY, initialZoom + 1);
 	}
 
 
