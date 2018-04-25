@@ -23,9 +23,7 @@ async function createQuest(req, res) {
 }
 
 async function updateQuest(req, res) {
-    let newQuest = new Quest(req.body);
-
-    newQuest = await questService.updateQuest(newQuest);
+    const newQuest = await questService.updateQuest(req.params.id, req.body);
 
     res.json(newQuest);
 }

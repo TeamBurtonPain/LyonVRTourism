@@ -8,9 +8,10 @@ async function createAccount(account) {
     return account.save();
 }
 
-async function updateAccount(account) {
-    const condition = { _id: account._id };
-    return Account.update(condition, account);
+async function updateAccount(accountId, accountModif) {
+    const actualAccount = await Account.findById(accountId);
+    actualAccount.merge(accountModif);
+    return actualAccount.save();
 }
 
 async function deleteAccount(accountId) {

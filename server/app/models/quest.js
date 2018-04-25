@@ -7,25 +7,58 @@ const Quest = new Schema({
         lat: Number,
         long: Number
     },
-    description: String,
-    picturePath: String,
+    title: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    picturePath: {
+        type: String,
+        required: true
+    },
     checkpoints: [
         {
-            photoPath: String,
+            photoPath: {
+                type: String,
+                required: true
+            },
             text: String,
+            choices: {
+                type: [String],
+                required: true
+            },
             enigmAnswer: String,
-            difficulty: Number // O < difficulty < 5
+            difficulty: {
+                type: Number,
+                required: true,
+                min: 0,
+                max: 5
+            } // O < difficulty < 5
         }
     ],
     feedbacks: [
         {
             _id: Schema.Types.ObjectId,
             _idAccount: Schema.Types.ObjectId,
-            comment: String,
-            mark: Number // 0 < note < 10
+            comment: {
+                type: String,
+                required: true
+            },
+            mark: {
+                type: Number,
+                required: true,
+                min: 0,
+                max: 10
+            } // 0 < note < 10
         }
     ],
-    disable: Boolean
+    disable: {
+        type: Boolean,
+        required: true
+    }
 });
 
 module.exports = mongoose.model('Quest', Quest);

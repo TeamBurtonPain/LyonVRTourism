@@ -16,9 +16,7 @@ async function createAccount(req, res) {
 }
 
 async function updateAccount(req, res) {
-    let newAccount = new Account(req.body);
-
-    newAccount = await accountService.updateAccount(newAccount);
+    const newAccount = await accountService.updateAccount(req.params.id, req.body);
 
     res.json(newAccount);
 }

@@ -1,16 +1,22 @@
 const Quest = require('../models/quest.js');
 
+async function getAll() {
+    return Quest.find();
+}
+
 async function getQuestById(questId) {
     return Quest.findById(questId);
 }
 
 async function createQuest(quest) {
+    quest.picturePath = 'picturePath'; // TODO: implement image upload
     return quest.save();
 }
 
-async function updateQuest(quest) {
-    const condition = { _id: quest._id };
-    return Quest.update(condition, quest);
+async function updateQuest(questId, questModif) {
+    const actualQuest = await Quest.findById(questId);
+    actualQuest.merge(questModif);
+    return actualQuest.save();
 }
 
 async function deleteQuest(questId) {
@@ -19,6 +25,7 @@ async function deleteQuest(questId) {
 }
 
 module.exports = {
+    getAll,
     getQuestById,
     createQuest,
     updateQuest,

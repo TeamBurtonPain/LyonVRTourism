@@ -1,27 +1,46 @@
 // TODO: const { createUserError } = require('../../utils');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const merge = require('mongoose-merge-plugin');
 
 const Account = new Schema({
-    connexion: {
-        email: String, // Optional
-        password: String // Optional
+    connection: {
+        email: {
+            type: String,
+            validate: {
+                validator: (v) => {
+                    // eslint-disable-next-line
+                    return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(v);
+                }
+            },
+            required: true
+        },
+        password: {
+            type: String,
+            required: true
+        }
     },
     userInformation: {
-        lastName: String, // Server side only and optional
-        firstName: String, // Server side only and optional
-        dateOfBirth: Date, // Server side only and optional
-        username: String, // Pseudo
+        lastName: String, // Optional
+        firstName: String, // Optional
+        dateOfBirth: Date, // Optional
+        username: {
+            type: String,
+            required: true
+        }, // Pseudo
         accountType: {
             type: String,
-            enum: ['ADMIN', 'EDITOR', 'GAMER'],
+            enum: {
+                values: ['ADMIN', 'EDITOR', 'GAMER'],
+                message: '`accountType` field must be one of these value [\'ADMIN\', \'EDITOR\', \'GAMER\']'
+            },
             default: 'GAMER'
         },
         idEditor: String // Null for a gamer
     },
     dates: {
-        createdAt: Date,
-        updatedAt: Date
+        createdAt: Date, // Auto
+        updatedAt: Date // Auto
     },
     game: {
         badges: [Schema.Types.ObjectId], // Badges ObjectId Array
@@ -46,5 +65,7 @@ const Account = new Schema({
         elapsedTime: Number // Sec
     }
 });
+
+Account.plugin(merge);
 
 module.exports = mongoose.model('Account', Account);
