@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 
 
@@ -66,6 +67,26 @@ public class User
     }
 
 
+    /// <summary>
+    /// Adds a quest to the quests began if it does not exists already for this user.
+    /// </summary>
+    /// <param name="q">The quest.</param>
+    /// <returns>
+    /// True if a <see cref="StateQuest"/> was added, false else.
+    /// </returns>
+    public bool AddQuest(Quest q)
+    {
+        if (quests.ContainsKey(q.Id))
+        {
+            return false;
+        }
+        else
+        {
+            StateQuest newStateQuest = new StateQuest(q);
+            quests.Add(q.Id, newStateQuest);
+            return true;
+        }
+    }
 
     /// <summary>
     /// Checks the quest and modifies the users xp accordingly to the status of the quest.

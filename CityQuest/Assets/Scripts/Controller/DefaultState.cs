@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine.SceneManagement;
 
 
 /// <summary>
@@ -26,13 +27,34 @@ public class DefaultState : State
         controller.Transition(new MapState(controller));
     }
 
-    public void OptionAction()
-    {
-    }
+    public void OptionAction() { }
 
     public void LoginLocalAction() { }
     public void LoginServerAction() { }
     public void InscriptionAction() { }
     public void SelectionQuestInHistoricAction() { }
-    public void StartNewQuestAction() { }
+    public void StartQuestAction() { }
+
+    //TODO à faire coté unity
+    public void MenuNewQuest()
+    {
+        SceneManager.LoadScene("NewQuest");
+    }
+    public void MenuHistoric()
+    {
+        SceneManager.LoadScene("MyQuests");
+    }
+
+    //TODO à faire coté unity
+    public void MenuSettings()
+    {
+        SceneManager.LoadScene("Settings");
+    }
+
+    //TODO à faire coté unity
+    public void MenuLogout()
+    {
+        SceneManager.LoadScene("Logout");
+    }
+    
 }

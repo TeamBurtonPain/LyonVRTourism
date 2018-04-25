@@ -46,7 +46,7 @@ public class QuestStatistics
     /// <returns>
     /// The mean.
     /// </returns>
-    public double ComputMean()
+    public double ComputeMean()
     {
         double sum = 0;
         foreach (var mark in marks)

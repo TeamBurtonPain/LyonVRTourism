@@ -11,10 +11,9 @@ public class HistoricState : DefaultState
     {
     }
 
-
     public new void SelectionQuestInHistoricAction()
     {
         SceneManager.LoadScene("MapScene");
-
     }
+
 }

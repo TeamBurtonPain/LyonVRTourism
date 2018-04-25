@@ -16,5 +16,9 @@ public interface State
     void LoginServerAction();
     void InscriptionAction();
     void SelectionQuestInHistoricAction();
-    void StartNewQuestAction();
+    void StartQuestAction();
+    void MenuNewQuest();
+    void MenuHistoric();
+    void MenuSettings();
+    void MenuLogout();
 }

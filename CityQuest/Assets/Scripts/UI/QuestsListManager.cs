@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class QuestsListManager : MonoBehaviour {
@@ -10,7 +9,8 @@ public class QuestsListManager : MonoBehaviour {
 
     private void Start()
     {
-        FillQuestsList(/*Controller...getUser()*/new User("test"));
+		
+        FillQuestsList(Controller.Instance.User);
     }
 
     public void FillQuestsList(User user)

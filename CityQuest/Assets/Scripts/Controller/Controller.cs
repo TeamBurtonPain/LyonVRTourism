@@ -37,6 +37,10 @@ public class Controller : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
+        Coordinates coordinates = new Coordinates();
+        coordinates.x = 42.3245f;
+        coordinates.y = 4.56978f;
+        Quest quest = new Quest(coordinates,"Trouver les pandas",
         user = null;
         selectedQuest = null;
         currentConnexion = ConnexionState.DISCONNECTED;
@@ -57,35 +61,34 @@ public class Controller : MonoBehaviour
 
     public void LoginLocal()
     {
-        currentConnexion = ConnexionState.CONNEXION_LOCAL;
+        
         currentState.LoginLocalAction();
+        currentConnexion = ConnexionState.CONNEXION_LOCAL;
     }
 
     public void LoginServer()
     {
-        currentConnexion = ConnexionState.CONNEXION_SERVER;
+        
         currentState.LoginServerAction();
+        currentConnexion = ConnexionState.CONNEXION_SERVER;
     }
 
     public void Inscription()
     {
-        currentConnexion = ConnexionState.CONNEXION_SERVER;
         currentState.InscriptionAction();
     }
 
     public void SelectionQuestInHistoric()
     {
-       // selectedQuest = ? Assigner selected quest à quête sélectionnée
         currentState.SelectionQuestInHistoricAction();
     }
 
-    public void StartNewQuest()
+    public void StartQuest()
     {
         if (selectedQuest != null && user != null)
         {
-            StateQuest newStateQuest = new StateQuest(selectedQuest);
-            user.Quests.Add(selectedQuest.Id, newStateQuest);
-            currentState.StartNewQuestAction();
+            user.AddQuest(selectedQuest);
+            currentState.StartQuestAction();
         }
         else
         {
@@ -93,21 +96,15 @@ public class Controller : MonoBehaviour
         }
     }
 
-    public void GoQuest()
-    {
-        
-    }
-
-    public void SelectionQuestInMap()
-    {
-       
-    }
-
-    public void Menu()
-    {
-    }
+ 
 
     /*********** FIN BOUTONS ***********/
+
+    public static Controller Instance
+    {
+        get { return instance; }
+    }
+
     public Quest SelectedQuest
     {
         get { return selectedQuest; }
