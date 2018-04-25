@@ -7,8 +7,9 @@ using UnityEngine.UI;
 public class GeoManager : MonoBehaviour
 {
 
-    public Text positionText;// A retirer plus tard (test V1)
-    public Text resultText;// A retirer plus tard (test V1)
+    public Text x;
+    public Text resultText;
+    public Text positionText;
     public float radius;
 
     protected static GeoManager instance;

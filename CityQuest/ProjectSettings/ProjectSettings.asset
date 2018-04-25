@@ -625,7 +625,6 @@ PlayerSettings:
   XboxOneSplashScreen: {fileID: 0}
   XboxOneAllowedProductIds: []
   XboxOnePersistentLocalStorageSize: 0
-  XboxOneXTitleMemory: 8
   xboxOneScriptCompiler: 0
   vrEditorSettings:
     daydream:
@@ -640,7 +639,7 @@ PlayerSettings:
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
   cloudProjectId: 157f53ef-7fe1-421b-861e-0a125b846726
-  projectName: CityQuest (1)
+  projectName: CityQuest
   organizationId: tsassano
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
