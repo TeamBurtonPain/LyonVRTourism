@@ -632,13 +632,16 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
-    Collab: 1
+    Build: 0
+    Collab: 0
+    ErrorHub: 0
+    Hub: 0
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
-  cloudProjectId: 3924d4fa-d7fd-4bd1-9871-9753ca0dbcf5
-  projectName: CityQuest
-  organizationId: plopegg
+  cloudProjectId: 157f53ef-7fe1-421b-861e-0a125b846726
+  projectName: CityQuest (1)
+  organizationId: tsassano
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
