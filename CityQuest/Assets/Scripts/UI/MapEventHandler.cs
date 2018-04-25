@@ -5,11 +5,11 @@ using UnityEngine;
 public class MapEventHandler : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
 
-    public float perspectiveZoomSpeed = 0.05f;        // The rate of change of the field of view in perspective mode.
-    public Camera mainCamera;
+    public float perspectiveZoomSpeed = 0.01f;        // The rate of change of the field of view in perspective mode.
 
     //Prevents click trigger while dragging
-    private bool dragging = false;
+    private float prevDragX;
+    private float prevDragY;
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -18,22 +18,22 @@ public class MapEventHandler : MonoBehaviour, IPointerClickHandler, IBeginDragHa
 
     public void OnDrag(PointerEventData eventData)
     {
+        float coeff = Camera.main.orthographicSize / Camera.main.pixelWidth;
+        Vector3 dragVector = new Vector3(Input.mousePosition.x - prevDragX, 0, Input.mousePosition.y - prevDragY);
+        Vector3 newView = Camera.main.transform.position - dragVector * coeff;
+        prevDragX = Input.mousePosition.x;
+        prevDragY = Input.mousePosition.y;
+        Camera.main.transform.SetPositionAndRotation(newView, Camera.main.transform.rotation);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left) //left button dragging only
-        {
-            dragging = true;
-        }
+        prevDragX = Input.mousePosition.x;
+        prevDragY = Input.mousePosition.y;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (dragging) //in case it was a left dragging
-        {
-            dragging = false;
-        }
     }
 
     void Update()
@@ -50,14 +50,14 @@ public class MapEventHandler : MonoBehaviour, IPointerClickHandler, IBeginDragHa
             float prevTouchDeltaMag = (touchZeroPrevPos - touchOnePrevPos).magnitude;
             float touchDeltaMag = (touchZero.position - touchOne.position).magnitude;
 
+            float touchCenterX = touchOne.position.x;
+            float touchCenterY = touchOne.position.y;
+
             float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
 
-            Vector3 currPos = mainCamera.transform.position;
-            float y = currPos.y + deltaMagnitudeDiff * perspectiveZoomSpeed;
-            y = Mathf.Clamp(y, 0.1f, 10f);
-            Vector3 testView = new Vector3(0f, y, 0f); 
-            mainCamera.transform.SetPositionAndRotation(testView, Quaternion.Euler(new Vector3(90, 0, 0)));
-    }
+            Camera.main.orthographicSize += deltaMagnitudeDiff * perspectiveZoomSpeed;
+            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, 0.1f, 5f);
+        }
         
     }
 }

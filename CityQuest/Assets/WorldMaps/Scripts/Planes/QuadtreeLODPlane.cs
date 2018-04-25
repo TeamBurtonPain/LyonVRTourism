@@ -188,9 +188,11 @@ public class QuadtreeLODPlane : MonoBehaviour {
 	private DistanceTestResult DoDistanceTest()
 	{
 		const float THRESHOLD_FACTOR = 2.5f;
+        
+        Vector3 fakeCam = Camera.main.transform.position;
+        fakeCam.y= Camera.main.orthographicSize;
 
-		Vector3 cameraPos = Camera.main.transform.position;
-		float distanceCameraBorder = Vector3.Distance (cameraPos, gameObject.GetComponent<MeshRenderer> ().bounds.ClosestPoint (cameraPos));
+        float distanceCameraBorder = Vector3.Distance (fakeCam, gameObject.GetComponent<MeshRenderer> ().bounds.ClosestPoint (fakeCam));
 		Vector3 boundsSize = gameObject.GetComponent<MeshRenderer> ().bounds.size;
 		float radius = (boundsSize.x + boundsSize.y + boundsSize.z) / 3.0f;
 
