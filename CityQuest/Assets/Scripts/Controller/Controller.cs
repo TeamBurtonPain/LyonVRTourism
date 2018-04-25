@@ -80,11 +80,11 @@ public class Controller : MonoBehaviour
     public void StartNewQuest()
     {
     }
-
+    /*
     public void GoQuest()
     {
         currentState.GoQuestAction();
-    }
+    }*/
 
     public void SelectionQuestInMap()
     {

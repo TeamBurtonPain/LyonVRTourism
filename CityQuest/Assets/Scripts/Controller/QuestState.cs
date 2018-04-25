@@ -10,11 +10,6 @@ public class QuestState : DefaultState
     public QuestState(Controller c) : base(c)
     {
     }
-
-    public new void GoQuestAction()
-    {
-        //Passage scène quête
-     //   SceneManager.LoadScene("QuestScene");
-    }
+    
 
 }
