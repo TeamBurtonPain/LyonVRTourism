@@ -56,16 +56,19 @@ public class Controller : MonoBehaviour
     public void LoginLocal()
     {
         currentState.LoginLocalAction();
+        currentConnexion = ConnexionState.CONNEXION_LOCAL;
     }
 
     public void LoginServer()
     {
         currentState.LoginServerAction();
+        currentConnexion = ConnexionState.CONNEXION_SERVER;
     }
 
     public void Inscription()
     {
         currentState.InscriptionAction();
+        currentConnexion = ConnexionState.CONNEXION_SERVER;
     }
 
     public void SelectionQuestInHistoric()
