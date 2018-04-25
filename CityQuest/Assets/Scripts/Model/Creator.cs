@@ -3,20 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Assets.Scripts.Model
+
+public class Creator : Account
 {
-    public class Creator : Account
+    private List<Quest> creations;
+
+    public Creator(Account a) 
+        : base(new User(a.Username, a.Id, a.Xp, a.Badges, a.Quests), a.Mail, a.Password, RoleAccount.CREATOR)
     {
-        private List<Quest> creations;
+        this.creations = new List<Quest>();
+    }
 
-        public Creator(Account a) : base(a.User,a.Mail,a.Password)
+    public List<Quest> Creations
+    {
+        get { return creations; }
+    }
+
+    public void Create(Quest q)
+    {
+        if (Equals(q.Creator))
         {
-            this.creations = new List<Quest>();
+            creations.Add(q);
         }
-
-        public List<Quest> Creations
+        else
         {
-            get { return creations; }
+            //TODO : Gestion erreur.
         }
     }
 }
