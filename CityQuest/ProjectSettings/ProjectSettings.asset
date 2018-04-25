@@ -631,8 +631,6 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
-<<<<<<< HEAD
-<<<<<<< HEAD
     Collab: 0
     UNet: 1
   facebookSdkVersion: 7.9.4
@@ -640,9 +638,6 @@ PlayerSettings:
   cloudProjectId: 983044ac-e818-4085-b75b-5e10db0e0604
   projectName: CityQuest
   organizationId: unity_d4abeeuzee46bw
-=======
-=======
->>>>>>> master
     Build: 0
     Collab: 0
     ErrorHub: 0
@@ -653,10 +648,6 @@ PlayerSettings:
   cloudProjectId: 157f53ef-7fe1-421b-861e-0a125b846726
   projectName: CityQuest
   organizationId: tsassano
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> master
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
