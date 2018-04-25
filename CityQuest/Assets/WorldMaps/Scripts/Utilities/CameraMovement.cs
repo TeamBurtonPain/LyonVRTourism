@@ -14,6 +14,7 @@ public class CameraMovement : MonoBehaviour
     }
 
     // Update is called once per frame
+    /*
     void Update () 
 	{
 		float heightWeight = heightMovementFactor * transform.position.y;
@@ -31,4 +32,5 @@ public class CameraMovement : MonoBehaviour
 
 		transform.Translate (movement);
 	}
+    */
 }

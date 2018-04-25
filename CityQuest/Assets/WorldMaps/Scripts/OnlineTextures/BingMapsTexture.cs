@@ -5,7 +5,8 @@ using System.Text;
 
 
 public class BingMapsTexture : OnlineTexture {
-	public static string testServerURL = "http://ecn.{subdomain}.tiles.virtualearth.net/tiles/r{quadkey}.jpeg?g=4892&mkt={culture}&shading=hill";
+    public static string testServerURL = "http://ecn.{subdomain}.tiles.virtualearth.net/tiles/r{quadkey}.jpeg?g=6422&mkt={culture}&shading=hill";
+        //"http://ecn.{subdomain}.tiles.virtualearth.net/tiles/r{quadkey}.jpeg?g=4892&mkt={culture}&shading=hill";
 	public string serverURL = BingMapsTexture.testServerURL;
 	public string initialSector = "0";
 	public float latitude = 28.127222f;
