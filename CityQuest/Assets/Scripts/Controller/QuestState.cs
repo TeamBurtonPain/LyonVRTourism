@@ -11,9 +11,10 @@ public class QuestState : DefaultState
     {
     }
 
-    public new void SelectionQuestInHistoricAction()
+    public new void GoQuestAction()
     {
-        SceneManager.LoadScene("MapScene");
-
+        //Passage scène quête
+     //   SceneManager.LoadScene("QuestScene");
     }
+
 }

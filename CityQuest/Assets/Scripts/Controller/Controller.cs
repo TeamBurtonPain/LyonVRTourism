@@ -70,7 +70,7 @@ public class Controller : MonoBehaviour
 
     public void SelectionQuestInHistoric()
     {
-
+       // selectedQuest = ? Assigner selected quest à quête sélectionnée
         currentState.SelectionQuestInHistoricAction();
     }
 
@@ -80,10 +80,12 @@ public class Controller : MonoBehaviour
 
     public void GoQuest()
     {
+        currentState.GoQuestAction();
     }
 
     public void SelectionQuestInMap()
     {
+       
     }
 
     public void Menu()
