@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine.SceneManagement;
 
 
 public class QuestState : DefaultState
@@ -10,8 +11,9 @@ public class QuestState : DefaultState
     {
     }
 
-
-    public new void OptionAction()
+    public new void SelectionQuestInHistoricAction()
     {
+        SceneManager.LoadScene("MapScene");
+
     }
 }
