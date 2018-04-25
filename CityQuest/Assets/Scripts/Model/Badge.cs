@@ -3,31 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Assets.Scripts.Model
-{
-    public class Badge
-    {
-        private string name;
-        private string description;
-        private long value;
 
-        public Badge(string n, string d, long v)
-        {
-            name = n;
-            description = d;
-            value = v;
-        }
-        public string Name
-        {
-            get { return name; }
-        }
-        public string Description
-        {
-            get { return description; }
-        }
-        public long Value
-        {
-            get { return value; }
-        }
+public class Badge
+{
+    private static long instanceCounter = 0;
+    private long id;
+    private string name;
+    private string description;
+    private long earn;
+
+    public Badge(string n, string d, long v)
+    {
+        id = instanceCounter++;
+        name = n;
+        description = d;
+        earn = v;
+    }
+
+    public long Id
+    {
+        get { return id; }
+    }
+
+    public string Name
+    {
+        get { return name; }
+    }
+
+    public string Description
+    {
+        get { return description; }
+    }
+
+    public long Earn
+    {
+        get { return earn; }
     }
 }

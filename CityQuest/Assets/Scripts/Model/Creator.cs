@@ -2,21 +2,44 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine.Networking;
 
-namespace Assets.Scripts.Model
+
+public class Creator : Account
 {
-    public class Creator : Account
+    private List<Quest> creations;
+
+
+    public Creator()
     {
-        private List<Quest> creations;
+        creations = new List<Quest>();
+    }
+    public Creator(Account a) 
+        : base(new User(a.Username, a.Id, a.Xp, a.Badges, a.Quests), 
+            a.Mail, a.Password, a.FirstName, a.LastName, a.DateBirth, RoleAccount.CREATOR)
+    {
+        this.creations = new List<Quest>();
+    }
 
-        public Creator(Account a) : base(a.User,a.Mail,a.Password)
-        {
-            this.creations = new List<Quest>();
-        }
+    public List<Quest> Creations
+    {
+        get { return creations; }
+    }
 
-        public List<Quest> Creations
+    public void Create(Quest q)
+    {
+        if (Equals(q.Creator))
         {
-            get { return creations; }
+            creations.Add(q);
         }
+        else
+        {
+            //TODO : Gestion erreur.
+        }
+    }
+
+    public override string ToString()
+    {
+        return base.ToString();
     }
 }

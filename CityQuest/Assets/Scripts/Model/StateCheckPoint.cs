@@ -3,34 +3,46 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Assets.Scripts.Model
+
+public enum StatusCheckPoint
 {
-    public enum StatusCheckPoint
+    FINISHED,
+    BEGUN,
+    UNINIT
+}
+
+public class StateCheckPoint
+{
+    private CheckPoint checkpoint;
+    private StatusCheckPoint status;
+    private double timeElapsed;
+
+    public StateCheckPoint(CheckPoint cp)
     {
-        FINISHED,
-        BEGUN,
-        UNINIT
+        this.checkpoint = cp;
+        status = StatusCheckPoint.UNINIT;
     }
 
-    public class StateCheckPoint
+    public StateCheckPoint(CheckPoint cp, StatusCheckPoint status)
     {
-        private CheckPoint checkpoint;
-        private StatusCheckPoint status;
+        this.checkpoint = cp;
+        this.status = status;
+    }
 
-        public StateCheckPoint(CheckPoint cp, StatusCheckPoint status){
-            this.checkpoint = cp;
-            this.status = status;
-        }
+    public CheckPoint Checkpoint
+    {
+        get { return checkpoint; }
+    }
 
-        public CheckPoint Checkpoint
-        {
-            get { return checkpoint; }
-        }
+    public StatusCheckPoint Status
+    {
+        get { return status; }
+        set { status = value; }
+    }
 
-        public StatusCheckPoint Status
-        {
-            get { return status; }
-            set { status = value; }
-        }
+    public double TimeElapsed
+    {
+        get { return timeElapsed; }
+        set { timeElapsed = value; }
     }
 }
