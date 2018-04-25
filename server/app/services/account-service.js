@@ -5,6 +5,11 @@ async function getAccountById(accountId) {
     };
 }
 
+async function createAccount(account) {
+    return account.save();
+}
+
 module.exports = {
     getAccountById,
+    createAccount,
 };
