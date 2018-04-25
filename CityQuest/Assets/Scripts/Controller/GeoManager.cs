@@ -15,7 +15,7 @@ public class GeoManager : MonoBehaviour
     protected static GeoManager instance;
 
     private Coordinates userPosition;
-    private Coordinates targetPosition;
+    private Coordinates targetPosition;// A retirer plus tard (test V1)
 
     void Awake()
     {
@@ -30,22 +30,25 @@ public class GeoManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        positionText.text = "";
-        resultText.text = "";
+        positionText.text = "";// A retirer plus tard (test V1)
+        resultText.text = "";// A retirer plus tard (test V1)
 
         userPosition = new Coordinates();
 
-        //target = Marseille
+        //Example : target = Marseille --> A retirer plus tard (test V1)
         targetPosition = new Coordinates();
         targetPosition.x = 43.296482f;
         targetPosition.y = 5.36978f;
 
         Start();
 
-        InvokeRepeating("Tester", 10, 5);
+        InvokeRepeating("Tester", 10, 5);// A retirer plus tard (test V1)
 
     }
 
+    /// <summary>
+    /// Initializes the position input from the device used by the App
+    /// </summary>
     void Start()
     {
 
@@ -69,14 +72,14 @@ public class GeoManager : MonoBehaviour
 
             if (Input.location.status == LocationServiceStatus.Failed)
             {
-
+                //latitude and longitude equals to 0
             }
             else
             {
                 gpsInit = true;
                 // We start the timer to check each tick (every 3 sec) the current gps position
-                //InvokeRepeating("RetrieveGPSData",0,3);
-                //Invoke("RetrieveGPSData", 0);
+                //InvokeRepeating("RetrieveGPSData",0,3); // A retirer plus tard (test V1)
+                //Invoke("RetrieveGPSData", 0); // A retirer plus tard (test V1)
             }
         }
         else
@@ -86,21 +89,18 @@ public class GeoManager : MonoBehaviour
 #endif
     }
 
-    void RetrieveGPSData()
-    {
-        LocationInfo currentGPSPosition = Input.location.lastData;
-        userPosition.x = currentGPSPosition.latitude;
-        userPosition.y = currentGPSPosition.longitude;
-        //string gpsString = userPosition.x + " / " + userPosition.y;
-        //string gpsString = currentGPSPosition.latitude + " / " + currentGPSPosition.longitude;
-        //positionText.text = gpsString;
-    }
-
+    // A retirer plus tard (test V1)
     private void Tester()
     {
         IsUserNear(targetPosition, radius);
     }
 
+    /// <summary>
+    /// Method that states if a user is near to a location within a perimeter stated in the params. The user coordinates are automatically collected using the device sensors
+    /// </summary>
+    /// <param name="target">Represents the location targeted by the user</param>
+    /// <param name="radius">Parameter that represents the minimum perimeter in which the user must be to begin its quest. radius in kilometers.</param>
+    /// <returns> A boolean that represents the validation of the user's presence nearby the location targeted.</returns>
     private bool IsUserNear(Coordinates target, float radius)
     {
         bool isNear = false;
@@ -108,21 +108,27 @@ public class GeoManager : MonoBehaviour
         userPosition.x = Input.location.lastData.latitude;
         userPosition.y = Input.location.lastData.longitude;
 
-        //positionText.text += "lat =" + userPosition.x + ",  long =" + userPosition.y + "||";
+        positionText.text = "lat =" + userPosition.x + ",  long =" + userPosition.y;
 
-        float distance = Distance(userPosition, target, radius);
-        positionText.text = "distance = " + distance;
+        float distance = Distance(userPosition, target);
+
         if (distance <= radius)
         {
             isNear = true;
         }
 
-        resultText.text += "result = " + isNear + "||";
+        resultText.text = "result = " + isNear;
 
         return isNear;
     }
 
-    private float Distance(Coordinates coord1, Coordinates coord2, float radius)
+    /// <summary>
+    /// Method calculating the euclidian distance between to coordinates using spherical consideration (with the earth radius R)
+    /// </summary>
+    /// <param name="coord1">Represents one geographical position to study</param>
+    /// <param name="coord2">Represents the other geographical position to study</param>
+    /// <returns>Returns a float representing the euclidian distance between the two position studied</returns>
+    private float Distance(Coordinates coord1, Coordinates coord2)
     {
         float coord1Lat = coord1.x * Mathf.PI / 180;
         float coord1Long = coord1.y * Mathf.PI / 180;
@@ -138,9 +144,23 @@ public class GeoManager : MonoBehaviour
         return distance;
     }
 
-
-    IEnumerator rechargeLocation()
+    /// <summary>
+    /// Sets the targetPosition attribute from the GeoManager
+    /// </summary>
+    /// <param name="latitude">Latitude of the target</param>
+    /// <param name="longitude">Longitude of the target</param>
+    public void SetTargetPosition(float latitude,float longitude)
     {
-        yield return new WaitForSeconds(5.0f);
+        targetPosition.x = latitude;
+        targetPosition.y = longitude;
+    }
+
+    /// <summary>
+    /// Gets the targetPosition attribute from the GeoManager
+    /// </summary>
+    /// <returns>Returns the Coordinates object that represents the target's position</returns>
+    public Coordinates GetTargetPosition()
+    {
+        return targetPosition;
     }
 }
