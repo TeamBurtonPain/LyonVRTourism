@@ -56,7 +56,7 @@ class ModelTest : MonoBehaviour
         };
 
         tquest.text = q1.ToString();
-        tuser.text = JsonUtility.ToJson(this);
+        tuser.text = JSONHelper.ToJson(q1);
     }
 
 
