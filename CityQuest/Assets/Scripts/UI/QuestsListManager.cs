@@ -4,26 +4,22 @@ using System.Collections.Generic;
 
 public class QuestsListManager : MonoBehaviour {
 
-    public Transform questTemplate;
+    public UI_QuestElement questTemplate;
     public Transform parent;
-    private List<Transform> listElements;
+    private List<UI_QuestElement> listElements;
 
     private void Start()
     {
-        FillQuestsList(new User("test"));
+        FillQuestsList(/*Controller...getUser()*/new User("test"));
     }
 
     public void FillQuestsList(User user)
     {
-        int i = 0;
-        do
+        foreach(StateQuest stateQuest in user.Quests.Values)
         {
-            Transform temp = Instantiate(questTemplate, this.parent);
-            temp.GetChild(1).gameObject.GetComponent<Text>().text =  /*user.Quests[i].Quest.Title*/""+ i;
+            UI_QuestElement temp = Instantiate(questTemplate, this.parent);
+            temp.linkQuest(stateQuest);
             listElements.Add(temp);
-            i++;
-        }while (i < user.Quests.Count) ;
-
-        
+        }
     }
 }
