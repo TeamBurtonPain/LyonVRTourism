@@ -18,6 +18,13 @@ public class User
     /// </summary>
     private Dictionary<long, StateQuest> quests;
 
+
+    public User()
+    {
+        badges = new List<Badge>();
+        quests = new Dictionary<long, StateQuest>();
+    }
+
     public User(string name)
     {
         username = name;
@@ -58,6 +65,8 @@ public class User
         this.quests = u.Quests;
     }
 
+
+
     /// <summary>
     /// Checks the quest and modifies the users xp accordingly to the status of the quest.
     /// </summary>
@@ -82,6 +91,7 @@ public class User
     public string Id
     {
         get { return id; }
+        set { id = value; }
     }
 
     public string Username
@@ -93,16 +103,19 @@ public class User
     public long Xp
     {
         get { return xp; }
+        set { xp = value; }
     }
 
     public List<Badge> Badges
     {
         get { return badges; }
+        set { badges = value; }
     }
 
     public Dictionary<long, StateQuest> Quests
     {
         get { return quests; }
+        set { quests = value; }
     }
 
     protected bool Equals(User other)
@@ -123,4 +136,11 @@ public class User
         return (id != null ? id.GetHashCode() : 0);
     }
 
+    public override string ToString()
+    {
+        id = "b";
+        username = "kbde";
+        xp = 0L;
+        return "User : id : " + id + ", name : " + username + ", xp : " + xp;
+    }
 }

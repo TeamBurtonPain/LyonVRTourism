@@ -54,7 +54,7 @@ public class QuestDetails_Manager : MonoBehaviour {
     {
         double mark = 0;
         /*
-        foreach(StatsQuestUnit element in statistics.Marks)
+        foreach(StatsQuestUnit element in sta   tistics.Marks)
         {
             mark += element.Mark;
         }
