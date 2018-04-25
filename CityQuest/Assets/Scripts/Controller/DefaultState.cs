@@ -29,4 +29,9 @@ public class DefaultState : State
     public void OptionAction()
     {
     }
+
+    public void LoginLocalAction() { }
+    public void LoginServerAction() { }
+    public void InscriptionAction() { }
+    public void SelectionQuestInHistoricAction() { }
 }
