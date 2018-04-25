@@ -8,16 +8,30 @@ async function getAccountById(req, res) {
 }
 
 async function createAccount(req, res) {
-    let newAccount = new Account();
-
-    newAccount.name = req.body.name;
+    let newAccount = new Account(req.body);
 
     newAccount = await accountService.createAccount(newAccount);
 
     res.json(newAccount);
 }
 
+async function updateAccount(req, res) {
+    let newAccount = new Account(req.body);
+
+    newAccount = await accountService.updateAccount(newAccount);
+
+    res.json(newAccount);
+}
+
+async function deleteAccount(req, res) {
+    await accountService.deleteAccount(req.params.id);
+
+    res.sendStatus(200);
+}
+
 module.exports = {
     getAccountById,
-    createAccount
+    createAccount,
+    updateAccount,
+    deleteAccount
 };
