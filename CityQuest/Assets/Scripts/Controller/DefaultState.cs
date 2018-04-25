@@ -35,26 +35,6 @@ public class DefaultState : State
     public void SelectionQuestInHistoricAction() { }
     public void StartQuestAction() { }
 
-    //TODO à faire coté unity
-    public void MenuNewQuest()
-    {
-        SceneManager.LoadScene("NewQuest");
-    }
-    public void MenuHistoric()
-    {
-        SceneManager.LoadScene("MyQuests");
-    }
-
-    //TODO à faire coté unity
-    public void MenuSettings()
-    {
-        SceneManager.LoadScene("Settings");
-    }
-
-    //TODO à faire coté unity
-    public void MenuLogout()
-    {
-        SceneManager.LoadScene("Logout");
-    }
+    
     
 }

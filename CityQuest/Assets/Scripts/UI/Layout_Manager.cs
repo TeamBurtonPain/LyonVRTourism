@@ -44,12 +44,21 @@ public class Layout_Manager : MonoBehaviour {
         }
     }
 
-    public void SelectButtonMesQuetesManager()
+    public void OnClickMenuNewQuest()
+	{
+        Controller.Instance.SelectMenuNewQuest();
+	}
+    public void OnClickMenuHistoric()
     {
-        SceneManager.LoadScene("Mes quêtes");
+        Controller.Instance.SelectMenuHistoric();
     }
-    public void SelectButtonParametresManager()
+    public void OnClickMenuSettings()
     {
-        SceneManager.LoadScene("Paramètres");
+        Controller.Instance.SelectMenuSettings();
     }
+    public void OnClickMenuLogout()
+    {
+        Controller.Instance.SelectMenuLogout();
+    }
+
 }

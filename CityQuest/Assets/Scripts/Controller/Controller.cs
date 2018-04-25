@@ -40,8 +40,8 @@ public class Controller : MonoBehaviour
         Coordinates coordinates = new Coordinates();
         coordinates.x = 42.3245f;
         coordinates.y = 4.56978f;
-        Quest quest = new Quest(coordinates,"Trouver les pandas",
-        user = null;
+        //Quest quest = new Quest(coordinates,"Trouver les pandas",
+        //user = null;
         selectedQuest = null;
         currentConnexion = ConnexionState.DISCONNECTED;
     }
@@ -96,7 +96,24 @@ public class Controller : MonoBehaviour
         }
     }
 
- 
+    public void SelectMenuNewQuest()
+    {
+        SceneManager.LoadScene("NewQuest");
+    }
+    public void SelectMenuHistoric()
+    {
+        SceneManager.LoadScene("MyQuests");
+    }
+
+    public void SelectMenuSettings()
+    {
+        SceneManager.LoadScene("Settings");
+    }
+
+    public void SelectMenuLogout()
+    {
+        SceneManager.LoadScene("Logout");
+    }
 
     /*********** FIN BOUTONS ***********/
 
