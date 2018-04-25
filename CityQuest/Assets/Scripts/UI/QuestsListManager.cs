@@ -9,8 +9,15 @@ public class QuestsListManager : MonoBehaviour {
 
     private void Start()
     {
-		
-        FillQuestsList(Controller.Instance.User);
+        if (Controller.Instance.User != null && Controller.Instance.User.Quests.Count != 0)
+        {
+            FillQuestsList(Controller.Instance.User);
+        }
+        else
+        {
+            Debug.Log("yolo on a réussi !! ");
+        }
+        
     }
 
     public void FillQuestsList(User user)

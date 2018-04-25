@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
@@ -29,7 +26,7 @@ public class DefaultState : State
 
     public void OptionAction() { }
 
-    public void LoginLocalAction() { }
+    public virtual void LoginLocalAction() {Debug.Log("Le mauvais"); }
     public void LoginServerAction() { }
     public void InscriptionAction() { }
     public void SelectionQuestInHistoricAction() { }

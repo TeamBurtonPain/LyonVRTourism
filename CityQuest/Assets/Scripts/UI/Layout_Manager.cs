@@ -44,21 +44,4 @@ public class Layout_Manager : MonoBehaviour {
         }
     }
 
-    public void OnClickMenuNewQuest()
-	{
-        Controller.Instance.SelectMenuNewQuest();
-	}
-    public void OnClickMenuHistoric()
-    {
-        Controller.Instance.SelectMenuHistoric();
-    }
-    public void OnClickMenuSettings()
-    {
-        Controller.Instance.SelectMenuSettings();
-    }
-    public void OnClickMenuLogout()
-    {
-        Controller.Instance.SelectMenuLogout();
-    }
-
 }
