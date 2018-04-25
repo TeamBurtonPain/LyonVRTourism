@@ -10,14 +10,14 @@ public class Badge
     private long id;
     private string name;
     private string description;
-    private long value;
+    private long earn;
 
     public Badge(string n, string d, long v)
     {
         id = instanceCounter++;
         name = n;
         description = d;
-        value = v;
+        earn = v;
     }
 
     public long Id
@@ -35,8 +35,8 @@ public class Badge
         get { return description; }
     }
 
-    public long Value
+    public long Earn
     {
-        get { return value; }
+        get { return earn; }
     }
 }

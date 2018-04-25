@@ -15,6 +15,7 @@ public class Controller
     private State currentState;
     private ConnexionState currentConnexion;
     private User user;
+    private Quest activeQuest;
 
     /// <summary>
     /// Transitions to the specified state s

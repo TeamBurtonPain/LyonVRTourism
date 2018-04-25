@@ -13,6 +13,11 @@ public class CheckPoint
     private List<string> choices;
     private string answer;
 
+    public CheckPoint()
+    {
+        choices = new List<string>();
+    }
+
     CheckPoint(string pic, string text, List<string> choices, string answer)
     {
         this.id = instanceCounter++;
@@ -25,6 +30,7 @@ public class CheckPoint
     public long Id
     {
         get { return id; }
+        set { id = value; }
     }
 
     public string Picture
@@ -48,5 +54,10 @@ public class CheckPoint
     {
         get { return answer; }
         set { answer = value; }
+    }
+
+    public override string ToString()
+    {
+        return "Checkpoint : id : " + id + ", text : " + text + ", answer : " + answer;
     }
 }

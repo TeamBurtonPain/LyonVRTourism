@@ -15,6 +15,7 @@ public class StateCheckPoint
 {
     private CheckPoint checkpoint;
     private StatusCheckPoint status;
+    private double timeElapsed;
 
     public StateCheckPoint(CheckPoint cp)
     {
@@ -37,5 +38,11 @@ public class StateCheckPoint
     {
         get { return status; }
         set { status = value; }
+    }
+
+    public double TimeElapsed
+    {
+        get { return timeElapsed; }
+        set { timeElapsed = value; }
     }
 }
