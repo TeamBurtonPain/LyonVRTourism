@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using Assets.Scripts.Model;
 using System.Collections.Generic;
 
 public class QuestsListManager : MonoBehaviour {
@@ -9,21 +8,21 @@ public class QuestsListManager : MonoBehaviour {
     public Transform parent;
     private List<Transform> listElements;
 
-    //A ENLEVER
     private void Start()
     {
         FillQuestsList(new User("test"));
     }
-    //----------------------------------------
 
     public void FillQuestsList(User user)
     {
-        foreach(System.Collections.Generic.KeyValuePair<long,StateQuest> quest in user.Quests)
+        int i = 0;
+        do
         {
             Transform temp = Instantiate(questTemplate, this.parent);
-            //temp.GetChild(0).gameObject.GetComponent<Text>().text = quest.Value.Quest.
+            temp.GetChild(1).gameObject.GetComponent<Text>().text =  /*user.Quests[i].Quest.Title*/""+ i;
             listElements.Add(temp);
-        }
+            i++;
+        }while (i < user.Quests.Count) ;
 
         
     }
