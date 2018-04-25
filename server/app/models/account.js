@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const merge = require('mongoose-merge-plugin');
+const mongooseBCrypt = require('mongoose-bcrypt');
 
 const Account = new Schema({
     connection: {
@@ -17,7 +18,8 @@ const Account = new Schema({
         },
         password: {
             type: String,
-            required: true
+            required: true,
+            bcrypt: true
         }
     },
     userInformation: {
@@ -67,5 +69,6 @@ const Account = new Schema({
 });
 
 Account.plugin(merge);
+Account.plugin(mongooseBCrypt);
 
 module.exports = mongoose.model('Account', Account);
