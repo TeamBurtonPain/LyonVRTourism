@@ -17,6 +17,10 @@ public class Controller : MonoBehaviour
     protected static Controller instance;
 
     private State currentState;
+    private State mapState;
+    private State historicState;
+    private State questState;
+    private State loginState;
     private ConnexionState currentConnexion;
     private User user;
 
@@ -36,6 +40,13 @@ public class Controller : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+
+        mapState = new MapState(this);
+        historicState = new HistoricState(this);
+        questState = new QuestState(this);
+        loginState = new LoginState(this);
+
+        currentState = loginState;
 
         Coordinates coordinates = new Coordinates();
         coordinates.x = 42.3245f;
@@ -61,7 +72,6 @@ public class Controller : MonoBehaviour
 
     public void LoginLocal()
     {
-        
         currentState.LoginLocalAction();
         currentConnexion = ConnexionState.CONNEXION_LOCAL;
     }

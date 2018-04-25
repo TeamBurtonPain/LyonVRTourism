@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-
 
 public class LoginState : DefaultState
 {
@@ -11,10 +7,11 @@ public class LoginState : DefaultState
     {
     }
 
-    public new void LoginLocalAction()
+    public override void LoginLocalAction()
     {
         //TODO : Penser à la récupération du User stocké en local
         //Code de gestion de première utilisation
+        Debug.Log("Le bon");
         SceneManager.LoadScene("MapScene");
     }
 

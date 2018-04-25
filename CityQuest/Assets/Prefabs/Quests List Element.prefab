@@ -407,8 +407,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6210e89bc5507fc41aff8414542bc571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  t: {fileID: 114120346184035870}
-  s: {fileID: 114107359020997342}
+  questNameText: {fileID: 114120346184035870}
+  questProgressText: {fileID: 114107359020997342}
 --- !u!222 &222173344135497056
 CanvasRenderer:
   m_ObjectHideFlags: 1
