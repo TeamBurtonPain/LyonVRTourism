@@ -24,6 +24,7 @@ The main goal is to provide a mobile video game to promote tourism and culture o
 - A computer as a server which the following tools:
     - NodeJS >= v9.10.0
     - MongoDB >= v3.6.4
+    - Yarn >= v1.5.1
 
 **The mobile phone and the computer (server) have to be on the same local network**
 
