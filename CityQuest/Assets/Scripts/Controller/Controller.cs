@@ -19,6 +19,8 @@ public class Controller : MonoBehaviour
     private State currentState;
     private ConnexionState currentConnexion;
     private User user;
+
+
     private Quest selectedQuest;
 
 
@@ -55,20 +57,20 @@ public class Controller : MonoBehaviour
 
     public void LoginLocal()
     {
-        currentState.LoginLocalAction();
         currentConnexion = ConnexionState.CONNEXION_LOCAL;
+        currentState.LoginLocalAction();
     }
 
     public void LoginServer()
     {
-        currentState.LoginServerAction();
         currentConnexion = ConnexionState.CONNEXION_SERVER;
+        currentState.LoginServerAction();
     }
 
     public void Inscription()
     {
-        currentState.InscriptionAction();
         currentConnexion = ConnexionState.CONNEXION_SERVER;
+        currentState.InscriptionAction();
     }
 
     public void SelectionQuestInHistoric()
@@ -79,11 +81,21 @@ public class Controller : MonoBehaviour
 
     public void StartNewQuest()
     {
+        if (selectedQuest != null && user != null)
+        {
+            StateQuest newStateQuest = new StateQuest(selectedQuest);
+            user.Quests.Add(selectedQuest.Id, newStateQuest);
+            currentState.StartNewQuestAction();
+        }
+        else
+        {
+            //TODO : Gestion des erreurs en cas de quest ou de user null
+        }
     }
 
     public void GoQuest()
     {
-        currentState.GoQuestAction();
+        
     }
 
     public void SelectionQuestInMap()
@@ -96,14 +108,15 @@ public class Controller : MonoBehaviour
     }
 
     /*********** FIN BOUTONS ***********/
-
-    public Quest GetSelectedQuest()
+    public Quest SelectedQuest
     {
-        return selectedQuest;
+        get { return selectedQuest; }
+        set { selectedQuest = value; }
     }
 
-    public void SetSelectedQuest(Quest newSelectedQuest)
+    public User User
     {
-        selectedQuest = newSelectedQuest;
+        get { return user; }
+        set { user = value; }
     }
 }

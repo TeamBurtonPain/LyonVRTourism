@@ -11,7 +11,7 @@ public class QuestState : DefaultState
     {
     }
 
-    public new void GoQuestAction()
+    public new void StartNewQuestAction()
     {
         //Passage scène quête
      //   SceneManager.LoadScene("QuestScene");

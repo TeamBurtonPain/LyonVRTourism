@@ -34,4 +34,5 @@ public class DefaultState : State
     public void LoginServerAction() { }
     public void InscriptionAction() { }
     public void SelectionQuestInHistoricAction() { }
+    public void StartNewQuestAction() { }
 }
