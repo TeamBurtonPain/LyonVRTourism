@@ -10,7 +10,8 @@ using System.Collections.Generic;
 public class QuadtreeLODPlane : MonoBehaviour {
 	public int vertexResolution = 20;
 
-	private OnlineTexture onlineTexture = null;
+
+    private OnlineTexture onlineTexture = null;
 
 	private string nodeID = "0";
 
@@ -189,6 +190,7 @@ public class QuadtreeLODPlane : MonoBehaviour {
 	{
 		const float THRESHOLD_FACTOR = 2.5f;
         
+        // we create a fake perspective cam on the basis of our ortho cam
         Vector3 fakeCam = Camera.main.transform.position;
         fakeCam.y= Camera.main.orthographicSize;
 
