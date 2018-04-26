@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 [Serializable]
 public class Coordinates
@@ -12,19 +13,23 @@ public class Coordinates
 [Serializable]
 public class Quest
 {
-
-    [NonSerialized]
     private static long instanceCounter = 0;
+    [SerializeField]
     private long id;
-
-    public Coordinates geolocalisation;
+    [SerializeField]
+    private Coordinates geolocalisation;
+    [SerializeField]
     private string title;
+    [SerializeField]
     private string description;
+    [SerializeField]
     private long value;
+    [SerializeField]
     private double timeLength;
 
     [NonSerialized]
     private QuestStatistics statistics;
+    [SerializeField]
     private bool open;
 
     [NonSerialized]
