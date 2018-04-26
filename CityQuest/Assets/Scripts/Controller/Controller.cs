@@ -108,7 +108,7 @@ public class Controller : MonoBehaviour
 
     public void SelectMenuNewQuest()
     {
-        SceneManager.LoadScene("NewQuest");
+        SceneManager.LoadScene("MapScene");
     }
     public void SelectMenuHistoric()
     {

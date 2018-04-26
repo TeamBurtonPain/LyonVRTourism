@@ -15,7 +15,7 @@ public class QuestsListManager : MonoBehaviour {
         }
         else
         {
-            Debug.Log("yolo on a réussi !! ");
+            //TODO : Set a default error message that say or redirect to the Mapscene so the user actually does his first quest
         }
         
     }
