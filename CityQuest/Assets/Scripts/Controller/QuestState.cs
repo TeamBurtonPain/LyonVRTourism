@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine.SceneManagement;
 
 
 public class QuestState : DefaultState
@@ -13,8 +9,8 @@ public class QuestState : DefaultState
 
     public new void StartQuestAction()
     {
-        //Passage scène quête
-     //   SceneManager.LoadScene("QuestScene");
+        //TODO : Scene QuestScene pour mettre en place le passage scène quête
+       //SceneManager.LoadScene("QuestScene");
     }
 
 

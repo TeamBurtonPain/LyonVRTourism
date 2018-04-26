@@ -1,22 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Net.Mime;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
+/// <summary>
+/// Class managing all the methods needed for the geolocalisation
+/// </summary>
 public class GeoManager : MonoBehaviour
 {
 
-    public Text x;
-    public Text resultText;
-    public Text positionText;
     public float radius;
 
     protected static GeoManager instance;
 
     private Coordinates userPosition;
-    private Coordinates targetPosition;// A retirer plus tard (test V1)
 
+    /// <summary>
+    /// Method initializing the GeoManager instance
+    /// </summary>
     void Awake()
     {
         if (instance == null)
@@ -30,19 +28,9 @@ public class GeoManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        positionText.text = "";// A retirer plus tard (test V1)
-        resultText.text = "";// A retirer plus tard (test V1)
-
         userPosition = new Coordinates();
 
-        //Example : target = Marseille --> A retirer plus tard (test V1)
-        targetPosition = new Coordinates();
-        targetPosition.x = 43.296482f;
-        targetPosition.y = 5.36978f;
-
         Start();
-
-        InvokeRepeating("Tester", 10, 5);// A retirer plus tard (test V1)
 
     }
 
@@ -55,7 +43,7 @@ public class GeoManager : MonoBehaviour
 #if PC
         Debug.Log("On PC / Don't have GPS");
 #elif !PC
-        bool gpsInit = false;
+
         //Starting the Location service before querying location
         Input.location.Start(0.5f); // Accuracy of 0.5 m
 
@@ -76,23 +64,12 @@ public class GeoManager : MonoBehaviour
             }
             else
             {
-                gpsInit = true;
-                // We start the timer to check each tick (every 3 sec) the current gps position
-                //InvokeRepeating("RetrieveGPSData",0,3); // A retirer plus tard (test V1)
-                //Invoke("RetrieveGPSData", 0); // A retirer plus tard (test V1)
             }
         }
         else
         {
-            positionText.text = "GPS not available";
         }
 #endif
-    }
-
-    // A retirer plus tard (test V1)
-    private void Tester()
-    {
-        IsUserNear(targetPosition, radius);
     }
 
     /// <summary>
@@ -101,14 +78,12 @@ public class GeoManager : MonoBehaviour
     /// <param name="target">Represents the location targeted by the user</param>
     /// <param name="radius">Parameter that represents the minimum perimeter in which the user must be to begin its quest. radius in kilometers.</param>
     /// <returns> A boolean that represents the validation of the user's presence nearby the location targeted.</returns>
-    private bool IsUserNear(Coordinates target, float radius)
+    public bool IsUserNear(Coordinates target, float radius)
     {
         bool isNear = false;
 
         userPosition.x = Input.location.lastData.latitude;
         userPosition.y = Input.location.lastData.longitude;
-
-        positionText.text = "lat =" + userPosition.x + ",  long =" + userPosition.y;
 
         float distance = Distance(userPosition, target);
 
@@ -116,8 +91,6 @@ public class GeoManager : MonoBehaviour
         {
             isNear = true;
         }
-
-        resultText.text = "result = " + isNear;
 
         return isNear;
     }
@@ -142,25 +115,5 @@ public class GeoManager : MonoBehaviour
             Mathf.Cos(coord2Long - coord1Long) + Mathf.Sin(coord1Lat) * Mathf.Sin(coord2Lat));
 
         return distance;
-    }
-
-    /// <summary>
-    /// Sets the targetPosition attribute from the GeoManager
-    /// </summary>
-    /// <param name="latitude">Latitude of the target</param>
-    /// <param name="longitude">Longitude of the target</param>
-    public void SetTargetPosition(float latitude,float longitude)
-    {
-        targetPosition.x = latitude;
-        targetPosition.y = longitude;
-    }
-
-    /// <summary>
-    /// Gets the targetPosition attribute from the GeoManager
-    /// </summary>
-    /// <returns>Returns the Coordinates object that represents the target's position</returns>
-    public Coordinates GetTargetPosition()
-    {
-        return targetPosition;
     }
 }

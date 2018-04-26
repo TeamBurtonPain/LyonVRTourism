@@ -26,7 +26,7 @@ public class DefaultState : State
 
     public void OptionAction() { }
 
-    public virtual void LoginLocalAction() {Debug.Log("Le mauvais"); }
+    public virtual void LoginLocalAction() {}
     public void LoginServerAction() { }
     public void InscriptionAction() { }
     public void SelectionQuestInHistoricAction() { }
