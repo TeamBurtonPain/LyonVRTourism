@@ -89,6 +89,7 @@ public class Controller : MonoBehaviour
     {
         if (pause && Application.platform == RuntimePlatform.Android )
         {
+            // TODO mettre en pause plutot
             Leave();
         }
     }
