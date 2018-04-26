@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 
 
@@ -23,10 +22,10 @@ public class StateQuest
         done = false;
 
         //init checkpoints state to 0%
-        checkpoints = new List<StateCheckPoint>(quest.Checkpoints.Count);
+        checkpoints = new List<StateCheckPoint>();
         for (int i = 0; i < quest.Checkpoints.Count; ++i)
         {
-            checkpoints[i] = new StateCheckPoint(q.Checkpoints[i]);
+            checkpoints.Add(new StateCheckPoint(q.Checkpoints[i]));
         }
     }
 

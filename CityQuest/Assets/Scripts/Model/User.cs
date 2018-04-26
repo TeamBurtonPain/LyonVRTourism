@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using UnityEngine;
 
 
 public class User
@@ -80,6 +80,7 @@ public class User
         }
         else
         {
+            
             StateQuest newStateQuest = new StateQuest(q);
             quests.Add(q.Id, newStateQuest);
             return true;
