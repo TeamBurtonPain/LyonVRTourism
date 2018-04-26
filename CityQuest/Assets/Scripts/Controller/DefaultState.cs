@@ -7,7 +7,7 @@ using UnityEngine;
 /// <seealso cref="State" />
 public class DefaultState : State
 {
-    private Controller controller;
+    protected Controller controller;
 
     public DefaultState(Controller c)
     {
@@ -18,19 +18,17 @@ public class DefaultState : State
     /// Returns to the map page
     /// </summary>
     /// <seealso cref="MapState" />
-    public void ReturnAction()
+    public virtual void ReturnAction()
     {
         controller.Transition(new MapState(controller));
     }
 
-    public void OptionAction() { }
+    public virtual void OptionAction() { }
 
     public virtual void LoginLocalAction() { }
     public virtual void LoginServerAction() { }
     public virtual void InscriptionAction() { }
-    public void SelectionQuestInHistoricAction() { }
-    public void StartQuestAction() { }
+    public virtual void SelectionQuestInHistoricAction() { }
 
-    
-    
+    public virtual void StartQuestAction() { }
 }

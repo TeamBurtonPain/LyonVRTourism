@@ -1,4 +1,3 @@
-﻿
 public class MapState : DefaultState
 {
     public MapState(Controller c) : base(c)
@@ -8,9 +7,9 @@ public class MapState : DefaultState
     /// <summary>
     /// Pops a pop up to close the app
     /// </summary>
-    //TODO : make the popup !
-    public new void ReturnAction()
+    public override void ReturnAction()
     {
+        controller.AskLeave();
     }
 
     public new void OptionAction()

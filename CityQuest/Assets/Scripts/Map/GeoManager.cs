@@ -5,10 +5,17 @@
 /// </summary>
 public class GeoManager : MonoBehaviour
 {
+    
+    public float radius = 1;
 
-    public float radius;
+    protected bool loaded = false;
+    protected bool failed = false;
 
     protected static GeoManager instance;
+    public static GeoManager Instance
+    {
+        get { return instance; }
+    }
 
     private Coordinates userPosition;
 
@@ -29,9 +36,6 @@ public class GeoManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         userPosition = new Coordinates();
-
-        Start();
-
     }
 
     /// <summary>
@@ -43,7 +47,6 @@ public class GeoManager : MonoBehaviour
 #if PC
         Debug.Log("On PC / Don't have GPS");
 #elif !PC
-
         //Starting the Location service before querying location
         Input.location.Start(0.5f); // Accuracy of 0.5 m
 
@@ -60,18 +63,29 @@ public class GeoManager : MonoBehaviour
 
             if (Input.location.status == LocationServiceStatus.Failed)
             {
+                failed = true;
                 //latitude and longitude equals to 0
             }
             else
             {
+                loaded = true;
             }
         }
         else
         {
+            failed = true;
         }
 #endif
     }
-
+    
+    public bool IsLoaded()
+    {
+        return loaded;
+    }
+    public bool HasFailed()
+    {
+        return failed;
+    }
     /// <summary>
     /// Method that states if a user is near to a location within a perimeter stated in the params. The user coordinates are automatically collected using the device sensors
     /// </summary>
@@ -93,6 +107,10 @@ public class GeoManager : MonoBehaviour
         }
 
         return isNear;
+    }
+    public Vector2 GetUserPosition()
+    {
+        return new Vector2(Input.location.lastData.latitude, Input.location.lastData.longitude);
     }
 
     /// <summary>
