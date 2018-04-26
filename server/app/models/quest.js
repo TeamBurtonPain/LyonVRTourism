@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const mongooseMerge = require('mongoose-merge-plugin');
+const mongooseBCrypt = require('mongoose-bcrypt');
+const mongooseTimestamp = require('mongoose-timestamp');
 
 const Quest = new Schema({
     _idCreator: Schema.Types.ObjectId,
@@ -41,7 +44,6 @@ const Quest = new Schema({
     ],
     feedbacks: [
         {
-            _id: Schema.Types.ObjectId,
             _idAccount: Schema.Types.ObjectId,
             comment: {
                 type: String,
@@ -60,5 +62,9 @@ const Quest = new Schema({
         required: true
     }
 });
+
+Quest.plugin(mongooseMerge);
+Quest.plugin(mongooseBCrypt);
+Quest.plugin(mongooseTimestamp);
 
 module.exports = mongoose.model('Quest', Quest);

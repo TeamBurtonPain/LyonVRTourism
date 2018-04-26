@@ -1,4 +1,0 @@
-{
-    "BadRequest": "Your request doesn't match the require schema (description will give more information)",
-    "LoginError": "Wrong email/password combinaison"
-}

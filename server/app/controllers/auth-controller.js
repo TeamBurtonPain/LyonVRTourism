@@ -1,3 +1,5 @@
+// TODO: add expiration management
+
 const { createUserError } = require('../../helpers');
 const accountService = require('../services/account-service');
 const jwtConfig = require('../../config/jwt');
@@ -15,6 +17,7 @@ async function login(req, res) {
         throw createUserError('LoginError', 'Wrong email/password combinaison');
     }
 
+    // Use mongoose-bcrypt plugin function :)
     const passwordVerif = await account.verifyConnectionPassword(req.body.password);
 
     if (!passwordVerif) {
@@ -29,12 +32,18 @@ async function login(req, res) {
     };
     const token = jwt.sign(jwtPayload, jwtConfig.secret);
 
-    await accountService.updateAccount(account._id, { connection: { jwt: jwtId } });
+    await accountService.updateAccount(account._id, { connection: { jwt: jwtId, revoked: false } });
     res.json({ message: 'OK', token: token });
 }
 
 async function logout(req, res) {
-    res.json({});
+    const currentAccount = await accountService.getAccountById(req.user.accountId);
+
+    currentAccount.connection.jwt = null;
+
+    const updatedAccount = await accountService.updateAccount(req.user.accountId, currentAccount);
+
+    res.json(updatedAccount);
 }
 
 module.exports = {

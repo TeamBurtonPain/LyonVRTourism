@@ -32,13 +32,13 @@
     "body-parser": "^1.18.2",
     "chalk": "^2.4.0",
     "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
     "jsonwebtoken": "^8.2.1",
     "mongoose": "^5.0.16",
     "mongoose-bcrypt": "^1.5.1",
     "mongoose-merge-plugin": "^0.0.5",
+    "mongoose-timestamp": "^0.6.0",
     "morgan": "^1.9.0",
-    "passport": "^0.4.0",
-    "passport-jwt": "^4.0.0",
     "uuid-v4": "^0.1.0"
   }
 }
