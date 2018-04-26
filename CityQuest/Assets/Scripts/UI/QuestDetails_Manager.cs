@@ -28,6 +28,11 @@ public class QuestDetails_Manager : MonoBehaviour {
         stars.Add(star5);
     }
 
+    /// <summary>
+    /// If a quest is selected on the map, the details of this quest are updated on the hidden interface
+    /// Adds to the scroll button an Animator, which handles the hiding and showing of the details interface
+    /// The trigger is simply a click on the scroll button
+    /// </summary>
     public void ScrollButtonListener()
     {
         //Mise à jour de la fenêtre cachée avec les informations correspondantes à l'éléments cliqué
@@ -35,19 +40,26 @@ public class QuestDetails_Manager : MonoBehaviour {
         {
             Quest actualQuest = Controller.Instance.SelectedQuest;
             StarsManager(actualQuest.Statistics);
-            DescriptionManager(actualQuest.Description);//"La Doua est un campus situé sur un ancien camp militaire dans la commune de Villeurbanne, au nord-est de l'agglomération lyonnaise. Il est bordé par le parc de la Tête d'Or et le tennis-club de Lyon à l'ouest, par le Rhône et le parc de la Feyssine au nord/nord-est, et enfin par Villeurbanne et le 6e arrondissement de Lyon au sud. Il constitue le plus grand site universitaire de l'agglomération lyonnaise avec une superficie de 100 hectares1.");
-
+            DescriptionManager(actualQuest.Description);
             //Affichage de la fenêtre cachée
             Animator animationObj = questDetails.GetComponentInChildren<Animator>();
             animationObj.SetTrigger("clic");
         }
     }
 
-    public void DescriptionManager(string text)
+    /// <summary>
+    /// Show, above of the map, the title of the Selected Quest
+    /// </summary>
+    /// <param name="title">Title of the selected quest</param>
+    public void DescriptionManager(string title)
     {
-        description.text = text;
+        description.text = title;
     }
 
+    /// <summary>
+    /// Handles the transription between the numeric rank of a quest, and its graphic representation with color filled stars
+    /// </summary>
+    /// <param name="statistics">The statistic object of the selected quest which contains its mark, given by the users</param>
     public void StarsManager(QuestStatistics statistics)
     {
         double mark = statistics.ComputeMean();

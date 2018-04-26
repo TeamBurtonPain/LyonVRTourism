@@ -20,6 +20,10 @@ public class QuestsListManager : MonoBehaviour {
         
     }
 
+    /// <summary>
+    /// Creates selectable components for each quest started or finished by the current user, and insert them into the Historic scene (also known as the "MyQuests" scene
+    /// </summary>
+    /// <param name="user">The current user</param>
     public void FillQuestsList(User user)
     {
         foreach(StateQuest stateQuest in user.Quests.Values)
