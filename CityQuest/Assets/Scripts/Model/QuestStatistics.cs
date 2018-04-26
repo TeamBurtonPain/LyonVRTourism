@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+
 
 
 public class QuestStatistics
@@ -46,7 +44,7 @@ public class QuestStatistics
     /// <returns>
     /// The mean.
     /// </returns>
-    public double ComputMean()
+    public double ComputeMean()
     {
         double sum = 0;
         foreach (var mark in marks)

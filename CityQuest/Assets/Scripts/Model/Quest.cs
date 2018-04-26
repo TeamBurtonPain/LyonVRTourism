@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 
 public class Coordinates
@@ -143,4 +141,7 @@ public class Quest
         return "Quest : id : " + id + ", title : " + title + ", at (" + geolocalisation.x + ", " + geolocalisation.y + "), description : " +
                description + "\n\t" +  string.Join(",\n\t", checkpoints.Select(x => x.ToString()).ToArray());
     }
+
+    
 }
+

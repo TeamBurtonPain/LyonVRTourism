@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
+using UnityEngine;
 
 /// <summary>
 /// 
@@ -26,12 +23,12 @@ public class DefaultState : State
         controller.Transition(new MapState(controller));
     }
 
-    public virtual void OptionAction()
-    {
-    }
+    public virtual void OptionAction() { }
 
     public virtual void LoginLocalAction() { }
     public virtual void LoginServerAction() { }
     public virtual void InscriptionAction() { }
     public virtual void SelectionQuestInHistoricAction() { }
+
+    public virtual void StartQuestAction() { }
 }

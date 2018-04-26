@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿
 
 
 public class Badge
@@ -39,4 +36,9 @@ public class Badge
     {
         get { return earn; }
     }
+    public override string ToString()
+    {
+        return "Badge : id : " + id + ", name : " + name + ", description : " + description + ", earn : " + earn;
+    }
+
 }

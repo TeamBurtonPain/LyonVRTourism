@@ -11,9 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/MapScene.unity
     guid: 35fd28708f117c44b8edaf268351261b
-  - enabled: 1
-    path: Assets/_Scenes/null.unity
-    guid: 0e54c7a369a8f674b99f0c58ee5e661e
   - enabled: 0
-    path: Assets/_Scenes/testGeoLoc.unity
-    guid: 9e46800a3b3a4e84ebad56fe735e2d5b
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/_Scenes/MyQuests.unity
+    guid: 6e641184a8bf49346891a2be259d297f

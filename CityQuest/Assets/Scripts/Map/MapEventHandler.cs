@@ -46,7 +46,7 @@ public class MapEventHandler : MonoBehaviour, IPointerClickHandler, IBeginDragHa
             float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
 
             Camera.main.orthographicSize += deltaMagnitudeDiff * zoomSpeed;
-            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, 0.1f, 5f);
+            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, 0.04f, 5f);
         }
     }
 

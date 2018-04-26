@@ -1,29 +1,36 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class QuestsListManager : MonoBehaviour {
 
-    public Transform questTemplate;
+    public UI_QuestElement questTemplate;
     public Transform parent;
-    private List<Transform> listElements;
+    private List<UI_QuestElement> listElements;
 
     private void Start()
     {
-        FillQuestsList(new User("test"));
+        if (Controller.Instance.User != null && Controller.Instance.User.Quests.Count != 0)
+        {
+            FillQuestsList(Controller.Instance.User);
+        }
+        else
+        {
+            //TODO : Set a default error message that say or redirect to the Mapscene so the user actually does his first quest
+        }
+        
     }
 
+    /// <summary>
+    /// Creates selectable components for each quest started or finished by the current user, and insert them into the Historic scene (also known as the "MyQuests" scene
+    /// </summary>
+    /// <param name="user">The current user</param>
     public void FillQuestsList(User user)
     {
-        int i = 0;
-        do
+        foreach(StateQuest stateQuest in user.Quests.Values)
         {
-            Transform temp = Instantiate(questTemplate, this.parent);
-            temp.GetChild(1).gameObject.GetComponent<Text>().text =  /*user.Quests[i].Quest.Title*/""+ i;
+            UI_QuestElement temp = Instantiate(questTemplate, this.parent);
+            temp.linkQuest(stateQuest);
             listElements.Add(temp);
-            i++;
-        }while (i < user.Quests.Count) ;
-
-        
+        }
     }
 }

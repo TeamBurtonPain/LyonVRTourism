@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,8 +18,13 @@ public class Controller : MonoBehaviour
     protected static Controller instance;
 
     private State currentState;
+    private State mapState;
+    private State historicState;
+    private State questState;
+    private State loginState;
     private ConnexionState currentConnexion;
     private User user;
+
     private Quest selectedQuest;
 
 
@@ -36,10 +39,36 @@ public class Controller : MonoBehaviour
             Destroy(gameObject);
         }
 
-        DontDestroyOnLoad(gameObject);
+        mapState = new MapState(this);
+        historicState = new HistoricState(this);
+        questState = new QuestState(this);
+        loginState = new LoginState(this);
 
-        user = null;
-        selectedQuest = null;
+        currentState = loginState;
+
+        //------ Test sample ---------
+        Coordinates coordinates = new Coordinates();
+        coordinates.x = 42.3245f;
+        coordinates.y = 4.56978f;
+
+        Creator creator = new Creator();
+        creator.FirstName = "John";
+        List<string> choices = new List<string>();
+        choices.Add("a");
+        choices.Add("b");
+        choices.Add("c");
+        CheckPoint cp1 = new CheckPoint("pic1.png","blablablaTextCP1",choices,"b");
+        CheckPoint cp2 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "a");
+        List<CheckPoint> checkpoints = new List<CheckPoint>();
+        checkpoints.Add(cp1);
+        checkpoints.Add(cp2);
+        Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 3L, creator, checkpoints);
+
+        user = new User();
+        user.AddQuest(quest);
+        //------ End Test sample -------
+
+        selectedQuest = quest;
         currentConnexion = ConnexionState.DISCONNECTED;
 
         //TODO delete au merge
@@ -58,7 +87,7 @@ public class Controller : MonoBehaviour
 
     void OnApplicationPause(bool pause)
     {
-        if (pause)
+        if (pause && Application.platform == RuntimePlatform.Android )
         {
             Leave();
         }
@@ -106,7 +135,6 @@ public class Controller : MonoBehaviour
     public void Inscription()
     {
         currentState.InscriptionAction();
-        currentConnexion = ConnexionState.CONNEXION_SERVER;
     }
 
     public void SelectionQuestInHistoric()
@@ -115,8 +143,26 @@ public class Controller : MonoBehaviour
         currentState.SelectionQuestInHistoricAction();
     }
 
-    public void StartNewQuest()
+    public void StartQuest()
     {
+        if (selectedQuest != null && user != null)
+        {
+            user.AddQuest(selectedQuest);
+            currentState.StartQuestAction();
+        }
+        else
+        {
+            //TODO : Gestion des erreurs en cas de quest ou de user null
+        }
+    }
+
+    public void SelectMenuNewQuest()
+    {
+        SceneManager.LoadScene("MapScene");
+    }
+    public void SelectMenuHistoric()
+    {
+        SceneManager.LoadScene("MyQuests");
     }
     /*
     public void GoQuest()
@@ -124,24 +170,32 @@ public class Controller : MonoBehaviour
         currentState.GoQuestAction();
     }*/
 
-    public void SelectionQuestInMap()
+    public void SelectMenuSettings()
     {
-
+        SceneManager.LoadScene("Settings");
     }
 
-    public void Menu()
+    public void SelectMenuLogout()
     {
+        SceneManager.LoadScene("Logout");
     }
 
     /*********** FIN BOUTONS ***********/
 
-    public Quest GetSelectedQuest()
+    public static Controller Instance
     {
-        return selectedQuest;
+        get { return instance; }
     }
 
-    public void SetSelectedQuest(Quest newSelectedQuest)
+    public Quest SelectedQuest
     {
-        selectedQuest = newSelectedQuest;
+        get { return selectedQuest; }
+        set { selectedQuest = value; }
+    }
+
+    public User User
+    {
+        get { return user; }
+        set { user = value; }
     }
 }
