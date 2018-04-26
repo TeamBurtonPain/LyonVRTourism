@@ -29,7 +29,7 @@ public class QuestsListManager : MonoBehaviour {
         foreach(StateQuest stateQuest in user.Quests.Values)
         {
             UI_QuestElement temp = Instantiate(questTemplate, this.parent);
-            temp.linkQuest(stateQuest);
+            temp.LinkQuest(stateQuest);
            // listElements.Add(temp);
         }
     }

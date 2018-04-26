@@ -22,12 +22,14 @@ public class QuestDetails_Manager : MonoBehaviour {
     {
         starRated = Color.yellow;
         starUnrated = Color.gray;
-        stars = new List<Image>();
-        stars.Add(star1);
-        stars.Add(star2);
-        stars.Add(star3);
-        stars.Add(star4);
-        stars.Add(star5);
+        stars = new List<Image>
+        {
+            star1,
+            star2,
+            star3,
+            star4,
+            star5
+        };
     }
 
     /// <summary>

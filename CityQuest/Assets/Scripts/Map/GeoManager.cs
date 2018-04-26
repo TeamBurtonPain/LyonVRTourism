@@ -17,7 +17,6 @@ public class GeoManager : MonoBehaviour
         get { return instance; }
     }
 
-    private Coordinates userPosition;
 
     /// <summary>
     /// Method initializing the GeoManager instance
@@ -34,8 +33,6 @@ public class GeoManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
-
-        userPosition = new Coordinates();
     }
 
     /// <summary>
@@ -73,6 +70,7 @@ public class GeoManager : MonoBehaviour
         }
         else
         {
+            // TODO ask politely
             failed = true;
         }
 #endif
@@ -94,19 +92,15 @@ public class GeoManager : MonoBehaviour
     /// <returns> A boolean that represents the validation of the user's presence nearby the location targeted.</returns>
     public bool IsUserNear(Coordinates target, float radius)
     {
-        bool isNear = false;
-
-        userPosition.x = Input.location.lastData.latitude;
-        userPosition.y = Input.location.lastData.longitude;
+        Coordinates userPosition = new Coordinates
+        {
+            x = Input.location.lastData.latitude,
+            y = Input.location.lastData.longitude
+        };
 
         float distance = Distance(userPosition, target);
 
-        if (distance <= radius)
-        {
-            isNear = true;
-        }
-
-        return isNear;
+        return distance <= radius;
     }
     public Vector2 GetUserPosition()
     {

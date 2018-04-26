@@ -3,12 +3,9 @@
 
 public class HistoricState : DefaultState
 {
-    public HistoricState(Controller c) : base(c)
+    public override void SelectionQuestInHistoricAction(Quest quest)
     {
-    }
-
-    public new void SelectionQuestInHistoricAction()
-    {
+        Controller.Instance.SelectedQuest = quest;
         SceneManager.LoadScene("MapScene");
     }
 

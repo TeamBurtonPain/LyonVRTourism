@@ -17,11 +17,11 @@ public class Controller : MonoBehaviour
 
     protected static Controller instance;
 
-    private State currentState;
-    private State mapState;
-    private State historicState;
-    private State questState;
-    private State loginState;
+    private IState currentState;
+    public IState mapState;
+    public IState historicState;
+    public IState questState;
+    public IState loginState;
     private ConnexionState currentConnexion;
     private User user;
 
@@ -41,10 +41,10 @@ public class Controller : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        mapState = new MapState(this);
-        historicState = new HistoricState(this);
-        questState = new QuestState(this);
-        loginState = new LoginState(this);
+        mapState = new MapState();
+        historicState = new HistoricState();
+        questState = new QuestState();
+        loginState = new LoginState();
 
         currentState = loginState;
 
@@ -61,9 +61,11 @@ public class Controller : MonoBehaviour
         choices.Add("c");
         CheckPoint cp1 = new CheckPoint("pic1.png","blablablaTextCP1",choices,"b");
         CheckPoint cp2 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "a");
-        List<CheckPoint> checkpoints = new List<CheckPoint>();
-        checkpoints.Add(cp1);
-        checkpoints.Add(cp2);
+        List<CheckPoint> checkpoints = new List<CheckPoint>
+        {
+            cp1,
+            cp2
+        };
         Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 3L, creator, checkpoints);
         Quest quest2 = new Quest(coordinates, "Trouver les pandas roux2", "Description des pandas roux2", 3L, creator, checkpoints);
 
@@ -81,7 +83,7 @@ public class Controller : MonoBehaviour
     /// </summary>
     /// <param name="s">The state.</param>
     //TODO : voir quoi faire d'autre pour effectuer la transition 
-    public void Transition(State s)
+    public void Transition(IState s)
     {
         currentState = s;
     }
@@ -140,10 +142,9 @@ public class Controller : MonoBehaviour
         currentState.InscriptionAction();
     }
 
-    public void SelectionQuestInHistoric()
+    public void SelectionQuestInHistoric(Quest myQuest)
     {
-        // selectedQuest = ? Assigner selected quest à quête sélectionnée
-        currentState.SelectionQuestInHistoricAction();
+        currentState.SelectionQuestInHistoricAction(myQuest);
     }
 
     public void StartQuest()

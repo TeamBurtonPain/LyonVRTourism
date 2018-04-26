@@ -7,7 +7,6 @@ public class MapLocalizer : MonoBehaviour {
 
     public void Localise(Transform t, float lat, float longi)
     {
-
         float sinLatitude = Mathf.Sin(lat * Mathf.PI / 180.0f);
 
         float pixelX = (((longi + 180) / 360) * 256 * Mathf.Pow(2, mainPlan.initialZoom + 1));

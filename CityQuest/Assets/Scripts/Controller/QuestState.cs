@@ -3,19 +3,9 @@
 
 public class QuestState : DefaultState
 {
-    public QuestState(Controller c) : base(c)
-    {
-    }
-
-    public new void StartQuestAction()
+    public override void StartQuestAction()
     {
         //TODO : Scene QuestScene pour mettre en place le passage scène quête
-       //SceneManager.LoadScene("QuestScene");
+        //SceneManager.LoadScene("QuestScene");
     }
-
-
-
-
- 
-
 }

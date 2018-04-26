@@ -14,13 +14,13 @@ public class Layout_Manager : MonoBehaviour {
     private void Awake()
     {
         menuDeroulant.SetActive(false);
-        ColorManager();
+        ColorManage();
     }
 
     /// <summary>
     /// Setup the background color of both menu and layout
     /// </summary>
-    public void ColorManager()
+    public void ColorManage()
     {
         backgroundColor = Color.gray;
         layout.GetComponent<Image>().color = backgroundColor;

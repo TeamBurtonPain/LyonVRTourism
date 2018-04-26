@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerLoc : MonoBehaviour {
 
     public MapLocalizer localizer;
-    // Use this for initialization
+
     void Start () {
         InvokeRepeating("CheckLoca", 0, 1);
     }
