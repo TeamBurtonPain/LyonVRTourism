@@ -16,6 +16,10 @@ class ModelTest : MonoBehaviour
         {
             Id = "0@bob",
             Username = "bob",
+            Mail = "mail@frub.fufv",
+            Password = "pass",
+            LastName = "fdibs",
+            FirstName = "bob",
             Xp = 0L,
             Role = RoleAccount.CREATOR
         };
@@ -54,6 +58,8 @@ class ModelTest : MonoBehaviour
             Creator = c,
             Checkpoints = {cp1, cp2, cp3},
         };
+
+        HTTPHelper.Send(c);
 
         tuser.text = JSONHelper.ToJsonString(q1);
     }

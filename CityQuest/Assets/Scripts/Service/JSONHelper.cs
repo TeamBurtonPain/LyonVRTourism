@@ -13,17 +13,15 @@ public static class JSONHelper
     public static string ToJsonString(Quest q)
     {
         JObject jsonQuest = new JObject(
-            new JProperty("_id", q.Id),
+            //new JProperty("_id", q.Id),
             new JProperty("_idCreator", q.Creator.Id),
             new JProperty("geolocalisation", JSONHelper.ToJson(q.Geolocalisation)),
             new JProperty("title", q.Title),
             new JProperty("description", q.Description),
             //new JProperty("picture", q.picture64),
             new JProperty("checkpoints", JSONHelper.ToJson(q.Checkpoints)),
-            new JProperty("dates", new JObject(
-                new JProperty("createdAt", q.CreationDate),
-                new JProperty("updatedAt", q.UpdateDate)
-            )),
+            new JProperty("createdAt", q.CreationDate),
+            new JProperty("updatedAt", q.UpdateDate),
             new JProperty("statistics", JSONHelper.ToJson(q.Statistics)),
             new JProperty("open", q.Open)
         );
@@ -93,7 +91,7 @@ public static class JSONHelper
     public static string ToJsonString(Account a)
     {
         JObject jsonAccount = new JObject(
-            new JProperty("_id", a.Id),
+            //new JProperty("_id", a.Id),
             new JProperty("connection", new JObject(
                 new JProperty("email", a.Mail),
                 new JProperty("password", a.Password)
@@ -105,10 +103,8 @@ public static class JSONHelper
                 new JProperty("username", a.Username),
                 new JProperty("accountType", a.Role.ToString())
             )),
-            new JProperty("dates", new JObject(
-                new JProperty("createdAt", a.CreationDate),
-                new JProperty("updatedAt", a.UpdateDate)
-            )),
+            new JProperty("createdAt", a.CreationDate),
+            new JProperty("updatedAt", a.UpdateDate),
             new JProperty("game", new JObject(
                 new JProperty("badges", JSONHelper.ToJson(a.Badges)),
                 new JProperty("quests", JSONHelper.ToJson(a.Quests)),
