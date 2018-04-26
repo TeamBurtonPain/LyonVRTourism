@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 /// <summary>
 /// Class managing all the methods needed for the geolocalisation
 /// </summary>
 public class GeoManager : MonoBehaviour
 {
-    
+
     public float radius = 1;
 
     protected bool loaded = false;
@@ -44,16 +45,25 @@ public class GeoManager : MonoBehaviour
 #if PC
         Debug.Log("On PC / Don't have GPS");
 #elif !PC
+        StartCoroutine(Init());
+#endif
+    }
+
+
+    public IEnumerator Init()
+    {
+        failed = false;
         //Starting the Location service before querying location
         Input.location.Start(0.5f); // Accuracy of 0.5 m
 
-        int wait = 1000; // Per default
+        int wait = 10; // Per default
 
         // Checks if the GPS is enabled by the user (-> Allow location )
         if (Input.location.isEnabledByUser)
         {
             while (Input.location.status == LocationServiceStatus.Initializing && wait > 0)
             {
+                yield return new WaitForSeconds(1);
                 wait--;
             }
 
@@ -61,7 +71,7 @@ public class GeoManager : MonoBehaviour
             if (Input.location.status == LocationServiceStatus.Failed)
             {
                 failed = true;
-                //latitude and longitude equals to 0
+                yield break;
             }
             else
             {
@@ -70,12 +80,12 @@ public class GeoManager : MonoBehaviour
         }
         else
         {
-            // TODO ask politely
             failed = true;
+            yield break;
         }
-#endif
     }
-    
+
+
     public bool IsLoaded()
     {
         return loaded;
