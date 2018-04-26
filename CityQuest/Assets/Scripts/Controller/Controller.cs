@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public enum ConnexionState
 {
@@ -10,7 +8,6 @@ public enum ConnexionState
     CONNEXION_SERVER,
     DISCONNECTED
 }
-
 public class Controller : MonoBehaviour
 {
     public GameObject leavingWindow;

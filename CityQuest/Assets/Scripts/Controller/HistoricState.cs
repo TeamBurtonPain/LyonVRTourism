@@ -1,6 +1,5 @@
 ﻿using UnityEngine.SceneManagement;
 
-
 public class HistoricState : DefaultState
 {
     public override void SelectionQuestInHistoricAction(Quest quest)

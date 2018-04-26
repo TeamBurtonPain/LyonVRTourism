@@ -1,7 +1,4 @@
-﻿
-using UnityEngine;
-
-/// <summary>
+﻿/// <summary>
 /// 
 /// </summary>
 /// <seealso cref="State" />

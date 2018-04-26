@@ -1,7 +1,4 @@
-﻿using UnityEngine.SceneManagement;
-
-
-public class QuestState : DefaultState
+﻿public class QuestState : DefaultState
 {
     public override void StartQuestAction()
     {
