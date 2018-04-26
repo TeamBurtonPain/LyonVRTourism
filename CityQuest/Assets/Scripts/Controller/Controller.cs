@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum ConnexionState
 {
@@ -14,6 +15,8 @@ public enum ConnexionState
 
 public class Controller : MonoBehaviour
 {
+    public GameObject leavingWindow;
+
     protected static Controller instance;
 
     private State currentState;
@@ -38,6 +41,9 @@ public class Controller : MonoBehaviour
         user = null;
         selectedQuest = null;
         currentConnexion = ConnexionState.DISCONNECTED;
+
+        //TODO delete au merge
+        currentState = new MapState(this);
     }
 
     /// <summary>
@@ -50,6 +56,38 @@ public class Controller : MonoBehaviour
         currentState = s;
     }
 
+    void OnApplicationPause(bool pause)
+    {
+        if (pause)
+        {
+            Leave();
+        }
+    }
+
+    public void AskLeave()
+    {
+        leavingWindow.SetActive(true);
+    }
+
+    public void Leave()
+    {
+        //Application.Quit();
+        System.Diagnostics.Process.GetCurrentProcess().Kill();
+    }
+
+    public void CancelLeave()
+    {
+        leavingWindow.SetActive(false);
+    }
+
+    private void Update()
+    {
+
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            currentState.ReturnAction();
+        }
+    }
 
     /*********** BOUTONS ***********/
 
@@ -73,7 +111,7 @@ public class Controller : MonoBehaviour
 
     public void SelectionQuestInHistoric()
     {
-       // selectedQuest = ? Assigner selected quest à quête sélectionnée
+        // selectedQuest = ? Assigner selected quest à quête sélectionnée
         currentState.SelectionQuestInHistoricAction();
     }
 
@@ -88,7 +126,7 @@ public class Controller : MonoBehaviour
 
     public void SelectionQuestInMap()
     {
-       
+
     }
 
     public void Menu()

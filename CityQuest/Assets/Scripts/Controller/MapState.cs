@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using UnityEngine;
 
 public class MapState : DefaultState
 {
@@ -13,9 +13,9 @@ public class MapState : DefaultState
     /// <summary>
     /// Pops a pop up to close the app
     /// </summary>
-    //TODO : make the popup !
-    public new void ReturnAction()
+    public override void ReturnAction()
     {
+        controller.AskLeave();
     }
 
     public new void OptionAction()
