@@ -13,7 +13,6 @@ public class BingMapsTexture : OnlineTexture {
 	public float longitude = -15.431389f;
 	public int initialZoom = 0;
     public Vector2 origin;
-    public Vector2 size;
 
     private new void Start()
     {
@@ -39,13 +38,6 @@ public class BingMapsTexture : OnlineTexture {
         float latOrigin = Mathf.Asin((Mathf.Exp(tempX) - 1) / (Mathf.Exp(tempX) + 1)) / Mathf.PI * 180.0f;
         float longOrigin = tileX / Mathf.Pow(2, initialZoom + 1) * 360 - 180;
         this.origin = new Vector2(latOrigin, longOrigin);
-
-        // size = différence avec la tile suivante, 
-        float longSize = 1 / Mathf.Pow(2, initialZoom + 1) * 360;
-        float tempX2 = (0.5f - (tileY + 1) / Mathf.Pow(2, initialZoom + 1)) * (4 * Mathf.PI);
-        float latOrigin2 = Mathf.Asin((Mathf.Exp(tempX2) - 1) / (Mathf.Exp(tempX2) + 1)) / Mathf.PI * 180.0f;
-        float latSize = -latOrigin2 + latOrigin;
-        this.size = new Vector2(latSize, longSize);
 
         initialSector = TileXYToQuadKey (tileX, tileY, initialZoom + 1);
 	}

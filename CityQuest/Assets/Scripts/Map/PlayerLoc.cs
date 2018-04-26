@@ -7,7 +7,7 @@ public class PlayerLoc : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         InvokeRepeating("CheckLoca", 1, 1);
-	}
+    }
 	
 
    private void CheckLoca()
