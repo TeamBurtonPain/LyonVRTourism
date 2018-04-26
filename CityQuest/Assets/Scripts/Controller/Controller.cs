@@ -87,7 +87,7 @@ public class Controller : MonoBehaviour
 
     void OnApplicationPause(bool pause)
     {
-        if (pause)
+        if (pause && Application.platform == RuntimePlatform.Android )
         {
             Leave();
         }
