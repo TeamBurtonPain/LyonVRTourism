@@ -5,7 +5,7 @@ public class QuestsListManager : MonoBehaviour {
 
     public UI_QuestElement questTemplate;
     public Transform parent;
-    private List<UI_QuestElement> listElements;
+    // private List<UI_QuestElement> listElements;
 
     private void Start()
     {
@@ -30,7 +30,7 @@ public class QuestsListManager : MonoBehaviour {
         {
             UI_QuestElement temp = Instantiate(questTemplate, this.parent);
             temp.linkQuest(stateQuest);
-            listElements.Add(temp);
+           // listElements.Add(temp);
         }
     }
 }

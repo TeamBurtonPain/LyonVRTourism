@@ -65,9 +65,11 @@ public class Controller : MonoBehaviour
         checkpoints.Add(cp1);
         checkpoints.Add(cp2);
         Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 3L, creator, checkpoints);
+        Quest quest2 = new Quest(coordinates, "Trouver les pandas roux2", "Description des pandas roux2", 3L, creator, checkpoints);
 
         user = new User();
         user.AddQuest(quest);
+        user.AddQuest(quest2);
         //------ End Test sample -------
 
         selectedQuest = quest;
@@ -88,7 +90,7 @@ public class Controller : MonoBehaviour
     {
         if (pause && Application.platform == RuntimePlatform.Android )
         {
-            // TODO mettre en pause plutot
+            // TODO mettre en pause plutot genre retourner sur la scene d' accueil
             Leave();
         }
     }
@@ -100,6 +102,7 @@ public class Controller : MonoBehaviour
 
     public void Leave()
     {
+        // Chose one of the 2 following (sometime it bugs on some systems)
         //Application.Quit();
         System.Diagnostics.Process.GetCurrentProcess().Kill();
     }

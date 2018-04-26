@@ -5,27 +5,6 @@ using UnityEngine;
 public class MapLocalizer : MonoBehaviour {
     public BingMapsTexture mainPlan;
 
-    protected static MapLocalizer instance;
-    public static MapLocalizer Instance
-    {
-        get { return instance; }
-    }
-
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
-
-        DontDestroyOnLoad(gameObject);
-
-    }
-
     public void Localise(Transform t, float lat, float longi)
     {
 

@@ -165,7 +165,7 @@ MonoBehaviour:
     m_Bottom: 15
   m_ChildAlignment: 1
   m_Spacing: 15
-  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
   m_ChildControlHeight: 0
@@ -339,6 +339,7 @@ GameObject:
   - component: {fileID: 252558523}
   - component: {fileID: 252558525}
   - component: {fileID: 252558524}
+  - component: {fileID: 252558526}
   m_Layer: 5
   m_Name: ListView
   m_TagString: Untagged
@@ -398,6 +399,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 252558522}
+--- !u!114 &252558526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 252558522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73569fe51095c524ba6747de3de863aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questTemplate: {fileID: 114958849948629782, guid: 2b26eae6e54b6dc4fa3b6cb1fac62550,
+    type: 2}
+  parent: {fileID: 37648283}
 --- !u!1 &342165976
 GameObject:
   m_ObjectHideFlags: 0
@@ -1008,7 +1023,7 @@ Prefab:
     - target: {fileID: 224638508930557208, guid: 0dfb5109b8df8d047a00ae5555dca292,
         type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224638508930557208, guid: 0dfb5109b8df8d047a00ae5555dca292,
         type: 2}
@@ -1060,6 +1075,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1473094177033150, guid: 0dfb5109b8df8d047a00ae5555dca292, type: 2}
+      propertyPath: m_Name
+      value: _GameController
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0dfb5109b8df8d047a00ae5555dca292, type: 2}
   m_IsPrefabParent: 0
@@ -1078,7 +1097,7 @@ RectTransform:
   - {fileID: 895627437}
   - {fileID: 812521672}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1194,7 +1213,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1120385554}
   m_HandleRect: {fileID: 1120385553}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1392,8 +1411,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 670821012}
   m_HandleRect: {fileID: 670821011}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 1
+  m_Value: 0.5
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
