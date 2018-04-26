@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,7 +20,6 @@ public class Controller : MonoBehaviour
     private State loginState;
     private ConnexionState currentConnexion;
     private User user;
-
 
     private Quest selectedQuest;
 
@@ -48,11 +44,21 @@ public class Controller : MonoBehaviour
 
         currentState = loginState;
 
+        //------ Test sample ---------
         Coordinates coordinates = new Coordinates();
         coordinates.x = 42.3245f;
         coordinates.y = 4.56978f;
-        //Quest quest = new Quest(coordinates,"Trouver les pandas",
+
+        Creator creator = new Creator();
+        creator.FirstName = "John";
+
+        List<CheckPoint> checkpoints = new List<CheckPoint>();
+        //checkpoints.Add(new CheckPoint());
+        Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 3L, creator,
+            checkpoints);
         //user = null;
+        //------ End Test sample -------
+
         selectedQuest = null;
         currentConnexion = ConnexionState.DISCONNECTED;
     }
