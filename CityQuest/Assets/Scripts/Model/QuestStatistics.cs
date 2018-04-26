@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 
+[Serializable]
 public class QuestStatistics
 {
     private Quest quest;

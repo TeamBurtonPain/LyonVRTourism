@@ -55,7 +55,7 @@ class ModelTest : MonoBehaviour
             Checkpoints = {cp1, cp2, cp3},
         };
 
-        tquest.text = q1.ToString();
+        tquest.text = JsonUtility.ToJson(q1);
         tuser.text = JSONHelper.ToJson(q1);
     }
 

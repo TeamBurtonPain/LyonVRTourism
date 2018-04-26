@@ -11,7 +11,7 @@ public static class JSONHelper
     {
         List<String> jsonObject = new List<string>();
         jsonObject.Add(ToJson(q.Creator));
-        jsonObject.Add(ToJson(q.Geolocalisation));
+        jsonObject.Add(JsonUtility.ToJson(q.Geolocalisation));
         jsonObject.Add(JsonUtility.ToJson(q.Title));
         jsonObject.Add(JsonUtility.ToJson(q.Description));
         return "{"+string.Join(",", jsonObject.ToArray())+"}";

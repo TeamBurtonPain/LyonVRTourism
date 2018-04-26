@@ -1,26 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
-
+[Serializable]
 public class Coordinates
 {
     public float x;
     public float y;
 }
 
+[Serializable]
 public class Quest
 {
 
+    [NonSerialized]
     private static long instanceCounter = 0;
     private long id;
-    private Coordinates geolocalisation;
+
+    public Coordinates geolocalisation;
     private string title;
     private string description;
     private long value;
     private double timeLength;
+
+    [NonSerialized]
     private QuestStatistics statistics;
     private bool open;
+
+    [NonSerialized]
     private Creator creator;
+
+    [NonSerialized]
     private List<CheckPoint> checkpoints;
 
 
@@ -143,9 +153,4 @@ public class Quest
     }
 
     
-}
-
-public string JsonUtility.ToJson()
-{
-
 }
