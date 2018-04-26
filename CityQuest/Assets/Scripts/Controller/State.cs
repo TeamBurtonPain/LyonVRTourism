@@ -17,4 +17,5 @@ public interface State
     void InscriptionAction();
     void SelectionQuestInHistoricAction();
     void StartQuestAction();
+
 }

@@ -115,6 +115,7 @@ public class Controller : MonoBehaviour
         SceneManager.LoadScene("MyQuests");
     }
 
+
     public void SelectMenuSettings()
     {
         SceneManager.LoadScene("Settings");
