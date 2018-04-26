@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4911714111731184}
-  - component: {fileID: 33669583461564228}
+  - component: {fileID: 33913093953586990}
   - component: {fileID: 64915492026037370}
   - component: {fileID: 23584508511655114}
   - component: {fileID: 114907858790802228}
@@ -39,7 +39,7 @@ Transform:
   m_GameObject: {fileID: 1895355997056028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 4, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -78,7 +78,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33669583461564228
+--- !u!33 &33913093953586990
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -107,9 +107,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1895355997056028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 2ac8e014817d2e84fb00dd9ca7292c4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textureLoaded: 1
+  serverURL: http://ecn.{subdomain}.tiles.virtualearth.net/tiles/r{quadkey}.jpeg?g=6422&mkt={culture}&shading=hill&dpi=Large
+  initialSector: 12022
+  latitude: 45.8
+  longitude: 4.8
+  initialZoom: 4
+  origin: {x: 48.9225, y: 0}
+  size: {x: 7.942604, y: 11.25}
 --- !u!114 &114907858790802228
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -118,6 +126,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1895355997056028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: bfacca9dcb2873e479c4eee1666eff23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vertexResolution: 10
