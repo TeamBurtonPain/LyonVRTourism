@@ -1,42 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using UnityEngine;
 
-[Serializable]
+
 public class Coordinates
 {
     public float x;
     public float y;
 }
 
-[Serializable]
 public class Quest
 {
     private static long instanceCounter = 0;
-    [SerializeField]
     private long id;
-    [SerializeField]
     private Coordinates geolocalisation;
-    [SerializeField]
     private string title;
-    [SerializeField]
     private string description;
-    [SerializeField]
     private long value;
-    [SerializeField]
     private double timeLength;
-
-    [NonSerialized]
     private QuestStatistics statistics;
-    [SerializeField]
     private bool open;
-
-    [NonSerialized]
     private Creator creator;
-
-    [NonSerialized]
     private List<CheckPoint> checkpoints;
+    private DateTime creationDate;
+    private DateTime updateDate;
 
 
     public Quest()
@@ -130,6 +119,16 @@ public class Quest
     public List<CheckPoint> Checkpoints
     {
         get { return checkpoints; }
+    }
+
+    public DateTime CreationDate
+    {
+        get { return creationDate; }
+    }
+
+    public DateTime UpdateDate
+    {
+        get { return updateDate; }
     }
 
     protected bool Equals(Quest other)

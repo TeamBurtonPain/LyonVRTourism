@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 
 const Quest = new Schema({
     _idCreator: Schema.Types.ObjectId,
-    geo: {
-        lat: Number,
-        long: Number
+    geolocalisation: {
+        x: Number,
+        y: Number
     },
     title: {
         type: String,
@@ -15,7 +15,7 @@ const Quest = new Schema({
         type: String,
         required: true
     },
-    picturePath: {
+    picture: {
         type: String,
         required: true
     },
@@ -30,7 +30,7 @@ const Quest = new Schema({
                 type: [String],
                 required: true
             },
-            enigmAnswer: String,
+            answer: String,
             difficulty: {
                 type: Number,
                 required: true,
@@ -39,10 +39,9 @@ const Quest = new Schema({
             } // O < difficulty < 5
         }
     ],
-    feedbacks: [
+    statistics: [
         {
-            _id: Schema.Types.ObjectId,
-            _idAccount: Schema.Types.ObjectId,
+            _idUser: Schema.Types.ObjectId,
             comment: {
                 type: String,
                 required: true
@@ -55,7 +54,7 @@ const Quest = new Schema({
             } // 0 < note < 10
         }
     ],
-    disable: {
+    open: {
         type: Boolean,
         required: true
     }

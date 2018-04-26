@@ -20,6 +20,9 @@ public class Account : User
     private string lastName;
     private DateTime dateBirth;
     private RoleAccount role;
+    private DateTime creationDate;
+    private DateTime updateDate;
+    private long elapsedTime;
 
 
     public Account()
@@ -79,6 +82,21 @@ public class Account : User
     {
         get { return role; }
         set { role = value; }
+    }
+
+    public DateTime CreationDate
+    {
+        get { return creationDate; }
+    }
+
+    public DateTime UpdateDate
+    {
+        get { return updateDate; }
+    }
+
+    public long ElapsedTime
+    {
+        get { return elapsedTime; }
     }
 
     public override string ToString()

@@ -5,7 +5,6 @@ using System.Text;
 using UnityEngine.Networking;
 
 
-[Serializable]
 public class Creator : Account
 {
     private List<Quest> creations;

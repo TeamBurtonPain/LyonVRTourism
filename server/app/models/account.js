@@ -31,12 +31,11 @@ const Account = new Schema({
         accountType: {
             type: String,
             enum: {
-                values: ['ADMIN', 'EDITOR', 'GAMER'],
-                message: '`accountType` field must be one of these value [\'ADMIN\', \'EDITOR\', \'GAMER\']'
+                values: ['ADMIN', 'CREATOR', 'USER'],
+                message: '`accountType` field must be one of these value [\'ADMIN\', \'CREATOR\', \'USER\']'
             },
-            default: 'GAMER'
-        },
-        idEditor: String // Null for a gamer
+            default: 'USER'
+        }
     },
     dates: {
         createdAt: Date, // Auto
@@ -54,11 +53,7 @@ const Account = new Schema({
                 },
                 stats: {
                     earnedXp: Number,
-                },
-                feedback: {
-                    comment: String,
-                    mark: Number
-                } // May be duplicate this object to quest object
+                }
             }
         ],
         xp: Number,
