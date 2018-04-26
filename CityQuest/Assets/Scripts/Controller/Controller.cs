@@ -39,6 +39,8 @@ public class Controller : MonoBehaviour
             Destroy(gameObject);
         }
 
+        DontDestroyOnLoad(gameObject);
+
         mapState = new MapState(this);
         historicState = new HistoricState(this);
         questState = new QuestState(this);
@@ -70,9 +72,6 @@ public class Controller : MonoBehaviour
 
         selectedQuest = quest;
         currentConnexion = ConnexionState.DISCONNECTED;
-
-        //TODO delete au merge
-        currentState = new MapState(this);
     }
 
     /// <summary>
@@ -123,14 +122,14 @@ public class Controller : MonoBehaviour
 
     public void LoginLocal()
     {
-        currentState.LoginLocalAction();
         currentConnexion = ConnexionState.CONNEXION_LOCAL;
+        currentState.LoginLocalAction();
     }
 
     public void LoginServer()
     {
-        currentState.LoginServerAction();
         currentConnexion = ConnexionState.CONNEXION_SERVER;
+        currentState.LoginServerAction();
     }
 
     public void Inscription()
@@ -178,7 +177,8 @@ public class Controller : MonoBehaviour
 
     public void SelectMenuLogout()
     {
-        SceneManager.LoadScene("Logout");
+        // TODO deco
+        SceneManager.LoadScene("Login");
     }
 
     /*********** FIN BOUTONS ***********/
