@@ -4,6 +4,10 @@ async function getAccountById(accountId) {
     return Account.findById(accountId);
 }
 
+async function getAccountByEmail(email) {
+    return Account.findOne({ 'connection.email': email });
+}
+
 async function createAccount(account) {
     return account.save();
 }
@@ -21,6 +25,7 @@ async function deleteAccount(accountId) {
 
 module.exports = {
     getAccountById,
+    getAccountByEmail,
     createAccount,
     updateAccount,
     deleteAccount,

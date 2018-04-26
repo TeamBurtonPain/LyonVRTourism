@@ -20,7 +20,8 @@ const Account = new Schema({
             type: String,
             required: true,
             bcrypt: true
-        }
+        },
+        jwt: String
     },
     userInformation: {
         lastName: String, // Optional

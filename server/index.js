@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const chalk = require('chalk');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const passport = require('passport');
 
 // Config import
 const WEB_CONFIG = require('./config/web.js');
@@ -26,7 +27,10 @@ app.use(
 //Parse the request to JSON
 app.use(bodyParser.json());
 
-// Serve the API first
+// Initialize passport
+passport.use(require('./config/auth.js'));
+
+// Serve the API
 app.use('/api/', routes);
 
 // 404 Not found

@@ -14,9 +14,11 @@ router.use((err, req, res, next) => {
         });
     }
 
+    // eslint-disable-next-line
+    console.log(err); // TODO: remove this line
     return res.status(500).json({
         error: 'ServerError',
-        message: 'A problem has occurred, try again later'
+        message: err.message ? err.message : 'A problem has occurred, try again later'
     });
 });
 
