@@ -16,8 +16,8 @@ async function getQuestById(req, res) {
 
 async function createQuest(req, res) {
     let newQuest = new Quest(req.body);
-
-    newQuest = await questService.createQuest(newQuest);
+    const picture = req.body.picture;
+    newQuest = await questService.createQuest(newQuest, picture);
 
     res.json(newQuest);
 }
