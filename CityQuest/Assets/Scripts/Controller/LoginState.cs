@@ -1,4 +1,5 @@
-﻿using UnityEngine.SceneManagement;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoginState : DefaultState
 {
@@ -13,13 +14,13 @@ public class LoginState : DefaultState
         SceneManager.LoadScene("MapScene");
     }
 
-    public new void LoginServerAction()
+    public override void LoginServerAction()
     {
         //TODO : Code d'authentification au serveur
         SceneManager.LoadScene("MapScene");
     }
 
-    public new void InscriptionAction()
+    public override void InscriptionAction()
     {
         //TODO : Code d'inscription
         SceneManager.LoadScene("MapScene");

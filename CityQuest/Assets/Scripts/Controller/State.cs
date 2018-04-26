@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-
+﻿
 /// <summary>
 /// Interface for the state pattern.
 /// Methods to override are common actions methods like the return action.

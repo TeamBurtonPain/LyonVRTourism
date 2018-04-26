@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
@@ -21,6 +22,7 @@ public class QuestDetails_Manager : MonoBehaviour {
     {
         starRated = Color.yellow;
         starUnrated = Color.gray;
+        stars = new List<Image>();
         stars.Add(star1);
         stars.Add(star2);
         stars.Add(star3);
@@ -64,7 +66,11 @@ public class QuestDetails_Manager : MonoBehaviour {
     {
         double mark = statistics.ComputeMean();
 
-        for(int i = 0; i < mark; i++)
+        //TODO gerer le cas sans moyenne
+        if (double.IsNaN(mark))    
+            mark = 0;
+
+        for(int i = 0; i < mark && i < stars.Count; i++)
         {
             stars[i].color = starRated;
         }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -51,15 +52,22 @@ public class Controller : MonoBehaviour
 
         Creator creator = new Creator();
         creator.FirstName = "John";
-
+        List<string> choices = new List<string>();
+        choices.Add("a");
+        choices.Add("b");
+        choices.Add("c");
+        CheckPoint cp1 = new CheckPoint("pic1.png","blablablaTextCP1",choices,"b");
+        CheckPoint cp2 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "a");
         List<CheckPoint> checkpoints = new List<CheckPoint>();
-        //checkpoints.Add(new CheckPoint());
-        Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 3L, creator,
-            checkpoints);
-        //user = null;
+        checkpoints.Add(cp1);
+        checkpoints.Add(cp2);
+        Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 3L, creator, checkpoints);
+
+        user = new User();
+        user.AddQuest(quest);
         //------ End Test sample -------
 
-        selectedQuest = null;
+        selectedQuest = quest;
         currentConnexion = ConnexionState.DISCONNECTED;
     }
 
@@ -84,7 +92,6 @@ public class Controller : MonoBehaviour
 
     public void LoginServer()
     {
-        
         currentState.LoginServerAction();
         currentConnexion = ConnexionState.CONNEXION_SERVER;
     }
