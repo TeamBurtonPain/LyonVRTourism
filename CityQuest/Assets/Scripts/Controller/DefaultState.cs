@@ -1,4 +1,6 @@
 ﻿
+using UnityEngine;
+
 /// <summary>
 /// 
 /// </summary>
@@ -23,9 +25,9 @@ public class DefaultState : State
 
     public void OptionAction() { }
 
-    public virtual void LoginLocalAction() {}
-    public void LoginServerAction() { }
-    public void InscriptionAction() { }
+    public virtual void LoginLocalAction() { }
+    public virtual void LoginServerAction() { }
+    public virtual void InscriptionAction() { }
     public void SelectionQuestInHistoricAction() { }
     public void StartQuestAction() { }
 

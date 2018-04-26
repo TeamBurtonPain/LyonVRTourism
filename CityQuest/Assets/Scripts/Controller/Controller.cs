@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -91,7 +92,6 @@ public class Controller : MonoBehaviour
 
     public void LoginServer()
     {
-        
         currentState.LoginServerAction();
         currentConnexion = ConnexionState.CONNEXION_SERVER;
     }
