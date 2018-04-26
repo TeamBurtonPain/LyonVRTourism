@@ -36,8 +36,6 @@ public class Controller : MonoBehaviour
             Destroy(gameObject);
         }
 
-        DontDestroyOnLoad(gameObject);
-
         mapState = new MapState(this);
         historicState = new HistoricState(this);
         questState = new QuestState(this);
