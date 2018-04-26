@@ -145,7 +145,3 @@ public class Quest
     
 }
 
-public string JsonUtility.ToJson()
-{
-
-}
