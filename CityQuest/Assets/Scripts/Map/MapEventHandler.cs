@@ -6,6 +6,7 @@ public class MapEventHandler : MonoBehaviour, IPointerClickHandler, IBeginDragHa
 {
 
     public float zoomSpeed = 0.01f;        // Amplitude of the zoom while pinching.
+    public int mapSize = 10;
 
     //Prevents click trigger while dragging
     private float prevDragX;
@@ -48,6 +49,12 @@ public class MapEventHandler : MonoBehaviour, IPointerClickHandler, IBeginDragHa
             Camera.main.orthographicSize += deltaMagnitudeDiff * zoomSpeed;
             Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, 0.1f, 5f);
         }
+        Camera.main.transform.SetPositionAndRotation(new Vector3(
+               Mathf.Clamp(Camera.main.transform.position.x, -mapSize / 2 + Camera.main.orthographicSize / 2, mapSize / 2 - Camera.main.orthographicSize / 2),
+               Camera.main.transform.position.y,
+               Mathf.Clamp(Camera.main.transform.position.z, -mapSize / 2 + Camera.main.orthographicSize / 2, mapSize / 2 - Camera.main.orthographicSize / 2)
+               ), Camera.main.transform.rotation);
+
     }
 
     public void OnBeginDrag(PointerEventData eventData)
