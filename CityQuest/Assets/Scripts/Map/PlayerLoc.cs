@@ -19,4 +19,9 @@ public class PlayerLoc : MonoBehaviour {
             localizer.Localise(this.transform, loca.x, loca.y);
         }
     }
+
+    public void CenterCam()
+    {
+        Camera.main.transform.position = new Vector3(this.transform.position.x, Camera.main.transform.position.y, this.transform.position.z);
+    }
 }
