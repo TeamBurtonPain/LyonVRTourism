@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class MapEventHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
-
+    
     public float zoomSpeed = 1f;        // Amplitude of the zoom while pinching.
 
     protected bool isReadyDrag = false;
     protected bool isReadyMove = false;
+
+    public int mapSize = 10;
 
     //Prevents click trigger while dragging
 
@@ -41,7 +43,10 @@ public class MapEventHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHan
             Vector2 dragVector = newDrag - initDrag;
             Vector3 newView = initPosition - new Vector3(dragVector.x, 0, dragVector.y) * coeff;
 
-            Camera.main.transform.SetPositionAndRotation(newView, Camera.main.transform.rotation);
+            newView.x = Mathf.Clamp(newView.x,-mapSize + Camera.main.orthographicSize * Camera.main.aspect, mapSize - Camera.main.orthographicSize * Camera.main.aspect);
+            newView.z = Mathf.Clamp(newView.z, -mapSize + Camera.main.orthographicSize, mapSize - Camera.main.orthographicSize);
+
+            Camera.main.transform.position = newView;
             oldTemp = newDrag;
         }
 
