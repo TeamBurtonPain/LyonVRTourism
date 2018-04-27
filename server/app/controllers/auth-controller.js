@@ -33,7 +33,7 @@ async function login(req, res) {
     const token = jwt.sign(jwtPayload, jwtConfig.secret);
 
     await accountService.updateAccount(account._id, { connection: { jwt: jwtId, revoked: false } });
-    res.json({ message: 'OK', token: token });
+    res.json({ jwt: token });
 }
 
 async function logout(req, res) {

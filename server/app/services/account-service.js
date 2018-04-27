@@ -24,7 +24,7 @@ async function deleteAccount(accountId) {
 }
 
 async function isTokenRevoked(jwtId) {
-    const account = await Account.findOne({ 'connection.jwt.uuid': jwtId });
+    const account = await Account.findOne({ 'connection.jwt': jwtId });
 
     return !account || account.connection.jwt;
 }

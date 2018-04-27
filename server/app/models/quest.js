@@ -24,7 +24,7 @@ const Quest = new Schema({
     },
     checkpoints: [
         {
-            photoPath: {
+            picturePath: {
                 type: String,
                 required: true
             },

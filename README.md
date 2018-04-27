@@ -24,17 +24,28 @@ The main goal is to provide a mobile video game to promote tourism and culture o
 - A computer as a server which the following tools:
     - NodeJS >= v9.10.0
     - MongoDB >= v3.6.4
-    - Yarn >= v1.5.1
+    - Yarn >= v1.5.0
 
 **The mobile phone and the computer (server) have to be on the same local network**
 
 ### BackEnd
 
-First, install dependies by running the following command: `cd server/ && yarn install`
+**Go to the server directory: `cd server/`**
 
-You have to run:
-1. MongoDB database by typing `mongod --dbpath <path-to-your-database>`
-2. NodeJS server by typing this command `cd server/ && yarn run prod`
+#### Install node project dependencies
+Install node dependencies by running the following command: `cd server/ && yarn install`
+
+#### Create mongoDB database
+- Launch your mongo server by typing: `mongod --dbpath <path-to-your-databases-storage-directory>`.
+- With a new console, connect to your mongo server: `mongo` (the command use the defaut mongo server configuration: `HOST: localhost` & `PORT: 27017`).
+- Create a database by typing: `use UrbanQuestDev`
+
+![Mongo session](http://storage4.static.itmages.com/i/18/0427/h_1524820475_4222983_08fd426f1b.png)
+
+#### Launch the NodeJS server
+**Mongo server must run before. See "Create mongoDB database".**
+
+Launch the NodeJS server by typing this command `yarn run dev`
 
 ### Android application
 

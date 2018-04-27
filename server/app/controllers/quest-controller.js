@@ -1,6 +1,7 @@
 // TODO: const { createUserError } = require('../../utils');
 const questService = require('../services/quest-service.js');
 const Quest = require('../models/quest');
+const { createUserError } = require('../../helpers/errors');
 
 async function getAllQuests(req, res) {
     const quests = await questService.getAll();
@@ -16,8 +17,10 @@ async function getQuestById(req, res) {
 
 async function createQuest(req, res) {
     let newQuest = new Quest(req.body);
-    const picture = req.body.picture;
-    newQuest = await questService.createQuest(newQuest, picture);
+
+    if (!req.body.picture) throw createUserError('BadRequest', 'Quest must have a picture');
+
+    newQuest = await questService.createQuest(newQuest, req.body.picture, req.body.checkpoints);
 
     res.json(newQuest);
 }

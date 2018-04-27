@@ -79,7 +79,7 @@
         type: String,
         required: true
     },
-    picturePath: {
+    picture: {
         type: String,
         required: true
     },
@@ -159,12 +159,14 @@ Request methods | Path | Auth | AccountType | Require body | Response | Descript
 
 ## Errors
 
-{
-    "BadRequest": "Your request doesn't match the require schema (description will give more information)",
-    "LoginError": "Wrong email/password combinaison"
-}
+ErrorName | Code | Description
+:---: | :---: | :---:
+**BadRequest** | 400 | Your request doesn't match the require schema (description will give more information)
+**LoginError** | 400 | Wrong email/password combinaison
 
 ## Enhancement
 
 - Allow a user to update only his information
-- Client authentification
+- Client application authentification (server will only accept request from the client application and not form anybody)
+- Improve update (PUT) protocol for ARRAY UPDATE: for now, if a ADMIN want to update checkpoints of a quest, he have to send the full checkpoint ARRAY (including all pictures). Consequently, bandwidth and memory are affected.
+- Add role guard in some endpoints. For example, it could prevent GAMER to add a quest (ADMIN right).
