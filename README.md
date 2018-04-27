@@ -20,8 +20,8 @@ The main goal is to provide a mobile video game to promote tourism and culture o
 
 ### Pre-Requisites
 
-- A devlopper preconfigured android mobile phone. More information (TODO)
-- A computer as a server which the following tools:
+- A developper preconfigured android mobile phone. More information _(TODO)_
+- A computer as a server which the fosllowing tools installed:
     - NodeJS >= v9.10.0
     - MongoDB >= v3.6.4
     - Yarn >= v1.5.0
