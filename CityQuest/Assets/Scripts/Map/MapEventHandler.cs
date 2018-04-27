@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine;
 
-public class MapEventHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class MapEventHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
 
     public float zoomSpeed = 1f;        // Amplitude of the zoom while pinching.

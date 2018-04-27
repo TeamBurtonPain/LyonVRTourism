@@ -20,6 +20,9 @@ public class Controller : MonoBehaviour
     public IState questState;
     public IState loginState;
     private ConnexionState currentConnexion;
+
+    private List<Quest> existingQuests;
+
     private User user;
 
     private Quest selectedQuest;
@@ -49,6 +52,9 @@ public class Controller : MonoBehaviour
         Coordinates coordinates = new Coordinates();
         coordinates.x = 42.3245f;
         coordinates.y = 4.56978f;
+        Coordinates coordinates2 = new Coordinates();
+        coordinates2.x = 45.781732f;
+        coordinates2.y = 4.872846f;
 
         Creator creator = new Creator();
         creator.FirstName = "John";
@@ -56,7 +62,7 @@ public class Controller : MonoBehaviour
         choices.Add("a");
         choices.Add("b");
         choices.Add("c");
-        CheckPoint cp1 = new CheckPoint("pic1.png","blablablaTextCP1",choices,"b");
+        CheckPoint cp1 = new CheckPoint("pic1.png", "blablablaTextCP1", choices, "b");
         CheckPoint cp2 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "a");
         List<CheckPoint> checkpoints = new List<CheckPoint>
         {
@@ -64,7 +70,12 @@ public class Controller : MonoBehaviour
             cp2
         };
         Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 3L, creator, checkpoints);
-        Quest quest2 = new Quest(coordinates, "Trouver les pandas roux2", "Description des pandas roux2", 3L, creator, checkpoints);
+        Quest quest2 = new Quest(coordinates2, "Trouver les pandas roux2", "Description des pandas roux2", 3L, creator, checkpoints);
+        existingQuests = new List<Quest>
+        {
+            quest,
+            quest2
+        };
 
         user = new User();
         user.AddQuest(quest);
@@ -87,7 +98,7 @@ public class Controller : MonoBehaviour
 
     void OnApplicationPause(bool pause)
     {
-        if (pause && Application.platform == RuntimePlatform.Android )
+        if (pause && Application.platform == RuntimePlatform.Android)
         {
             // TODO mettre en pause plutot genre retourner sur la scene d' accueil
             Leave();
@@ -193,6 +204,11 @@ public class Controller : MonoBehaviour
     {
         get { return selectedQuest; }
         set { selectedQuest = value; }
+    }
+
+    public List<Quest> ExistingQuests
+    {
+        get { return existingQuests; }
     }
 
     public User User
