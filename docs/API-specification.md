@@ -38,7 +38,7 @@
         updatedAt: Date // Auto (server side)
     },
     game: {
-        badges: [Schema.Types.ObjectId], // Badges ObjectId Array
+        badges: [Schema.Types.ObjectId], // Badges ObjectId Array.
         quests: [
             {
                 _idQuest: Schema.Types.ObjectId, // Quest ObjectId
@@ -129,14 +129,14 @@
 
 ## EndPoints
 
-Every request must match the following syntax: `http://<server-url>/api/<Request path>`
+Every request must match the following syntax: `http://<server-url>:3000/api/<Request path>`
 
 ### Authentification
 
 Request methods | Path | Auth | AccountType | Require body | Response | Description 
 :---: | :---: | :---: | :---: | :---: | :---: | :---:
 **POST** | `auth/login` | No | * | `{ email: String, password: String }` | `{ jwt: String }` | Log a user and provide a JWT
-**GET** | `auth/logout` | Yes | * | _null_ | _null_ | Logout a user and revoke associated JWT
+**GET** | `auth/logout` | Yes | * | _null_ | _null_ | Logout a user by removing his associated JWT
 
 ### Accounts
 
@@ -144,8 +144,8 @@ Request methods | Path | Auth | AccountType | Require body | Response | Descript
 :---: | :---: | :---: | :---: | :---: | :---: | :---:
 **POST** | `accounts` | No | * | `account model` | `account model` | Persist an account
 **GET** | `accounts/<id>` | Yes | * | _null_ | `account model` | Get account by id
-**PUT** | `accounts/<id>` | Yes | * | `account model` | `account model` | Update an account by id. Request body will erase old account.
-**DELETE** | `accounts/<id>` | Yes | * | _null_ | _null_ | Update an account by id. Request body will erase old account.
+**PUT** | `accounts/<id>` | Yes | * | `account model` | `account model` | Update an account by id. **See [PUT SPECIFICATION](#PUT\ Specification).**
+**DELETE** | `accounts/<id>` | Yes | * | _null_ | _null_ | Delete an account by id.
 
 ### Quests
 
@@ -154,8 +154,12 @@ Request methods | Path | Auth | AccountType | Require body | Response | Descript
 **GET** | `quests/<id>` | Yes | * | _null_ | `quest model` | Get all quests
 **POST** | `quests` | Yes | * | `quest model` | `quest model` | Persist a quest
 **GET** | `quests/<id>` | Yes | * | _null_ | `quest model` | Get quest by id
-**PUT** | `quests/<id>` | Yes | * | `quest model` | `quest model` | Update a quest by id. Request body will erase old quest.
-**DELETE** | `quests/<id>` | Yes | * | _null_ | _null_ | Delete a quest.
+**PUT** | `quests/<id>` | Yes | * | `quest model` | `quest model` | Update a quest by id. Request body will erase old quest. **See [PUT SPECIFICATION](#PUT\ Specification).**
+**DELETE** | `quests/<id>` | Yes | * | _null_ | _null_ | Delete a quest and every associated pictures.
+
+## PUT Specification
+
+If you update an array, the old array and new array won't be compared. It means that new array will erase old array even if new array if empty. Be carefull :)
 
 ## Errors
 
