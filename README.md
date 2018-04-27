@@ -1,4 +1,4 @@
-# LyonVRTourism
+# UrbanQuest Project
 
 This project is a school project for [GrandLyon](https://www.grandlyon.com/) account.
 
