@@ -1,7 +1,9 @@
 // TODO: const { createUserError } = require('../../utils');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const merge = require('mongoose-merge-plugin');
+const mongooseMerge = require('mongoose-merge-plugin');
+const mongooseBCrypt = require('mongoose-bcrypt');
+const mongooseTimestamp = require('mongoose-timestamp');
 
 const Account = new Schema({
     connection: {
@@ -13,17 +15,20 @@ const Account = new Schema({
                     return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(v);
                 }
             },
+            unique: true,
             required: true
         },
         password: {
             type: String,
-            required: true
-        }
+            required: true,
+            bcrypt: true
+        },
+        jwt: String,
     },
     userInformation: {
-        lastName: String, // Optional
-        firstName: String, // Optional
-        dateOfBirth: Date, // Optional
+        lastName: String,
+        firstName: String,
+        dateOfBirth: Date,
         username: {
             type: String,
             required: true
@@ -36,11 +41,6 @@ const Account = new Schema({
             },
             default: 'GAMER'
         },
-        idEditor: String // Null for a gamer
-    },
-    dates: {
-        createdAt: Date, // Auto
-        updatedAt: Date // Auto
     },
     game: {
         badges: [Schema.Types.ObjectId], // Badges ObjectId Array
@@ -58,14 +58,16 @@ const Account = new Schema({
                 feedback: {
                     comment: String,
                     mark: Number
-                } // May be duplicate this object to quest object
+                }
             }
         ],
         xp: Number,
-        elapsedTime: Number // Sec
+        elapsedTime: Number // Second
     }
 });
 
-Account.plugin(merge);
+Account.plugin(mongooseMerge);
+Account.plugin(mongooseBCrypt);
+Account.plugin(mongooseTimestamp);
 
 module.exports = mongoose.model('Account', Account);

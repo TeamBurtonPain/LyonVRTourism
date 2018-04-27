@@ -24,9 +24,9 @@ app.use(
 );
 
 //Parse the request to JSON
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '10mb' }));
 
-// Serve the API first
+// Serve the API
 app.use('/api/', routes);
 
 // 404 Not found
