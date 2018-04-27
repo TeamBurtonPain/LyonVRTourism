@@ -1,4 +1,4 @@
 module.exports = {
-    host: 'mongodb://localhost:27017/UrbanQuest',
+    host: 'mongodb://localhost:27017/UrbanQuestDev',
     port: process.env.PORT || 27017,
 };
