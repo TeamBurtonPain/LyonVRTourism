@@ -1,15 +1,12 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using System.Net.Mime;
 using UnityEngine;
-using UnityEngine.UI;
 
+/// <summary>
+/// Class managing all the methods needed for the geolocalisation
+/// </summary>
 public class GeoManager : MonoBehaviour
 {
 
-    public Text x;
-    public Text resultText;
-    public Text positionText;
     public float radius = 1;
 
     protected bool loaded = false;
@@ -21,9 +18,10 @@ public class GeoManager : MonoBehaviour
         get { return instance; }
     }
 
-    private Coordinates userPosition;
-    private Coordinates targetPosition;// A retirer plus tard (test V1)
 
+    /// <summary>
+    /// Method initializing the GeoManager instance
+    /// </summary>
     void Awake()
     {
         if (instance == null)
@@ -36,19 +34,6 @@ public class GeoManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
-
-        positionText.text = "";// A retirer plus tard (test V1)
-        resultText.text = "";// A retirer plus tard (test V1)
-
-        userPosition = new Coordinates();
-
-        //Example : target = Marseille --> A retirer plus tard (test V1)
-        targetPosition = new Coordinates();
-        targetPosition.x = 43.296482f;
-        targetPosition.y = 5.36978f;
-
-        //InvokeRepeating("Tester", 10, 5);// A retirer plus tard (test V1)
-
     }
 
     /// <summary>
@@ -60,16 +45,25 @@ public class GeoManager : MonoBehaviour
 #if PC
         Debug.Log("On PC / Don't have GPS");
 #elif !PC
+        StartCoroutine(Init());
+#endif
+    }
+
+
+    public IEnumerator Init()
+    {
+        failed = false;
         //Starting the Location service before querying location
         Input.location.Start(0.5f); // Accuracy of 0.5 m
 
-        int wait = 1000; // Per default
+        int wait = 10; // Per default
 
         // Checks if the GPS is enabled by the user (-> Allow location )
         if (Input.location.isEnabledByUser)
         {
             while (Input.location.status == LocationServiceStatus.Initializing && wait > 0)
             {
+                yield return new WaitForSeconds(1);
                 wait--;
             }
 
@@ -77,23 +71,20 @@ public class GeoManager : MonoBehaviour
             if (Input.location.status == LocationServiceStatus.Failed)
             {
                 failed = true;
-                //latitude and longitude equals to 0
+                yield break;
             }
             else
             {
                 loaded = true;
-                // We start the timer to check each tick (every 3 sec) the current gps position
-                //InvokeRepeating("RetrieveGPSData",0,3); // A retirer plus tard (test V1)
-                //Invoke("RetrieveGPSData", 0); // A retirer plus tard (test V1)
             }
         }
         else
         {
-            positionText.text = "GPS not available";
             failed = true;
+            yield break;
         }
-#endif
     }
+
 
     public bool IsLoaded()
     {
@@ -103,13 +94,6 @@ public class GeoManager : MonoBehaviour
     {
         return failed;
     }
-
-    // A retirer plus tard (test V1)
-    private void Tester()
-    {
-        IsUserNear(targetPosition, radius);
-    }
-
     /// <summary>
     /// Method that states if a user is near to a location within a perimeter stated in the params. The user coordinates are automatically collected using the device sensors
     /// </summary>
@@ -118,27 +102,18 @@ public class GeoManager : MonoBehaviour
     /// <returns> A boolean that represents the validation of the user's presence nearby the location targeted.</returns>
     public bool IsUserNear(Coordinates target, float radius)
     {
-        bool isNear = false;
-
-        userPosition.x = Input.location.lastData.latitude;
-        userPosition.y = Input.location.lastData.longitude;
-
-        positionText.text = "lat =" + userPosition.x + ",  long =" + userPosition.y;
+        Coordinates userPosition = new Coordinates
+        {
+            x = Input.location.lastData.latitude,
+            y = Input.location.lastData.longitude
+        };
 
         float distance = Distance(userPosition, target);
 
-        if (distance <= radius)
-        {
-            isNear = true;
-        }
-
-        resultText.text = "result = " + isNear;
-
-        return isNear;
+        return distance <= radius;
     }
     public Vector2 GetUserPosition()
     {
-        resultText.text = Input.location.lastData.latitude + "/" + Input.location.lastData.longitude;
         return new Vector2(Input.location.lastData.latitude, Input.location.lastData.longitude);
     }
 
@@ -162,25 +137,5 @@ public class GeoManager : MonoBehaviour
             Mathf.Cos(coord2Long - coord1Long) + Mathf.Sin(coord1Lat) * Mathf.Sin(coord2Lat));
 
         return distance;
-    }
-
-    /// <summary>
-    /// Sets the targetPosition attribute from the GeoManager
-    /// </summary>
-    /// <param name="latitude">Latitude of the target</param>
-    /// <param name="longitude">Longitude of the target</param>
-    public void SetTargetPosition(float latitude,float longitude)
-    {
-        targetPosition.x = latitude;
-        targetPosition.y = longitude;
-    }
-
-    /// <summary>
-    /// Gets the targetPosition attribute from the GeoManager
-    /// </summary>
-    /// <returns>Returns the Coordinates object that represents the target's position</returns>
-    public Coordinates GetTargetPosition()
-    {
-        return targetPosition;
     }
 }

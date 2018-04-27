@@ -1,37 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-
-/// <summary>
+﻿/// <summary>
 /// 
 /// </summary>
 /// <seealso cref="State" />
-public class DefaultState : State
+public class DefaultState : IState
 {
-    private Controller controller;
-
-    public DefaultState(Controller c)
-    {
-        controller = c;
-    }
-
     /// <summary>
     /// Returns to the map page
     /// </summary>
     /// <seealso cref="MapState" />
-    public void ReturnAction()
+    public virtual void ReturnAction()
     {
-        controller.Transition(new MapState(controller));
+        Controller.Instance.Transition(Controller.Instance.mapState);
     }
 
-    public void OptionAction()
-    {
-    }
+    public virtual void OptionAction() { }
 
-    public void LoginLocalAction() { }
-    public void LoginServerAction() { }
-    public void InscriptionAction() { }
-    public void SelectionQuestInHistoricAction() { }
+    public virtual void LoginLocalAction() { }
+    public virtual void LoginServerAction() { }
+    public virtual void InscriptionAction() { }
+    public virtual void SelectionQuestInHistoricAction(Quest myQuest) { }
+
+    public virtual void StartQuestAction() { }
 }

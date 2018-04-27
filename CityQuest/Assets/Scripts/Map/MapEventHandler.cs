@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine;
 
-public class MapEventHandler : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class MapEventHandler : MonoBehaviour, IBeginDragHandler, IDragHandler
 {
 
     public float zoomSpeed = 0.01f;        // Amplitude of the zoom while pinching.
@@ -12,12 +12,6 @@ public class MapEventHandler : MonoBehaviour, IPointerClickHandler, IBeginDragHa
     private float prevDragX;
     private float prevDragY;
     private bool zooming = false;
-
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-
-    }
 
     public void OnDrag(PointerEventData eventData)
     {
@@ -47,7 +41,7 @@ public class MapEventHandler : MonoBehaviour, IPointerClickHandler, IBeginDragHa
             float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
 
             Camera.main.orthographicSize += deltaMagnitudeDiff * zoomSpeed;
-            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, 0.1f, 5f);
+            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, 0.05f, 5f);
         }
         Camera.main.transform.SetPositionAndRotation(new Vector3(
                Mathf.Clamp(Camera.main.transform.position.x, -mapSize / 2 + Camera.main.orthographicSize / 2, mapSize / 2 - Camera.main.orthographicSize / 2),
@@ -65,9 +59,5 @@ public class MapEventHandler : MonoBehaviour, IPointerClickHandler, IBeginDragHa
             zooming = false;
         prevDragX = Input.mousePosition.x;
         prevDragY = Input.mousePosition.y;
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
     }
 }

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Layout_Manager : MonoBehaviour {
@@ -9,13 +8,19 @@ public class Layout_Manager : MonoBehaviour {
     public GameObject layout;
     public GameObject menuDeroulant;
 
+    /// <summary>
+    /// Hide the burger menu when the scene is loaded, and set both layout and menu colors the same
+    /// </summary>
     private void Awake()
     {
         menuDeroulant.SetActive(false);
-        ColorManager();
+        ColorManage();
     }
 
-    public void ColorManager()
+    /// <summary>
+    /// Setup the background color of both menu and layout
+    /// </summary>
+    public void ColorManage()
     {
         backgroundColor = Color.gray;
         layout.GetComponent<Image>().color = backgroundColor;
@@ -32,6 +37,9 @@ public class Layout_Manager : MonoBehaviour {
         menuDeroulant.SetActive(false);
     }
 
+    /// <summary>
+    /// Handle the Hiding and Showing of the burger menu
+    /// </summary>
     public void MenuDeroulantManager()
     {
         if (menuDeroulant.activeSelf)
@@ -44,12 +52,4 @@ public class Layout_Manager : MonoBehaviour {
         }
     }
 
-    public void SelectButtonMesQuetesManager()
-    {
-        SceneManager.LoadScene("Mes quêtes");
-    }
-    public void SelectButtonParametresManager()
-    {
-        SceneManager.LoadScene("Paramètres");
-    }
 }

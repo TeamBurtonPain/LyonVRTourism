@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
@@ -19,51 +20,59 @@ public class QuestDetails_Manager : MonoBehaviour {
 
     private void Awake()
     {
-        /*
-        StatsQuestUnit test1 = new StatsQuestUnit(new User("Jacky")); test1.Mark = 3;
-        StatsQuestUnit test2 = new StatsQuestUnit(new User("Michel")); test1.Mark = 5;
-        StatsQuest testStats = new StatsQuest(test1, test2);
-        */
         starRated = Color.yellow;
         starUnrated = Color.gray;
-        stars.Add(star1);
-        stars.Add(star2);
-        stars.Add(star3);
-        stars.Add(star4);
-        stars.Add(star5);
+        stars = new List<Image>
+        {
+            star1,
+            star2,
+            star3,
+            star4,
+            star5
+        };
     }
 
+    /// <summary>
+    /// If a quest is selected on the map, the details of this quest are updated on the hidden interface
+    /// Adds to the scroll button an Animator, which handles the hiding and showing of the details interface
+    /// The trigger is simply a click on the scroll button
+    /// </summary>
     public void ScrollButtonListener()
     {
         //Mise à jour de la fenêtre cachée avec les informations correspondantes à l'éléments cliqué
-        //Quest quest = new Quest()...
-        StarsManager(/* quest.Statistics */);
-        DescriptionManager(/*quest.Description*/"La Doua est un campus situé sur un ancien camp militaire dans la commune de Villeurbanne, au nord-est de l'agglomération lyonnaise. Il est bordé par le parc de la Tête d'Or et le tennis-club de Lyon à l'ouest, par le Rhône et le parc de la Feyssine au nord/nord-est, et enfin par Villeurbanne et le 6e arrondissement de Lyon au sud. Il constitue le plus grand site universitaire de l'agglomération lyonnaise avec une superficie de 100 hectares1.");
-
-        //Affichage de la fenêtre cachée
-        Animator animationObj = questDetails.GetComponentInChildren<Animator>();
-        animationObj.SetTrigger("clic");
-    }
-
-    public void DescriptionManager(string text)
-    {
-        description.text = text;
-    }
-
-    public void StarsManager(/*StatsQuest statistics*/)
-    {
-        double mark = 0;
-        /*
-        foreach(StatsQuestUnit element in sta   tistics.Marks)
+        if (Controller.Instance.SelectedQuest != null)
         {
-            mark += element.Mark;
+            Quest actualQuest = Controller.Instance.SelectedQuest;
+            StarsManager(actualQuest.Statistics);
+            DescriptionManager(actualQuest.Description);
+            //Affichage de la fenêtre cachée
+            Animator animationObj = questDetails.GetComponentInChildren<Animator>();
+            animationObj.SetTrigger("clic");
         }
-        mark = System.Math.Truncate(mark / statistics.Marks.Count);
-        */
-        // A ENLEVER
-        mark = 4;
-        //-----------
-        for(int i = 0; i < mark; i++)
+    }
+
+    /// <summary>
+    /// Show, above of the map, the title of the Selected Quest
+    /// </summary>
+    /// <param name="title">Title of the selected quest</param>
+    public void DescriptionManager(string title)
+    {
+        description.text = title;
+    }
+
+    /// <summary>
+    /// Handles the transription between the numeric rank of a quest, and its graphic representation with color filled stars
+    /// </summary>
+    /// <param name="statistics">The statistic object of the selected quest which contains its mark, given by the users</param>
+    public void StarsManager(QuestStatistics statistics)
+    {
+        double mark = statistics.ComputeMean();
+
+        //TODO gerer le cas sans moyenne
+        if (double.IsNaN(mark))    
+            mark = 0;
+
+        for(int i = 0; i < mark && i < stars.Count; i++)
         {
             stars[i].color = starRated;
         }

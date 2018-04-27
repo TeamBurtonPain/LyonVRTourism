@@ -1,32 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine.SceneManagement;
-
+﻿using UnityEngine.SceneManagement;
 
 public class LoginState : DefaultState
 {
-    public LoginState(Controller c) : base(c)
-    {
-    }
-
-    public new void LoginLocalAction()
+    public override void LoginLocalAction()
     {
         //TODO : Penser à la récupération du User stocké en local
-        //Code de gestion de première utilisation
+        //TODO : Code de gestion de première utilisation
         SceneManager.LoadScene("MapScene");
     }
 
-    public new void LoginServerAction()
+    public override void LoginServerAction()
     {
-        //Code d'authentification au serveur
+        //TODO : Code d'authentification au serveur
         SceneManager.LoadScene("MapScene");
     }
 
-    public new void InscriptionAction()
+    public override void InscriptionAction()
     {
-        //Code d'inscription
+        //TODO : Code d'inscription
         SceneManager.LoadScene("MapScene");
     }
 

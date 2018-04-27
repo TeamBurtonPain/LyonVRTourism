@@ -18,7 +18,7 @@ public class QuadtreeLODPlane : MonoBehaviour {
 	GameObject[] children_ = null;
 
 	private int depth_ = 0;
-	const int MAX_DEPTH = 7;
+	const int MAX_DEPTH = 9;
 
 
 	public void Start()

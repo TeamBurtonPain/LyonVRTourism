@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,14 +8,20 @@ public enum ConnexionState
     CONNEXION_SERVER,
     DISCONNECTED
 }
-
 public class Controller : MonoBehaviour
 {
+    public GameObject leavingWindow;
+
     protected static Controller instance;
 
-    private State currentState;
+    private IState currentState;
+    public IState mapState;
+    public IState historicState;
+    public IState questState;
+    public IState loginState;
     private ConnexionState currentConnexion;
     private User user;
+
     private Quest selectedQuest;
 
 
@@ -35,8 +38,40 @@ public class Controller : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        user = null;
-        selectedQuest = null;
+        mapState = new MapState();
+        historicState = new HistoricState();
+        questState = new QuestState();
+        loginState = new LoginState();
+
+        currentState = loginState;
+
+        //------ Test sample ---------
+        Coordinates coordinates = new Coordinates();
+        coordinates.x = 42.3245f;
+        coordinates.y = 4.56978f;
+
+        Creator creator = new Creator();
+        creator.FirstName = "John";
+        List<string> choices = new List<string>();
+        choices.Add("a");
+        choices.Add("b");
+        choices.Add("c");
+        CheckPoint cp1 = new CheckPoint("pic1.png","blablablaTextCP1",choices,"b");
+        CheckPoint cp2 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "a");
+        List<CheckPoint> checkpoints = new List<CheckPoint>
+        {
+            cp1,
+            cp2
+        };
+        Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 3L, creator, checkpoints);
+        Quest quest2 = new Quest(coordinates, "Trouver les pandas roux2", "Description des pandas roux2", 3L, creator, checkpoints);
+
+        user = new User();
+        user.AddQuest(quest);
+        user.AddQuest(quest2);
+        //------ End Test sample -------
+
+        selectedQuest = quest;
         currentConnexion = ConnexionState.DISCONNECTED;
     }
 
@@ -45,40 +80,90 @@ public class Controller : MonoBehaviour
     /// </summary>
     /// <param name="s">The state.</param>
     //TODO : voir quoi faire d'autre pour effectuer la transition 
-    public void Transition(State s)
+    public void Transition(IState s)
     {
         currentState = s;
     }
 
+    void OnApplicationPause(bool pause)
+    {
+        if (pause && Application.platform == RuntimePlatform.Android )
+        {
+            // TODO mettre en pause plutot genre retourner sur la scene d' accueil
+            Leave();
+        }
+    }
+
+    public void AskLeave()
+    {
+        leavingWindow.SetActive(true);
+    }
+
+    public void Leave()
+    {
+        // Chose one of the 2 following (sometime it bugs on some systems)
+        //Application.Quit();
+        System.Diagnostics.Process.GetCurrentProcess().Kill();
+    }
+
+    public void CancelLeave()
+    {
+        leavingWindow.SetActive(false);
+    }
+
+    private void Update()
+    {
+
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            currentState.ReturnAction();
+        }
+    }
 
     /*********** BOUTONS ***********/
 
     public void LoginLocal()
     {
-        currentState.LoginLocalAction();
         currentConnexion = ConnexionState.CONNEXION_LOCAL;
+        currentState.LoginLocalAction();
     }
 
     public void LoginServer()
     {
-        currentState.LoginServerAction();
         currentConnexion = ConnexionState.CONNEXION_SERVER;
+        currentState.LoginServerAction();
     }
 
     public void Inscription()
     {
         currentState.InscriptionAction();
-        currentConnexion = ConnexionState.CONNEXION_SERVER;
     }
 
-    public void SelectionQuestInHistoric()
+    public void SelectionQuestInHistoric(Quest myQuest)
     {
-       // selectedQuest = ? Assigner selected quest à quête sélectionnée
-        currentState.SelectionQuestInHistoricAction();
+        currentState.SelectionQuestInHistoricAction(myQuest);
     }
 
-    public void StartNewQuest()
+    public void StartQuest()
     {
+        if (selectedQuest != null && user != null)
+        {
+            user.AddQuest(selectedQuest);
+            currentState.StartQuestAction();
+        }
+        else
+        {
+            //TODO : Gestion des erreurs en cas de quest ou de user null
+        }
+    }
+
+    public void SelectMenuNewQuest()
+    {
+        SceneManager.LoadScene("MapScene");
+    }
+    public void SelectMenuHistoric()
+    {
+        SceneManager.LoadScene("MyQuests");
     }
     /*
     public void GoQuest()
@@ -86,24 +171,33 @@ public class Controller : MonoBehaviour
         currentState.GoQuestAction();
     }*/
 
-    public void SelectionQuestInMap()
+    public void SelectMenuSettings()
     {
-       
+        SceneManager.LoadScene("Settings");
     }
 
-    public void Menu()
+    public void SelectMenuLogout()
     {
+        // TODO deco
+        SceneManager.LoadScene("Login");
     }
 
     /*********** FIN BOUTONS ***********/
 
-    public Quest GetSelectedQuest()
+    public static Controller Instance
     {
-        return selectedQuest;
+        get { return instance; }
     }
 
-    public void SetSelectedQuest(Quest newSelectedQuest)
+    public Quest SelectedQuest
     {
-        selectedQuest = newSelectedQuest;
+        get { return selectedQuest; }
+        set { selectedQuest = value; }
+    }
+
+    public User User
+    {
+        get { return user; }
+        set { user = value; }
     }
 }
