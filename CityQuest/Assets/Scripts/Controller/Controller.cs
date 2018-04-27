@@ -170,10 +170,12 @@ public class Controller : MonoBehaviour
 
     public void SelectMenuNewQuest()
     {
+        currentState = mapState;
         SceneManager.LoadScene("MapScene");
     }
     public void SelectMenuHistoric()
     {
+        currentState = historicState;
         SceneManager.LoadScene("MyQuests");
     }
     /*
@@ -190,6 +192,7 @@ public class Controller : MonoBehaviour
     public void SelectMenuLogout()
     {
         // TODO deco
+        currentState = loginState;
         SceneManager.LoadScene("Login");
     }
 
