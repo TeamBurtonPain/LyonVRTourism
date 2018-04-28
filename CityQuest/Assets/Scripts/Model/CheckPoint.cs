@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+
 
 
 public class CheckPoint
@@ -19,7 +17,8 @@ public class CheckPoint
         choices = new List<string>();
     }
 
-    CheckPoint(string pic, string text, List<string> choices, string answer, int difficulty)
+    public CheckPoint(string pic, string text, List<string> choices, string answer, int difficulty)
+
     {
         this.id = instanceCounter++;
         this.picture = pic;

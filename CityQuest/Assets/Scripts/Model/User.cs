@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -82,6 +80,7 @@ public class User
         }
         else
         {
+            
             StateQuest newStateQuest = new StateQuest(q);
             quests.Add(q.Id, newStateQuest);
             return true;

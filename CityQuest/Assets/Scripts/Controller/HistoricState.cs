@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine.SceneManagement;
-
+﻿using UnityEngine.SceneManagement;
 
 public class HistoricState : DefaultState
 {
-    public HistoricState(Controller c) : base(c)
+    public override void SelectionQuestInHistoricAction(Quest quest)
     {
-    }
-
-    public new void SelectionQuestInHistoricAction()
-    {
+        Controller.Instance.SelectedQuest = quest;
         SceneManager.LoadScene("MapScene");
     }
 
