@@ -59,7 +59,7 @@ class ModelTest : MonoBehaviour
             Checkpoints = {cp1, cp2, cp3},
         };
 
-        HTTPHelper.Send(c);
+        HTTPHelper.Persist(c);
 
         tuser.text = JSONHelper.ToJsonString(q1);
     }
