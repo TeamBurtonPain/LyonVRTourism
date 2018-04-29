@@ -3,19 +3,27 @@ using UnityEngine.UI;
 
 public class AccountCreationManager : MonoBehaviour
 {
-    public Button CreateAccountButton;
-    public InputField FirstNameInputField;
-    public InputField LastNameInputField;
-    public InputField MailInputField;
-    public InputField PasswordInputField;
+    public InputField firstNameInputField;
+    public InputField lastNameInputField;
+    public InputField mailInputField;
+    public InputField passwordInputField;
+    /*
     public Dropdown YearsDropdown;
     public Dropdown MonthsDropdown;
     public Dropdown DaysDropdown;
+    */
+    public Toggle aggrement;
 
     public void Btn_CreateNewAccount()
     {
-        // Passer inputs au controleur ou à une fonction autre ? Située ou ? 
-        Controller.Instance.CreateNewAccount();
+        if (aggrement.isOn)
+        {
+            Controller.Instance.CreateNewAccount(firstNameInputField.text, lastNameInputField.text, mailInputField.text, passwordInputField.text);
+        }
+        else
+        {
+            // Controller.Instance.Error("Vous devez accepter les conditions et tout");
+        }
     }
 
 }
