@@ -4,21 +4,25 @@ public class LoginState : DefaultState
 {
     public override void LoginLocalAction()
     {
-        //TODO : Penser à la récupération du User stocké en local
-        //TODO : Code de gestion de première utilisation
-        Controller.Instance.LoadMap();
+        // TODO check is user existe en local
+        // if user found en local
+        //     Controller.Instance.LoadMap();
+        // else 
+            Controller.Instance.LoadUsername();
     }
 
     public override void LoginServerAction()
     {
-        //TODO : Code d'authentification au serveur
-        Controller.Instance.LoadMap();
+        Controller.Instance.LoadConnexion();
     }
 
     public override void InscriptionAction()
     {
-        //TODO : Code d'inscription
-        Controller.Instance.LoadMap();
+        Controller.Instance.LoadInscription();
+    }
+    public override void ReturnAction()
+    {
+        Controller.Instance.SelectMenuLogout();
     }
 
 }
