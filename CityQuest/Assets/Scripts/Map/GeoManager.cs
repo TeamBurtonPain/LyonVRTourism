@@ -98,9 +98,8 @@ public class GeoManager : MonoBehaviour
     /// Method that states if a user is near to a location within a perimeter stated in the params. The user coordinates are automatically collected using the device sensors
     /// </summary>
     /// <param name="target">Represents the location targeted by the user</param>
-    /// <param name="radius">Parameter that represents the minimum perimeter in which the user must be to begin its quest. radius in kilometers.</param>
     /// <returns> A boolean that represents the validation of the user's presence nearby the location targeted.</returns>
-    public bool IsUserNear(Coordinates target, float radius)
+    public bool IsUserNear(Coordinates target)
     {
         Coordinates userPosition = new Coordinates
         {

@@ -11,6 +11,7 @@ public enum ConnexionState
 public class Controller : MonoBehaviour
 {
     public GameObject leavingWindow;
+    public ErrorPopUp errorTemplate;
 
     protected static Controller instance;
 
@@ -159,9 +160,15 @@ public class Controller : MonoBehaviour
     {
         if (selectedQuest != null && user != null)
         {
-            currentState = questState;
-            user.AddQuest(selectedQuest);
-            SceneManager.LoadScene("GameImageScene");
+            if (GeoManager.Instance.IsUserNear(selectedQuest.Geolocalisation))
+            {
+                currentState = questState;
+                user.AddQuest(selectedQuest);
+                SceneManager.LoadScene("GameImageScene");
+            }
+            else{
+                Error("Too far to start this quest.");
+            }
         }
         else
         {
@@ -212,6 +219,12 @@ public class Controller : MonoBehaviour
     }
 
     /*********** FIN BOUTONS ***********/
+
+    public void Error(string msg)
+    {
+        ErrorPopUp error = Instantiate(errorTemplate, this.transform);
+        error.SetError(msg);
+    }
 
     public static Controller Instance
     {
