@@ -167,7 +167,7 @@ public class Controller : MonoBehaviour
                 SceneManager.LoadScene("GameImageScene");
             }
             else{
-                Error("Too far to start this quest.");
+                Error("Vous êtes trop loin pour lancer cette quête.");
             }
         }
         else
@@ -185,6 +185,16 @@ public class Controller : MonoBehaviour
     {
         currentState = loginState;
         SceneManager.LoadScene("AccountCreation");
+    }
+    public void LoadConnexion()
+    {
+        currentState = loginState;
+        SceneManager.LoadScene("Connexion");
+    }
+    public void LoadUsername()
+    {
+        currentState = loginState;
+        SceneManager.LoadScene("Pseudo");
     }
 
     public void SelectMenuNewQuest()
@@ -204,7 +214,7 @@ public class Controller : MonoBehaviour
 
     public void SelectMenuLogout()
     {
-        // TODO deco
+        // TODO deco en local (persistance)
         currentState = loginState;
         SceneManager.LoadScene("Login");
     }
@@ -227,8 +237,20 @@ public class Controller : MonoBehaviour
     {
         // TODO des trucs avec ce pseudo
         // persistance local
-        currentState = loginState;
-        SceneManager.LoadScene("Login");
+        LoadMap();
+    }
+
+    public void TryConnection(string mail, string pwd)
+    {
+        // TODO le back.
+        // connexion au serveur.
+        // if connexion ok 
+        //     faire la persistance locale de la connexion au compte +
+        //     user = charger l'user depuis la bdd
+        SceneManager.LoadScene("MapScene");
+        // else 
+        // Error("Aucune correspondance trouvée.");
+
     }
 
     /*********** FIN BOUTONS ***********/

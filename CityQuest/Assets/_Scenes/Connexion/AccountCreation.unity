@@ -1750,7 +1750,7 @@ GameObject:
   - component: {fileID: 830118407}
   - component: {fileID: 830118408}
   m_Layer: 5
-  m_Name: CreateAccountObj
+  m_Name: CreateAccountManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
