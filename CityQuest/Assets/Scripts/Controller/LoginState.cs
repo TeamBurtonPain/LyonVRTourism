@@ -6,19 +6,19 @@ public class LoginState : DefaultState
     {
         //TODO : Penser à la récupération du User stocké en local
         //TODO : Code de gestion de première utilisation
-        SceneManager.LoadScene("MapScene");
+        Controller.Instance.LoadMap();
     }
 
     public override void LoginServerAction()
     {
         //TODO : Code d'authentification au serveur
-        SceneManager.LoadScene("MapScene");
+        Controller.Instance.LoadMap();
     }
 
     public override void InscriptionAction()
     {
         //TODO : Code d'inscription
-        SceneManager.LoadScene("MapScene");
+        Controller.Instance.LoadMap();
     }
 
 }

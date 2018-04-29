@@ -159,8 +159,9 @@ public class Controller : MonoBehaviour
     {
         if (selectedQuest != null && user != null)
         {
+            currentState = questState;
             user.AddQuest(selectedQuest);
-            currentState.StartQuestAction();
+            SceneManager.LoadScene("GameImageScene");
         }
         else
         {
@@ -168,21 +169,21 @@ public class Controller : MonoBehaviour
         }
     }
 
-    public void SelectMenuNewQuest()
+    public void LoadMap()
     {
         currentState = mapState;
         SceneManager.LoadScene("MapScene");
+    }
+
+    public void SelectMenuNewQuest()
+    {
+        LoadMap();
     }
     public void SelectMenuHistoric()
     {
         currentState = historicState;
         SceneManager.LoadScene("MyQuests");
     }
-    /*
-    public void GoQuest()
-    {
-        currentState.GoQuestAction();
-    }*/
 
     public void SelectMenuSettings()
     {
