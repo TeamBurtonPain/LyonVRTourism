@@ -197,6 +197,12 @@ public class Controller : MonoBehaviour
         SceneManager.LoadScene("Login");
     }
 
+    public void CreateNewAccount()
+    {
+       // Passer dans le bon state currentState =  ?;
+        SceneManager.LoadScene("MapScene"); // ou load une scene de validation ? 
+    }
+
     /*********** FIN BOUTONS ***********/
 
     public static Controller Instance

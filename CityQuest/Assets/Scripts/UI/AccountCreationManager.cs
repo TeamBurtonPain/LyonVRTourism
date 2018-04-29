@@ -12,6 +12,10 @@ public class AccountCreationManager : MonoBehaviour
     public Dropdown MonthsDropdown;
     public Dropdown DaysDropdown;
 
-
+    public void Btn_CreateNewAccount()
+    {
+        // Passer inputs au controleur ou à une fonction autre ? Située ou ? 
+        Controller.Instance.CreateNewAccount();
+    }
 
 }
