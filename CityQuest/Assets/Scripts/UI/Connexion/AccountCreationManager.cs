@@ -7,6 +7,7 @@ public class AccountCreationManager : MonoBehaviour
     public InputField lastNameInputField;
     public InputField mailInputField;
     public InputField passwordInputField;
+    public InputField usernameInputField;
     /*
     public Dropdown YearsDropdown;
     public Dropdown MonthsDropdown;
@@ -18,7 +19,7 @@ public class AccountCreationManager : MonoBehaviour
     {
         if (aggrement.isOn)
         {
-            Controller.Instance.CreateNewAccount(firstNameInputField.text, lastNameInputField.text, mailInputField.text, passwordInputField.text);
+            Controller.Instance.CreateNewAccount(firstNameInputField.text, lastNameInputField.text, mailInputField.text, passwordInputField.text, usernameInputField.text);
         }
         else
         {

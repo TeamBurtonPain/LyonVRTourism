@@ -219,11 +219,15 @@ public class Controller : MonoBehaviour
         SceneManager.LoadScene("Login");
     }
 
-    public void CreateNewAccount(string firstName, string lastname, string mail, string password)
+    public void CreateNewAccount(string firstName, string lastname, string mail, string password, string username)
     {
-        // TODO integrity checkr
 
-        // TODO : persistance.
+        // TODO integrity check
+
+        // récupérer les infos locales si elles existent.
+        // on se dit que s'il y a un pseudo en local, on le remplace par celui rentré ici de toutes façon. Le reste est gardé.
+
+        // TODO : persistance en ligne + locale de la connexion.
 
         // if persistance ok -> user = user
         LoadMap();
