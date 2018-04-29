@@ -27,7 +27,13 @@ public class Loader : MonoBehaviour {
         }
         else
         {
-            SceneManager.LoadScene("Login");
+            // TODO 
+            // if lien avec compte en ligne trouvé
+            //     SceneManager.LoadScene("MapScene");
+            // else if compte local trouvé 
+            //     SceneManager.LoadScene("Login");
+            // else
+            SceneManager.LoadScene("Pseudo");
         }
     }
 

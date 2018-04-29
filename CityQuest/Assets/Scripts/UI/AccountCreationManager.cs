@@ -22,7 +22,7 @@ public class AccountCreationManager : MonoBehaviour
         }
         else
         {
-            // Controller.Instance.Error("Vous devez accepter les conditions et tout");
+            Controller.Instance.Error("Vous devez accepter les conditions et tout");
         }
     }
 

@@ -181,6 +181,11 @@ public class Controller : MonoBehaviour
         currentState = mapState;
         SceneManager.LoadScene("MapScene");
     }
+    public void LoadInscription()
+    {
+        currentState = loginState;
+        SceneManager.LoadScene("AccountCreation");
+    }
 
     public void SelectMenuNewQuest()
     {
@@ -216,6 +221,14 @@ public class Controller : MonoBehaviour
         // else 
         // Error(message);
 
+    }
+
+    public void ChooseUsername(string pseudo)
+    {
+        // TODO des trucs avec ce pseudo
+        // persistance local
+        currentState = loginState;
+        SceneManager.LoadScene("Login");
     }
 
     /*********** FIN BOUTONS ***********/

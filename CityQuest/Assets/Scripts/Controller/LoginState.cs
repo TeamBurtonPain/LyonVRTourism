@@ -18,7 +18,7 @@ public class LoginState : DefaultState
     public override void InscriptionAction()
     {
         //TODO : Code d'inscription
-        Controller.Instance.LoadMap();
+        Controller.Instance.LoadInscription();
     }
 
 }
