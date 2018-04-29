@@ -2,62 +2,114 @@
 using UnityEngine.EventSystems;
 using UnityEngine;
 
-public class MapEventHandler : MonoBehaviour, IBeginDragHandler, IDragHandler
+public class MapEventHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
-
-    public float zoomSpeed = 0.01f;        // Amplitude of the zoom while pinching.
+    
+    public float zoomSpeed = 1f;        // Amplitude of the zoom while pinching.
+    
+    protected bool isReadyDrag = false;
+    protected bool isReadyMove = false;
+    
     public int mapSize = 10;
 
     //Prevents click trigger while dragging
-    private float prevDragX;
-    private float prevDragY;
-    private bool zooming = false;
+
+    private Vector2 initDrag;
+    private Vector3 initPosition;
+    private Vector2 oldTemp;
+
+    private Touch startZoom0;
+    private Touch startZoom1;
+    private float initTouchDeltaMag;
+    private float initSize;
+
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (!zooming)
+        
         {
+            if (!isReadyMove)
+            {
+                // Move
+                initDrag = GetPos();
+                initPosition = Camera.main.transform.position;
+                isReadyMove = true;
+            }
+
             float coeff = Camera.main.orthographicSize / Camera.main.pixelWidth;
-            Vector3 dragVector = new Vector3(Input.mousePosition.x - prevDragX, 0, Input.mousePosition.y - prevDragY);
-            Vector3 newView = Camera.main.transform.position - dragVector * coeff;
-            prevDragX = Input.mousePosition.x;
-            prevDragY = Input.mousePosition.y;
-            Camera.main.transform.SetPositionAndRotation(newView, Camera.main.transform.rotation);
+
+            Vector2 newDrag = GetPos();
+
+            Vector2 dragVector = newDrag - initDrag;
+            Vector3 newView = initPosition - new Vector3(dragVector.x, 0, dragVector.y) * coeff;
+
+            newView.x = Mathf.Clamp(newView.x,-mapSize + Camera.main.orthographicSize * Camera.main.aspect, mapSize - Camera.main.orthographicSize * Camera.main.aspect);
+            newView.z = Mathf.Clamp(newView.z, -mapSize + Camera.main.orthographicSize, mapSize - Camera.main.orthographicSize);
+
+            Camera.main.transform.position = newView;
+            oldTemp = newDrag;
         }
+
+        // Zoom
         if (Input.touchCount == 2)
         {
+            if (!isReadyDrag)
+            {
+                isReadyDrag = true;
+                startZoom0 = Input.GetTouch(0);
+                startZoom1 = Input.GetTouch(1);
+                initTouchDeltaMag = (startZoom0.position - startZoom1.position).magnitude;
+                initSize = Camera.main.orthographicSize;
+            }
+
             Touch touchZero = Input.GetTouch(0);
             Touch touchOne = Input.GetTouch(1);
 
-            Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
-            Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
-
-            float prevTouchDeltaMag = (touchZeroPrevPos - touchOnePrevPos).magnitude;
             float touchDeltaMag = (touchZero.position - touchOne.position).magnitude;
 
-            float touchCenterX = touchOne.position.x;
-            float touchCenterY = touchOne.position.y;
+            float deltaMagnitudeDiff = initTouchDeltaMag / touchDeltaMag;
 
-            float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
-
-            Camera.main.orthographicSize += deltaMagnitudeDiff * zoomSpeed;
+            Camera.main.orthographicSize = deltaMagnitudeDiff * initSize;
             Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, 0.05f, 5f);
         }
-        Camera.main.transform.SetPositionAndRotation(new Vector3(
-               Mathf.Clamp(Camera.main.transform.position.x, -mapSize / 2 + Camera.main.orthographicSize / 2, mapSize / 2 - Camera.main.orthographicSize / 2),
-               Camera.main.transform.position.y,
-               Mathf.Clamp(Camera.main.transform.position.z, -mapSize / 2 + Camera.main.orthographicSize / 2, mapSize / 2 - Camera.main.orthographicSize / 2)
-               ), Camera.main.transform.rotation);
-
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
+
+    public void OnPointerDown(PointerEventData eventData)
     {
-        if (Input.touchCount == 2)
-            zooming = true;
-        if (Input.touchCount == 1)
-            zooming = false;
-        prevDragX = Input.mousePosition.x;
-        prevDragY = Input.mousePosition.y;
+        Reset();
     }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        Reset();
+    }
+
+    private void Reset()
+    {
+        isReadyDrag = false;
+        isReadyMove = false;
+    }
+    private Vector2 GetPos()
+    {
+        Vector2 v = new Vector2(0, 0);
+
+        if (Input.touchCount == 0)
+        {
+            v = Input.mousePosition;
+        }
+        else
+        {
+
+            for (int i = 0; i < Input.touchCount; i++)
+            {
+                v += Input.GetTouch(i).position;
+            }
+            v /= Input.touchCount;
+
+        }
+
+        return v;
+    }
+
 }

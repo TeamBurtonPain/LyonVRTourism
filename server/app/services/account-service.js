@@ -4,6 +4,10 @@ async function getAccountById(accountId) {
     return Account.findById(accountId);
 }
 
+async function getAccountByEmail(email) {
+    return Account.findOne({ 'connection.email': email });
+}
+
 async function createAccount(account) {
     return account.save();
 }
@@ -19,9 +23,17 @@ async function deleteAccount(accountId) {
     return Account.remove(condition);
 }
 
+async function isTokenRevoked(jwtId) {
+    const account = await Account.findOne({ 'connection.jwt': jwtId });
+
+    return !account || account.connection.jwt;
+}
+
 module.exports = {
     getAccountById,
+    getAccountByEmail,
     createAccount,
     updateAccount,
     deleteAccount,
+    isTokenRevoked,
 };
