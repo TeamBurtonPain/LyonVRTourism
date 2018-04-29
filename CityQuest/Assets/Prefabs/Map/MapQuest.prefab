@@ -98,6 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalMat: {fileID: 2100000, guid: c896a4d91506e604cad121c3d54c3d2c, type: 2}
   selectedMat: {fileID: 2100000, guid: 07b36e5bae2bce1479c970ebc6bf724b, type: 2}
+  tooFarMat: {fileID: 2100000, guid: e0e6d4801c6e4f74cb9b38b449cc0b27, type: 2}
 --- !u!114 &114740195053027928
 MonoBehaviour:
   m_ObjectHideFlags: 1
