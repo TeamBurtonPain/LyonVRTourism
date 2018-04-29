@@ -1,8 +1,7 @@
 ﻿public class QuestState : DefaultState
 {
-    public override void StartQuestAction()
+    public override void ReturnAction()
     {
-        //TODO : Scene QuestScene pour mettre en place le passage scène quête
-        //SceneManager.LoadScene("QuestScene");
+        Controller.Instance.LoadMap();
     }
 }

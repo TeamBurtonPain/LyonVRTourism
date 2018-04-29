@@ -3,7 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class QuestDetails_Manager : MonoBehaviour {
+public class QuestDetails_Manager : MonoBehaviour
+{
 
     public Button scroll;
     public GameObject questDetails;
@@ -12,13 +13,14 @@ public class QuestDetails_Manager : MonoBehaviour {
     public Image star3;
     public Image star4;
     public Image star5;
+    public Text name;
     public Text description;
     public List<Image> stars;
     private Color starRated;
     private Color starUnrated;
     private Quest quest;
 
-    private void Awake()
+    private void Start()
     {
         starRated = Color.yellow;
         starUnrated = Color.gray;
@@ -30,6 +32,23 @@ public class QuestDetails_Manager : MonoBehaviour {
             star4,
             star5
         };
+        UpdateContent();
+    }
+
+    public void UpdateContent()
+    {
+        //Mise à jour de la fenêtre cachée avec les informations correspondantes à l'éléments cliqué
+        if (Controller.Instance.SelectedQuest != null)
+        {
+            Quest actualQuest = Controller.Instance.SelectedQuest;
+            StarsManager(actualQuest.Statistics);
+            description.text = actualQuest.Description;
+            name.text = actualQuest.Title;
+        }
+        else
+        {
+            name.text = "No Quest selected";
+        }
     }
 
     /// <summary>
@@ -39,25 +58,13 @@ public class QuestDetails_Manager : MonoBehaviour {
     /// </summary>
     public void ScrollButtonListener()
     {
-        //Mise à jour de la fenêtre cachée avec les informations correspondantes à l'éléments cliqué
         if (Controller.Instance.SelectedQuest != null)
         {
-            Quest actualQuest = Controller.Instance.SelectedQuest;
-            StarsManager(actualQuest.Statistics);
-            DescriptionManager(actualQuest.Description);
+            UpdateContent();
             //Affichage de la fenêtre cachée
             Animator animationObj = questDetails.GetComponentInChildren<Animator>();
             animationObj.SetTrigger("clic");
         }
-    }
-
-    /// <summary>
-    /// Show, above of the map, the title of the Selected Quest
-    /// </summary>
-    /// <param name="title">Title of the selected quest</param>
-    public void DescriptionManager(string title)
-    {
-        description.text = title;
     }
 
     /// <summary>
@@ -69,16 +76,21 @@ public class QuestDetails_Manager : MonoBehaviour {
         double mark = statistics.ComputeMean();
 
         //TODO gerer le cas sans moyenne
-        if (double.IsNaN(mark))    
+        if (double.IsNaN(mark))
             mark = 0;
 
-        for(int i = 0; i < mark && i < stars.Count; i++)
+        for (int i = 0; i < mark && i < stars.Count; i++)
         {
             stars[i].color = starRated;
         }
-        for(int i = (int)mark; i < stars.Count; i++)
+        for (int i = (int)mark; i < stars.Count; i++)
         {
             stars[i].color = starUnrated;
         }
+    }
+
+    public void StartButtonListener()
+    {
+        Controller.Instance.StartQuest();
     }
 }
