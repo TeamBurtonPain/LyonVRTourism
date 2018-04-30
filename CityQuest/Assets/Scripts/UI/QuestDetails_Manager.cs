@@ -13,7 +13,7 @@ public class QuestDetails_Manager : MonoBehaviour
     public Image star3;
     public Image star4;
     public Image star5;
-    public Text name;
+    public Text tile;
     public Text description;
     public List<Image> stars;
     private Color starRated;
@@ -43,11 +43,11 @@ public class QuestDetails_Manager : MonoBehaviour
             Quest actualQuest = Controller.Instance.SelectedQuest;
             StarsManager(actualQuest.Statistics);
             description.text = actualQuest.Description;
-            name.text = actualQuest.Title;
+            tile.text = actualQuest.Title;
         }
         else
         {
-            name.text = "No Quest selected";
+            tile.text = "No Quest selected";
         }
     }
 

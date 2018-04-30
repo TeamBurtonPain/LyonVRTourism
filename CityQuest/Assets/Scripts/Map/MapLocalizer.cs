@@ -36,7 +36,6 @@ public class MapLocalizer : MonoBehaviour
         };
 
         float scale = GeoManager.Instance.Distance(c1, c2);
-        Debug.Log(scale + " vs " + targetSize);
         t.localScale = new Vector3(1, 1, 1) * targetSize / scale * 20;// 120 is the width of the map.
     }
 
