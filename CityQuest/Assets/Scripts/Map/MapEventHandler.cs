@@ -16,7 +16,6 @@ public class MapEventHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     private Vector2 initDrag;
     private Vector3 initPosition;
-    private Vector2 oldTemp;
 
     private Touch startZoom0;
     private Touch startZoom1;
@@ -47,7 +46,6 @@ public class MapEventHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHan
             newView.z = Mathf.Clamp(newView.z, -mapSize + Camera.main.orthographicSize, mapSize - Camera.main.orthographicSize);
 
             Camera.main.transform.position = newView;
-            oldTemp = newDrag;
         }
 
         // Zoom

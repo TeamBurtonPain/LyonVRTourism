@@ -20,5 +20,9 @@ public class DefaultState : IState
     public virtual void InscriptionAction() { }
     public virtual void SelectionQuestInHistoricAction(Quest myQuest) { }
 
-    public virtual void StartQuestAction() { }
+    //TODO inutile ici ?
+    public virtual void StartQuestAction() {
+
+        //Controller.user.AddQuest(selectedQuest);
+    }
 }

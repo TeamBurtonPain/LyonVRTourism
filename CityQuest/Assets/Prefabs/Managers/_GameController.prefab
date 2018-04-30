@@ -204,6 +204,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leavingWindow: {fileID: 1009461835178866}
+  errorTemplate: {fileID: 114377541159688256, guid: 69fc7053d499a1e46bac6f8905e4787b,
+    type: 2}
 --- !u!114 &114747057384446008
 MonoBehaviour:
   m_ObjectHideFlags: 1

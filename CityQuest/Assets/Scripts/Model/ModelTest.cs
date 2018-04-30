@@ -16,7 +16,7 @@ class ModelTest : MonoBehaviour
         {
             Id = "0@bob",
             Username = "bob",
-            Mail = "mail@frub.fufv",
+            Mail = "autremil@cndi.fkr",
             Password = "pass",
             LastName = "fdibs",
             FirstName = "bob",
@@ -60,6 +60,7 @@ class ModelTest : MonoBehaviour
         };
 
         HTTPHelper.Persist(c);
+        HTTPHelper.Persist(q1);
 
         tuser.text = JSONHelper.ToJsonString(q1);
     }

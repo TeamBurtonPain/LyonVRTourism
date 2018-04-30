@@ -1,13 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;using System.Linq;
+using System.Net;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public static class HTTPHelper
 {
-    public const string SERVER = "http://192.168.43.228:3000/api/";
+    public const string SERVER = "http://localhost:3000/api/";
 
+
+
+
+    /******************** AUTHENTIFICATION ********************/
+
+    public static Cookie AuthLogin(string mail, string pwd)
+    {
+        return new Cookie();
+    }
 
     /******************** PERSIST ********************/
     public static bool Persist(Account a)
@@ -23,10 +33,10 @@ public static class HTTPHelper
 
     }
 
-    public static bool Persist(Quest a)
+    public static bool Persist(Quest q)
     {
-        Debug.Log(JSONHelper.ToJsonString(a));
-        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "quests", Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(a)));
+        Debug.Log(JSONHelper.ToJsonString(q));
+        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "quests", Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(q)));
         uwr.method = "POST";
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
 
