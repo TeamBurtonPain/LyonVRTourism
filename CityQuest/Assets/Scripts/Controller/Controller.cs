@@ -259,7 +259,7 @@ public class Controller : MonoBehaviour
 
     public void OpenCamera()
     {
-        Debug.Log("Open Camera");
+        SceneManager.LoadScene("ImageRecognition");
     }
 
     /*********** FIN BOUTONS ***********/
