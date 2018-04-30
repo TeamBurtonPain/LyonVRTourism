@@ -237,7 +237,7 @@ public class Controller : MonoBehaviour
 
     }
 
-    public void CreateNewQuest(string firstName, string lastname, string mail, string password, string username)
+    public void CreateNewQuest(string firstName, string lastname, string mail, string password, string username, List<CreatorCheckpointManager> checkPoints)
     {
         // TODO integrity check
         // Vérifier bon format des données
@@ -252,27 +252,7 @@ public class Controller : MonoBehaviour
 
     }
 
-    public void CreateNewCheckpoint(
-        string enigma,
-        string firstAnswer, 
-        string secondAnswer, 
-        string thirdAnswer, 
-        string picture,
-        string rightAnswer)
-    {
-
-    // TODO integrity check
-    // Vérifier bon format des données
-
-    // TODO : persistance en ligne de la quête créé si non deja existante.
-
-    // if persistance ok -> quete = quete
-    //    LoadCheckpoint
-
-    // else 
-    // Error(message);
-
-}
+ 
 
     public void ChooseUsername(string pseudo)
     {

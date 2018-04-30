@@ -31,8 +31,14 @@ public class CreatorCheckpointManager : MonoBehaviour
 
     public void Btn_CreateNewCheckpoint()
     {
-        if (FirstAnswerToggle.isOn && !SecondAnswerToggle.isOn && !ThirdAnswerToggle.isOn)
+        if (FirstAnswerToggle.isOn && !SecondAnswerToggle.isOn && !ThirdAnswerToggle.isOn ||
+            !FirstAnswerToggle.isOn && SecondAnswerToggle.isOn && !ThirdAnswerToggle.isOn ||
+            !FirstAnswerToggle.isOn && !SecondAnswerToggle.isOn && ThirdAnswerToggle.isOn)
         {
+            parent.AddNewCheckpoint(index+1);
+
+        }
+       /* {
             Controller.Instance.CreateNewCheckpoint(
                 EnigmaInputField.text,
                 FirstAnswerInputField.text,
@@ -66,11 +72,23 @@ public class CreatorCheckpointManager : MonoBehaviour
                 FurnishedImage.ToString(),
                 //Convert.ToBase64String(FurnishedImage), // Pass image as string 
                 ThirdAnswerInputField.text);
-        }
+        }*/
         else
         {
             Controller.Instance.Error("Vous devez sélectionner une unique solution !");
         }
+    }
+
+    public void Btn_CreateQuest()
+    {
+            Controller.Instance.CreateNewQuest(
+                parent.QuestNameInputField.text,
+                parent.QuestDescriptionInputField.text,
+                parent.QuestValueInputField.text,
+                parent.PositionLatInputField.text,
+                parent.PositionLongInputField.text,
+                parent.AllCheckpoints); 
+                
     }
 
 }

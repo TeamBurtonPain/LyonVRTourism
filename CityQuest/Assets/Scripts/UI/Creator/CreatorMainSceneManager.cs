@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,28 +12,24 @@ public class CreatorMainSceneManager : MonoBehaviour
     public InputField QuestNameInputField;
     public InputField QuestDescriptionInputField;
     public InputField QuestValueInputField;
-    protected List<CreatorCheckpointManager> myCheckpoints;
+    public List<CreatorCheckpointManager> AllCheckpoints;
 
-    public void Btn_CreateNewQuest()
+    public void Btn_StartNewQuest()
     {
         this.gameObject.SetActive(false);
         AddNewCheckpoint(0);
-        /*
-            Controller.Instance.CreateNewQuest(
-                QuestNameInputField.text, 
-                QuestDescriptionInputField.text,
-                QuestValueInputField.text, 
-                PositionLatInputField.text, 
-                PositionLongInputField.text); 
-                */
+        
     }
 
     public void AddNewCheckpoint(int index)
     {
-       // myCheckpoints.Last() set active false si not null
+        if (AllCheckpoints.LastOrDefault() != null)
+        {
+            AllCheckpoints.Last().gameObject.SetActive(false);
+        }
         CreatorCheckpointManager temp = Instantiate(CheckpointTemplate, this.transform);
         temp.SetIndex(index, this);
-        myCheckpoints.Add(temp);
+        AllCheckpoints.Add(temp);
     }
 
     public void Btn_UseCurrentLoc()
