@@ -10,8 +10,8 @@ async function getAll() {
 
 async function getQuestById(questId) {
     let quest = await Quest.findById(questId);
-    quest = quest.toJSON();
     if (!quest) throw createUserError('Unknow quest', 'No quest found with the provided _id.');
+    quest = quest.toJSON();
     quest.picture = await base64EncodeToPromise(quest.picturePath);
     delete quest.picturePath;
     for (const checkpoint of quest.checkpoints) {
@@ -71,7 +71,7 @@ async function updateQuest(questId, questModif) {
 }
 
 async function deleteQuest(questId) {
-    const quest = await getQuestById(questId);
+    const quest = await Quest.findById(questId);
 
     await new Promise(resolve => fs.unlink(quest.picturePath, res => resolve(res)));
     for (const picturePath of quest.checkpoints.map(checkpoint => checkpoint.picturePath)) {
