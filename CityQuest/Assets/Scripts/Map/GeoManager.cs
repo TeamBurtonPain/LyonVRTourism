@@ -1,12 +1,14 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 /// <summary>
 /// Class managing all the methods needed for the geolocalisation
 /// </summary>
 public class GeoManager : MonoBehaviour
 {
-    
+
     public float radius = 1;
+    public float R = 6371f;
 
     protected bool loaded = false;
     protected bool failed = false;
@@ -17,7 +19,6 @@ public class GeoManager : MonoBehaviour
         get { return instance; }
     }
 
-    private Coordinates userPosition;
 
     /// <summary>
     /// Method initializing the GeoManager instance
@@ -34,8 +35,6 @@ public class GeoManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
-
-        userPosition = new Coordinates();
     }
 
     /// <summary>
@@ -47,16 +46,25 @@ public class GeoManager : MonoBehaviour
 #if PC
         Debug.Log("On PC / Don't have GPS");
 #elif !PC
+        StartCoroutine(Init());
+#endif
+    }
+
+
+    public IEnumerator Init()
+    {
+        failed = false;
         //Starting the Location service before querying location
         Input.location.Start(0.5f); // Accuracy of 0.5 m
 
-        int wait = 1000; // Per default
+        int wait = 10; // Per default
 
         // Checks if the GPS is enabled by the user (-> Allow location )
         if (Input.location.isEnabledByUser)
         {
             while (Input.location.status == LocationServiceStatus.Initializing && wait > 0)
             {
+                yield return new WaitForSeconds(1);
                 wait--;
             }
 
@@ -64,7 +72,7 @@ public class GeoManager : MonoBehaviour
             if (Input.location.status == LocationServiceStatus.Failed)
             {
                 failed = true;
-                //latitude and longitude equals to 0
+                yield break;
             }
             else
             {
@@ -74,10 +82,11 @@ public class GeoManager : MonoBehaviour
         else
         {
             failed = true;
+            yield break;
         }
-#endif
     }
-    
+
+
     public bool IsLoaded()
     {
         return loaded;
@@ -90,23 +99,18 @@ public class GeoManager : MonoBehaviour
     /// Method that states if a user is near to a location within a perimeter stated in the params. The user coordinates are automatically collected using the device sensors
     /// </summary>
     /// <param name="target">Represents the location targeted by the user</param>
-    /// <param name="radius">Parameter that represents the minimum perimeter in which the user must be to begin its quest. radius in kilometers.</param>
     /// <returns> A boolean that represents the validation of the user's presence nearby the location targeted.</returns>
-    public bool IsUserNear(Coordinates target, float radius)
+    public bool IsUserNear(Coordinates target)
     {
-        bool isNear = false;
-
-        userPosition.x = Input.location.lastData.latitude;
-        userPosition.y = Input.location.lastData.longitude;
+        Coordinates userPosition = new Coordinates
+        {
+            x = Input.location.lastData.latitude,
+            y = Input.location.lastData.longitude
+        };
 
         float distance = Distance(userPosition, target);
 
-        if (distance <= radius)
-        {
-            isNear = true;
-        }
-
-        return isNear;
+        return distance <= radius;
     }
     public Vector2 GetUserPosition()
     {
@@ -119,15 +123,13 @@ public class GeoManager : MonoBehaviour
     /// <param name="coord1">Represents one geographical position to study</param>
     /// <param name="coord2">Represents the other geographical position to study</param>
     /// <returns>Returns a float representing the euclidian distance between the two position studied</returns>
-    private float Distance(Coordinates coord1, Coordinates coord2)
+    public float Distance(Coordinates coord1, Coordinates coord2)
     {
         float coord1Lat = coord1.x * Mathf.PI / 180;
         float coord1Long = coord1.y * Mathf.PI / 180;
 
         float coord2Lat = coord2.x * Mathf.PI / 180;
         float coord2Long = coord2.y * Mathf.PI / 180;
-
-        float R = 6371f;
 
         float distance = R * Mathf.Acos(Mathf.Cos(coord1Lat) * Mathf.Cos(coord2Lat) *
             Mathf.Cos(coord2Long - coord1Long) + Mathf.Sin(coord1Lat) * Mathf.Sin(coord2Lat));

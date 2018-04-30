@@ -8,7 +8,7 @@ public class UI_QuestElement : MonoBehaviour
     public Text questNameText;
     public Text questProgressText;
 
-    public void linkQuest(StateQuest sQuest)
+    public void LinkQuest(StateQuest sQuest)
     {
         myQuest = sQuest.Quest;
         questNameText.text = sQuest.Quest.Title;
@@ -17,7 +17,6 @@ public class UI_QuestElement : MonoBehaviour
 
     public void SelectQuestInHistoric()
     {
-        Controller.Instance.SelectedQuest = myQuest;
-        Controller.Instance.SelectionQuestInHistoric();
+        Controller.Instance.SelectionQuestInHistoric(myQuest);
     }
 }

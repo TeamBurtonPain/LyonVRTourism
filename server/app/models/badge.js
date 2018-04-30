@@ -9,7 +9,6 @@ const Badge = new Schema({
         xp: Number,
         totalElapsedTime: Number,
         // TODO: quests: [Schema.Types.ObjectId],
-        // checkpoints: [Schema.Types.ObjectId],
     },
     earn: Number,
 });

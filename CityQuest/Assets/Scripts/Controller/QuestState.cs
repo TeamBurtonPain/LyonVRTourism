@@ -1,21 +1,7 @@
-﻿using UnityEngine.SceneManagement;
-
-
-public class QuestState : DefaultState
+﻿public class QuestState : DefaultState
 {
-    public QuestState(Controller c) : base(c)
+    public override void ReturnAction()
     {
+        Controller.Instance.LoadMap();
     }
-
-    public new void StartQuestAction()
-    {
-        //TODO : Scene QuestScene pour mettre en place le passage scène quête
-       //SceneManager.LoadScene("QuestScene");
-    }
-
-
-
-
- 
-
 }
