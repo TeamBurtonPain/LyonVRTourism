@@ -16,7 +16,7 @@ public class QuestLoc : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("CheckDistance", 0, 1);
+        InvokeRepeating("CheckDistance", 0.1f, 1);
     }
 
     public void LinkQuest(Quest q, MapLocalizer m, MapQuestGenerator parent)
@@ -33,7 +33,6 @@ public class QuestLoc : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            // Whatever you want it to do.
             Controller.Instance.SelectedQuest = quest;
             parent.UpdateSelect();
         }
