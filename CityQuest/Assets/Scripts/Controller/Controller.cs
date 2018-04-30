@@ -237,6 +237,20 @@ public class Controller : MonoBehaviour
 
     }
 
+    public void CreateNewQuest(string firstName, string lastname, string mail, string password, string username)
+    {
+
+
+        // TODO : persistance en ligne de la quête créé.
+
+        // if persistance ok -> quete = quete
+      //    LoadCheckpoint
+
+        // else 
+        // Error(message);
+
+    }
+
     public void ChooseUsername(string pseudo)
     {
         // TODO des trucs avec ce pseudo
