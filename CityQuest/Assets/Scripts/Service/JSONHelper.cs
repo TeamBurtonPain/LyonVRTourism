@@ -130,6 +130,21 @@ public static class JSONHelper
         return jsonAccount.ToString();
     }
 
+    public static string ToJsonString(User u)
+    {
+        JObject jsonAccount = new JObject(
+            new JProperty("userInformation", new JObject(
+                new JProperty("username", u.Username)
+            )),
+            new JProperty("game", new JObject(
+                new JProperty("badges", JSONHelper.ToJson(u.Badges)),
+                new JProperty("quests", JSONHelper.ToJson(u.Quests)),
+                new JProperty("xp", u.Xp)
+            ))
+        );
+        return jsonAccount.ToString();
+    }
+
     public static JArray ToJson(List<Badge> badges)
     {
         JArray jsonBadges = new JArray();
