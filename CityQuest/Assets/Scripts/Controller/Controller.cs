@@ -257,6 +257,11 @@ public class Controller : MonoBehaviour
 
     }
 
+    public void OpenCamera()
+    {
+        Debug.Log("Open Camera");
+    }
+
     /*********** FIN BOUTONS ***********/
 
     public void Error(string msg)
