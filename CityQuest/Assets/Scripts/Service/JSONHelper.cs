@@ -88,6 +88,21 @@ public static class JSONHelper
 
     //****************************** USER ******************************//
 
+    public static string GetIDFromAuth(string auth)
+    {
+        JObject jsonAuth = JObject.Parse(auth);
+        return (string) jsonAuth["_id"];
+    }
+
+    public static string ToJsonString(string mail, string pwd)
+    {
+        JObject jsonConnect = new JObject(
+            new JProperty("email", mail),
+            new JProperty("password", pwd)
+        );
+        return jsonConnect.ToString();
+    }
+
     public static string ToJsonString(Account a)
     {
         JObject jsonAccount = new JObject(
@@ -141,6 +156,11 @@ public static class JSONHelper
         }
 
         return jsonQuest;
+    }
+
+    public static Account GetAccount(string json)
+    {
+        return new Account();
     }
 
 }
