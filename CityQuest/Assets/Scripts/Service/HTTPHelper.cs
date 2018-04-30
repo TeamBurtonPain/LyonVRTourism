@@ -99,6 +99,45 @@ public static class HTTPHelper
         return true;
     }
 
+    /******************** UPDATE ********************/
+
+    public static bool Update(Account a, Cookie cookie)
+    {
+        Debug.Log(JSONHelper.ToJsonString(a));
+        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "accounts/"+a.Id, Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(a)));
+        uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
+        uwr.SetRequestHeader("Authorization", "Bearer " + cookie.Value);
+        uwr.SendWebRequest();
+        while (uwr.downloadProgress < 0.95f)
+        {
+            WaitForSecondsRealtime w = new WaitForSecondsRealtime(0.5f);
+        }
+        Debug.Log(uwr.ToString());
+        string text = uwr.downloadHandler.text;
+        Debug.Log(text);
+        return true;
+
+    }
+
+    public static bool Update(Quest q, Cookie cookie)
+    {
+        Debug.Log(JSONHelper.ToJsonString(q));
+        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "quests/" + q.Id, Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(q)));
+        uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
+        uwr.SetRequestHeader("Authorization", "Bearer " + cookie.Value);
+
+        Debug.Log(uwr.ToString());
+        uwr.SendWebRequest();
+        while (uwr.downloadProgress < 0.95f)
+        {
+            WaitForSecondsRealtime w = new WaitForSecondsRealtime(0.5f);
+        }
+        Debug.Log(uwr.ToString());
+        string text = uwr.downloadHandler.text;
+        Debug.Log(text);
+        return true;
+    }
+
     /******************** GET ********************/
 
     public static Account GetAccount(Cookie cookie)
@@ -121,6 +160,27 @@ public static class HTTPHelper
         Debug.Log(text);
 
         return JSONHelper.GetAccount(text);
+    }
+
+    public static Quest GetQuest(string id, Cookie cookie)
+    {
+        Debug.Log(cookie.Value);
+        Debug.Log(id);
+        UnityWebRequest uwr = UnityWebRequest.Get(SERVER + "quests/" + id);
+        uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
+        uwr.SetRequestHeader("Authorization", "Bearer " + cookie.Value);
+
+        Debug.Log(uwr.ToString());
+        uwr.SendWebRequest();
+        while (uwr.downloadProgress < 0.95f)
+        {
+            WaitForSecondsRealtime w = new WaitForSecondsRealtime(0.5f);
+        }
+        Debug.Log(uwr.ToString());
+        string text = uwr.downloadHandler.text;
+        Debug.Log(text);
+
+        return JSONHelper.GetQuest(text);
     }
 }
 

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public static class JSONHelper
@@ -83,6 +85,12 @@ public static class JSONHelper
             new JProperty("mark", qsu.Mark)
         );
         return jsonQsu;
+    }
+
+    public static Quest GetQuest(string json)
+    {
+        //TODO merge
+        return new Quest();
     }
 
 
@@ -175,8 +183,18 @@ public static class JSONHelper
 
     public static Account GetAccount(string json)
     {
+        //TODO merge
         return new Account();
     }
 
+
+    //****************************** PICTURE ******************************//
+
+    public static string GetBase64(string img)
+    {
+        byte[] imageBytes = System.IO.File.ReadAllBytes(img);
+        // Convert byte[] to Base64 String
+        return Convert.ToBase64String(imageBytes);
+    }
 }
 
