@@ -50,15 +50,51 @@ public class Controller : MonoBehaviour
         currentState = loginState;
 
         //------ Test sample ---------
-        Coordinates coordinates = new Coordinates();
-        coordinates.x = 42.3245f;
-        coordinates.y = 4.56978f;
-        Coordinates coordinates2 = new Coordinates();
-        coordinates2.x = 45.781732f;
-        coordinates2.y = 4.872846f;
+        Coordinates coordinates = new Coordinates
+        {
+            x = 42.3245f,
+            y = 4.56978f
+        };
+        Coordinates coordinates2 = new Coordinates
+        {
+            x = 45.781732f,
+            y = 4.872846f
+        };
+        Coordinates coordinates3 = new Coordinates
+        {
+            x = 45.771732f,
+            y = 4.872846f
+        };
+        Coordinates coordinates4 = new Coordinates
+        {
+            x = 45.761732f,
+            y = 4.872846f
+        };
+        Coordinates coordinates5 = new Coordinates
+        {
+            x = 45.751732f,
+            y = 4.872846f
+        };
+        Coordinates coordinates6 = new Coordinates
+        {
+            x = 45.741732f,
+            y = 4.872846f
+        };
+        Coordinates coordinates7 = new Coordinates
+        {
+            x = 45.731732f,
+            y = 4.872846f
+        };
+        Coordinates coordinates8 = new Coordinates
+        {
+            x = 45.7821732f,
+            y = 4.872846f
+        };
 
-        Creator creator = new Creator();
-        creator.FirstName = "John";
+        Creator creator = new Creator
+        {
+            FirstName = "John"
+        };
         List<string> choices = new List<string>();
         choices.Add("a");
         choices.Add("b");
@@ -72,10 +108,22 @@ public class Controller : MonoBehaviour
         };
         Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 3L, creator, checkpoints);
         Quest quest2 = new Quest(coordinates2, "Trouver les pandas roux2", "Description des pandas roux2", 3L, creator, checkpoints);
+        Quest q3 = new Quest(coordinates3, "a", "b", 3L, creator, checkpoints);
+        Quest q4 = new Quest(coordinates4, "a", "b", 3L, creator, checkpoints);
+        Quest q5 = new Quest(coordinates5, "a", "b", 3L, creator, checkpoints);
+        Quest q6 = new Quest(coordinates6, "a", "b", 3L, creator, checkpoints);
+        Quest q7 = new Quest(coordinates7, "a", "b", 3L, creator, checkpoints);
+        Quest q8 = new Quest(coordinates8, "a", "b", 3L, creator, checkpoints);
         existingQuests = new List<Quest>
         {
             quest,
-            quest2
+            quest2,
+            q3,
+            q4,
+            q5,
+            q6,
+            q7,
+            q8
         };
 
         user = new User();
@@ -162,8 +210,8 @@ public class Controller : MonoBehaviour
         {
             if (GeoManager.Instance.IsUserNear(selectedQuest.Geolocalisation))
             {
-                currentState = questState;
                 user.AddQuest(selectedQuest);
+                currentState = questState;
                 SceneManager.LoadScene("GameImageScene");
             }
             else{
@@ -278,7 +326,7 @@ public class Controller : MonoBehaviour
         // if connexion ok 
         //     faire la persistance locale de la connexion au compte +
         //     user = charger l'user depuis la bdd
-        SceneManager.LoadScene("MapScene");
+        LoadMap();
         // else 
         // Error("Aucune correspondance trouvée.");
 
