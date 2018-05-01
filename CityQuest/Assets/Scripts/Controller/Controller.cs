@@ -11,12 +11,14 @@ public enum ConnexionState
 public class Controller : MonoBehaviour
 {
     public GameObject leavingWindow;
+    public GameObject cancelWindow;
     public ErrorPopUp errorTemplate;
 
     protected static Controller instance;
 
     private IState currentState;
     public IState mapState;
+    public IState editorState;
     public IState historicState;
     public IState questState;
     public IState loginState;
@@ -43,6 +45,7 @@ public class Controller : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         mapState = new MapState();
+        editorState = new EditorState();
         historicState = new HistoricState();
         questState = new QuestState();
         loginState = new LoginState();
@@ -154,6 +157,8 @@ public class Controller : MonoBehaviour
         }
     }
 
+    //////////////// Pop-up windows
+    // Leave
     public void AskLeave()
     {
         leavingWindow.SetActive(true);
@@ -170,7 +175,24 @@ public class Controller : MonoBehaviour
     {
         leavingWindow.SetActive(false);
     }
+    // BackToMap
+    public void AskBackToMap()
+    {
+        cancelWindow.SetActive(true);
+    }
 
+    public void BackToMap()
+    {
+        cancelWindow.SetActive(false);
+        LoadMap();
+    }
+
+    public void CancelBackToMap()
+    {
+        cancelWindow.SetActive(false);
+    }
+    //////////////////////////
+    // end of pop-up windows
     private void Update()
     {
 
@@ -229,12 +251,6 @@ public class Controller : MonoBehaviour
         currentState = mapState;
         SceneManager.LoadScene("MapScene");
     }
-    public void LoadEditor()
-    {
-        // TODO un Etat Editeur ?
-        currentState = mapState;
-        SceneManager.LoadScene("CreatorMainScene");
-    }
     public void LoadInscription()
     {
         currentState = loginState;
@@ -253,7 +269,8 @@ public class Controller : MonoBehaviour
 
     public void SelectMenuNewQuest()
     {
-        LoadEditor();
+        currentState = editorState;
+        SceneManager.LoadScene("CreatorMainScene");
     }
     public void SelectMenuMap()
     {

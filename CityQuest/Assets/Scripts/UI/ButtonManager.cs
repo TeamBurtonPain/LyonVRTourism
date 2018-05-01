@@ -10,6 +10,10 @@ public class ButtonManager : MonoBehaviour
     {
         Controller.Instance.SelectMenuMap();
     }
+    public void Btn_BackToMap()
+    {
+        Controller.Instance.AskBackToMap();
+    }
     public void Btn_SelectMenuHistoric()
     {
         Controller.Instance.SelectMenuHistoric();
