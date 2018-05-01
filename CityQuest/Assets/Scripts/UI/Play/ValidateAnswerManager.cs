@@ -10,11 +10,10 @@ public class ValidateAnswerManager : MonoBehaviour
 
     public void ValidateAnswer()
     {
-        bool correct = Controller.Instance.ValidateAnswer(inputAnswer.text);
+        bool correct = Controller.Instance.CheckAnswer(inputAnswer.text);
         if (correct)
         {
             GetComponent<Image>().color = Color.green;
-            //GetComponent<Button>().transform.GetChild(0);
         }
     }
 }

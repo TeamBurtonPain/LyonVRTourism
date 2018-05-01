@@ -28,6 +28,10 @@ public class Controller : MonoBehaviour
 
     private Quest selectedQuest;
 
+    private StateQuest currentQuest;
+
+    private StateCheckPoint currentCheckpoint;
+
 
     void Awake()
     {
@@ -60,10 +64,10 @@ public class Controller : MonoBehaviour
         Creator creator = new Creator();
         creator.FirstName = "John";
         List<string> choices = new List<string>();
-        choices.Add("a");
-        choices.Add("b");
-        choices.Add("c");
-        CheckPoint cp1 = new CheckPoint("pic1.png", "blablablaTextCP1", choices, "b");
+        choices.Add("Du bambou");
+        choices.Add("Des oeufs");
+        choices.Add("Des M&M's");
+        CheckPoint cp1 = new CheckPoint("pic1.png", "Que mangent principalement les pandas roux ?", choices, "b");
         CheckPoint cp2 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "a");
         List<CheckPoint> checkpoints = new List<CheckPoint>
         {
@@ -77,6 +81,7 @@ public class Controller : MonoBehaviour
             quest,
             quest2
         };
+        StateQuest playing = new StateQuest(quest);
 
         user = new User();
         user.AddQuest(quest);
@@ -84,6 +89,8 @@ public class Controller : MonoBehaviour
         //------ End Test sample -------
 
         selectedQuest = quest;
+        currentQuest = playing;
+        currentCheckpoint = currentQuest.Checkpoints[0];
         currentConnexion = ConnexionState.DISCONNECTED;
     }
 
@@ -262,7 +269,7 @@ public class Controller : MonoBehaviour
         // TODO : Ouvrir la scene Vuforia caméra
     }
 
-    public bool ValidateAnswer(string answer)
+    public bool CheckAnswer(string answer)
     {
         return true;
         // TODO : Vérifier la validité de la réponse
@@ -285,6 +292,18 @@ public class Controller : MonoBehaviour
     {
         get { return selectedQuest; }
         set { selectedQuest = value; }
+    }
+
+    public StateQuest CurrentQuest
+    {
+        get { return currentQuest; }
+        set { currentQuest = value; }
+    }
+
+    public StateCheckPoint CurrentCheckpoint
+    {
+        get { return currentCheckpoint; }
+        set { currentCheckpoint = value; }
     }
 
     public List<Quest> ExistingQuests
