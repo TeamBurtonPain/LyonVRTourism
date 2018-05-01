@@ -259,7 +259,13 @@ public class Controller : MonoBehaviour
 
     public void OpenCamera()
     {
-        Debug.Log("Open Camera");
+        // TODO : Ouvrir la scene Vuforia caméra
+    }
+
+    public bool ValidateAnswer(string answer)
+    {
+        return true;
+        // TODO : Vérifier la validité de la réponse
     }
 
     /*********** FIN BOUTONS ***********/
