@@ -22,6 +22,8 @@ public class BingMapsTexture : OnlineTexture {
 
     public void ComputeInitialSector()
 	{
+
+        // On applique les formules données par Bing pour retrouver leur coordonnées de tile
 		float sinLatitude = Mathf.Sin (latitude * Mathf.PI / 180.0f);
 
 		int pixelX = (int)( ((longitude + 180) / 360) * 256 * Mathf.Pow (2, initialZoom + 1) );

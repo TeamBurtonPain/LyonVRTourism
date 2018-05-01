@@ -12,6 +12,7 @@ public enum ConnexionState
 public class Controller : MonoBehaviour
 {
     public GameObject leavingWindow;
+    public ErrorPopUp errorTemplate;
 
     protected static Controller instance;
 
@@ -63,8 +64,13 @@ public class Controller : MonoBehaviour
         choices.Add("a");
         choices.Add("b");
         choices.Add("c");
+<<<<<<< HEAD
         CheckPoint cp1 = new CheckPoint("pic1.png", "blablablaTextCP1", choices, "b",3);
         CheckPoint cp2 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "a",5);
+=======
+        CheckPoint cp1 = new CheckPoint("pic1.png", "blablablaTextCP1", choices, "b",1);
+        CheckPoint cp2 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "a",1);
+>>>>>>> b1f7f452e22bf58a7d9ca640fdb2f0bc5cdb0e58
         List<CheckPoint> checkpoints = new List<CheckPoint>
         {
             cp1,
@@ -160,8 +166,15 @@ public class Controller : MonoBehaviour
     {
         if (selectedQuest != null && user != null)
         {
-            user.AddQuest(selectedQuest);
-            currentState.StartQuestAction();
+            if (GeoManager.Instance.IsUserNear(selectedQuest.Geolocalisation))
+            {
+                currentState = questState;
+                user.AddQuest(selectedQuest);
+                SceneManager.LoadScene("GameImageScene");
+            }
+            else{
+                Error("Vous êtes trop loin pour lancer cette quête.");
+            }
         }
         else
         {
@@ -169,22 +182,36 @@ public class Controller : MonoBehaviour
         }
     }
 
-    public void SelectMenuNewQuest()
+    public void LoadMap()
     {
         currentState = mapState;
         SceneManager.LoadScene("MapScene");
+    }
+    public void LoadInscription()
+    {
+        currentState = loginState;
+        SceneManager.LoadScene("AccountCreation");
+    }
+    public void LoadConnexion()
+    {
+        currentState = loginState;
+        SceneManager.LoadScene("Connexion");
+    }
+    public void LoadUsername()
+    {
+        currentState = loginState;
+        SceneManager.LoadScene("Pseudo");
+    }
+
+    public void SelectMenuNewQuest()
+    {
+        LoadMap();
     }
     public void SelectMenuHistoric()
     {
         currentState = historicState;
         SceneManager.LoadScene("MyQuests");
     }
-
-    /*
-    public void GoQuest()
-    {
-        currentState.GoQuestAction();
-    }*/
 
     public void SelectMenuSettings()
     {
@@ -193,12 +220,56 @@ public class Controller : MonoBehaviour
 
     public void SelectMenuLogout()
     {
-        // TODO deco
+        // TODO deco en local (persistance)
         currentState = loginState;
         SceneManager.LoadScene("Login");
     }
 
+    public void CreateNewAccount(string firstName, string lastname, string mail, string password, string username)
+    {
+
+        // TODO integrity check
+
+        // récupérer les infos locales si elles existent.
+        // on se dit que s'il y a un pseudo en local, on le remplace par celui rentré ici de toutes façon. Le reste est gardé.
+
+        // TODO : persistance en ligne + locale de la connexion.
+
+        // if persistance ok -> user = user
+        LoadMap();
+
+        // else 
+        // Error(message);
+
+    }
+
+    public void ChooseUsername(string pseudo)
+    {
+        // TODO des trucs avec ce pseudo
+        // persistance local
+        LoadMap();
+    }
+
+    public void TryConnection(string mail, string pwd)
+    {
+        // TODO le back.
+        // connexion au serveur.
+        // if connexion ok 
+        //     faire la persistance locale de la connexion au compte +
+        //     user = charger l'user depuis la bdd
+        SceneManager.LoadScene("MapScene");
+        // else 
+        // Error("Aucune correspondance trouvée.");
+
+    }
+
     /*********** FIN BOUTONS ***********/
+
+    public void Error(string msg)
+    {
+        ErrorPopUp error = Instantiate(errorTemplate, this.transform);
+        error.SetError(msg);
+    }
 
     public static Controller Instance
     {

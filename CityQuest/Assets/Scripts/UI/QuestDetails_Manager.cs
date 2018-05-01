@@ -88,4 +88,9 @@ public class QuestDetails_Manager : MonoBehaviour
             stars[i].color = starUnrated;
         }
     }
+
+    public void StartButtonListener()
+    {
+        Controller.Instance.StartQuest();
+    }
 }

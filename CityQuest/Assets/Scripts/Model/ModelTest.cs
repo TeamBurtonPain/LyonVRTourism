@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +18,7 @@ class ModelTest : MonoBehaviour
         {
             Id = "0@bob",
             Username = "bob",
-            Mail = "mail@frub.fufv",
+            Mail = "aemil@cdi.fkr",
             Password = "pass",
             LastName = "fdibs",
             FirstName = "bob",
@@ -61,6 +62,16 @@ class ModelTest : MonoBehaviour
         };
 
         //HTTPHelper.Send(c);
+        Cookie auth = HTTPHelper.AuthLogin("autremil@cndi.fkr", "pass");
+        Debug.Log(auth.Value);
+        string decoded = JWTHelper.DecodePayload(auth.Value);
+        Debug.Log(decoded);
+
+        Account pasAccount = HTTPHelper.GetAccount(auth);
+
+
+        //HTTPHelper.Persist(c);
+        HTTPHelper.Persist(q1, auth);
 
         //tuser.text = JSONHelper.ToJsonString(q1);
 

@@ -26,7 +26,7 @@ public class MapQuestGenerator : MonoBehaviour {
         quest_details_manager.UpdateContent();
         foreach (QuestLoc q in quests)
         {
-            q.UpdateSelect();
+            q.CheckDistance();
         }
     }
 }

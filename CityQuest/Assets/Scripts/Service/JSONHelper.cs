@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class JSONHelper
 {
@@ -81,8 +86,29 @@ public static class JSONHelper
         return jsonQsu;
     }
 
+    public static Quest GetQuest(string json)
+    {
+        //TODO merge
+        return new Quest();
+    }
+
 
     //****************************** USER ******************************//
+
+    public static string GetIDFromAuth(string auth)
+    {
+        JObject jsonAuth = JObject.Parse(auth);
+        return (string) jsonAuth["_id"];
+    }
+
+    public static string ToJsonString(string mail, string pwd)
+    {
+        JObject jsonConnect = new JObject(
+            new JProperty("email", mail),
+            new JProperty("password", pwd)
+        );
+        return jsonConnect.ToString();
+    }
 
     public static string ToJsonString(Account a)
     {
@@ -106,6 +132,21 @@ public static class JSONHelper
                 new JProperty("quests", JSONHelper.ToJson(a.Quests)),
                 new JProperty("xp", a.Xp),
                 new JProperty("elapsedTime", a.ElapsedTime)
+            ))
+        );
+        return jsonAccount.ToString();
+    }
+
+    public static string ToJsonString(User u)
+    {
+        JObject jsonAccount = new JObject(
+            new JProperty("userInformation", new JObject(
+                new JProperty("username", u.Username)
+            )),
+            new JProperty("game", new JObject(
+                new JProperty("badges", JSONHelper.ToJson(u.Badges)),
+                new JProperty("quests", JSONHelper.ToJson(u.Quests)),
+                new JProperty("xp", u.Xp)
             ))
         );
         return jsonAccount.ToString();
@@ -248,5 +289,26 @@ public static class JSONHelper
         //Il faut déjà pouvoir réucpérer les objets Quest
     }
     */
+
+    public static Account GetAccount(string json)
+    {
+        //TODO merge : DONE (Hubert)
+        return ToAccount(json);
+    }
+
+
+    //****************************** PICTURE ******************************//
+
+    public static string GetBase64(string img)
+    {
+        byte[] imageBytes = System.IO.File.ReadAllBytes(img);
+        // Convert byte[] to Base64 String
+        return Convert.ToBase64String(imageBytes);
+    }
+
+    public static byte[] FromBase64(string img64)
+    {
+        return Convert.FromBase64String(img64);
+    }
 }
 

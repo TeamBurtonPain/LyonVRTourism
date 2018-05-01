@@ -7,11 +7,17 @@ public class QuestLoc : MonoBehaviour
 
     public Material normalMat;
     public Material selectedMat;
+    public Material tooFarMat;
 
     private MapQuestGenerator parent;
 
     private Quest quest;
     private MapLocalizer localizer;
+
+    private void Start()
+    {
+        InvokeRepeating("CheckDistance", 0, 1);
+    }
 
     public void LinkQuest(Quest q, MapLocalizer m, MapQuestGenerator parent)
     {
@@ -19,8 +25,8 @@ public class QuestLoc : MonoBehaviour
         localizer = m;
         this.parent = parent;
         localizer.Localise(this.transform, q.Geolocalisation.x, q.Geolocalisation.y);
-
-        UpdateSelect();
+        
+        CheckDistance();
     }
 
     void OnMouseOver()
@@ -42,6 +48,18 @@ public class QuestLoc : MonoBehaviour
         else
         {
             GetComponent<Renderer>().material = normalMat;
+        }
+    }
+
+    public void CheckDistance()
+    {
+        if (GeoManager.Instance.IsUserNear(quest.Geolocalisation))
+        {
+            UpdateSelect();
+        }
+        else
+        {
+            GetComponent<Renderer>().material = tooFarMat;
         }
     }
 }
