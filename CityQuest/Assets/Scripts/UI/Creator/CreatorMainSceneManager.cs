@@ -6,58 +6,67 @@ using UnityEngine.UI;
 
 public class CreatorMainSceneManager : MonoBehaviour
 {
-    public InputField PositionLongInputField;
-    public InputField PositionLatInputField;
-    public CreatorCheckpointManager CheckpointTemplate;
-    public InputField QuestNameInputField;
-    public InputField QuestDescriptionInputField;
-    public InputField QuestValueInputField;
-    protected List<CreatorCheckpointManager> AllCheckpoints;
+    public InputField questNameInputField;
+
+    public InputField positionLatInputField;
+    public InputField positionLongInputField;
+
+    public InputField questDescriptionInputField;
+    public InputField questValueInputField;
+
+    public CreatorCheckpointManager checkpointTemplate;
+
+    protected List<CreatorCheckpointManager> allCheckpoints = new List<CreatorCheckpointManager>();
 
     public void Btn_StartNewQuest()
     {
         this.gameObject.SetActive(false);
         AddNewCheckpoint(0);
-        
     }
 
     public void AddNewCheckpoint(int index)
     {
-        if (AllCheckpoints.LastOrDefault() != null)
+        if (allCheckpoints.Count != 0)
         {
-            AllCheckpoints.Last().gameObject.SetActive(false);
+            allCheckpoints.Last().gameObject.SetActive(false);
         }
-        CreatorCheckpointManager temp = Instantiate(CheckpointTemplate, this.transform);
+        CreatorCheckpointManager temp = Instantiate(checkpointTemplate);
         temp.SetIndex(index, this);
-        AllCheckpoints.Add(temp);
+        allCheckpoints.Add(temp);
     }
 
     public void Btn_UseCurrentLoc()
     {
-        // Find Current location
-
+        if (GeoManager.Instance.IsLoaded())
+        {
+            Vector2 loca = GeoManager.Instance.GetUserPosition();
+            positionLatInputField.text = loca.x.ToString();
+            positionLongInputField.text = loca.y.ToString();
+        }
     }
 
     public void ValidateQuest()
     {
         Controller.Instance.CreateNewQuest(
-            QuestNameInputField.text,
-            QuestDescriptionInputField.text,
-            QuestValueInputField.text,
-            PositionLatInputField.text,
-            PositionLongInputField.text,
+            questNameInputField.text,
+            questDescriptionInputField.text,
+            questValueInputField.text,
+            positionLatInputField.text,
+            positionLongInputField.text,
             ToCheckPoints()); // Pass checkpoints
     }
 
     public List<CheckPoint> ToCheckPoints()
     {
         List<CheckPoint> MyCheckPoints = new List<CheckPoint>();
-        foreach (CreatorCheckpointManager creatorCheckpoint in AllCheckpoints)
+        foreach (CreatorCheckpointManager creatorCheckpoint in allCheckpoints)
         {
-            List<string> choices = new List<string>();
-            choices.Add(creatorCheckpoint.FirstAnswerInputField.text);
-            choices.Add(creatorCheckpoint.SecondAnswerInputField.text);
-            choices.Add(creatorCheckpoint.ThirdAnswerInputField.text);
+            List<string> choices = new List<string>
+            {
+                creatorCheckpoint.FirstAnswerInputField.text,
+                creatorCheckpoint.SecondAnswerInputField.text,
+                creatorCheckpoint.ThirdAnswerInputField.text
+            };
 
             CheckPoint temp = new CheckPoint(
                 creatorCheckpoint.FurnishedImage.ToString(), // Pass image as string 
