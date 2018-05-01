@@ -39,7 +39,6 @@ public class CreatorCheckpointManager : MonoBehaviour
     {
         if (firstAnswerToggle.isOn)
         {
-            answer = firstAnswerInputField.text;
             secondAnswerToggle.isOn = false;
             thirdAnswerToggle.isOn = false;
         }
@@ -48,7 +47,6 @@ public class CreatorCheckpointManager : MonoBehaviour
     {
         if (secondAnswerToggle.isOn)
         {
-            answer = firstAnswerInputField.text;
             firstAnswerToggle.isOn = false;
             thirdAnswerToggle.isOn = false;
         }
@@ -57,7 +55,6 @@ public class CreatorCheckpointManager : MonoBehaviour
     {
         if (thirdAnswerToggle.isOn)
         {
-            answer = firstAnswerInputField.text;
             firstAnswerToggle.isOn = false;
             secondAnswerToggle.isOn = false;
         }
@@ -65,14 +62,24 @@ public class CreatorCheckpointManager : MonoBehaviour
 
     public void Btn_CreateNewCheckpoint()
     {
-        if(!firstAnswerToggle.isOn && !firstAnswerToggle.isOn && !firstAnswerToggle.isOn)
+        if (firstAnswerToggle.isOn)
         {
-            Controller.Instance.Error("Veuillez selectionner une bonne réponse");
-        }
-        else
-        {
+            answer = firstAnswerInputField.text;
             parent.AddNewCheckpoint(index + 1);
         }
+        else if (secondAnswerToggle.isOn)
+        {
+            answer = secondAnswerInputField.text;
+            parent.AddNewCheckpoint(index + 1);
+        }
+        else if (thirdAnswerToggle.isOn)
+        {
+            answer = thirdAnswerInputField.text;
+            parent.AddNewCheckpoint(index + 1);
+        }
+        else
+            Controller.Instance.Error("Veuillez selectionner une bonne réponse");
+        
     }
 
     public void Btn_CreateQuest()
