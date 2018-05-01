@@ -14,7 +14,14 @@ public class UI_AnswerElement : MonoBehaviour
 
     public void SelectAnswer()
     {
-        Controller.Instance.CheckAnswer(answer);
+        // TODO : Lancer la scene suivante
+        if(PlayQuestController.Instance.CheckAnswer(answer))
+        {
+            GetComponent<Image>().color = Color.green;
+        } else
+        {
+            GetComponent<Image>().color = Color.red;
+        }
     }
 }
 

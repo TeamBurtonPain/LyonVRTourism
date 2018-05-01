@@ -266,12 +266,6 @@ public class Controller : MonoBehaviour
         // TODO : Ouvrir la scene Vuforia caméra
     }
 
-    public bool CheckAnswer(string answer)
-    {
-        return true;
-        // TODO : Vérifier la validité de la réponse
-    }
-
     /*********** FIN BOUTONS ***********/
 
     public void Error(string msg)

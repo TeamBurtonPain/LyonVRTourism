@@ -537,7 +537,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Quel est l'aliment principal des pandas\n roux ?"
+  m_Text: Question
 --- !u!222 &1323584009
 CanvasRenderer:
   m_ObjectHideFlags: 0
