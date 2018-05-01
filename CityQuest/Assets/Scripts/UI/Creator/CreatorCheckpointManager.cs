@@ -4,67 +4,80 @@ using UnityEngine.UI;
 
 public class CreatorCheckpointManager : MonoBehaviour
 {
-    public InputField EnigmaInputField;
+    public Text indexText;
+    public InputField enigmaInputField;
+
+    public InputField firstAnswerInputField;
+    public InputField secondAnswerInputField;
+    public InputField thirdAnswerInputField;
+
+    public Image furnishedImage;
+
+    public Toggle firstAnswerToggle;
+    public Toggle secondAnswerToggle;
+    public Toggle thirdAnswerToggle;
+
+    private CreatorMainSceneManager parent;
+
     private int index;
     private string answer;
-    private CreatorMainSceneManager parent;
-    public InputField FirstAnswerInputField;
-    public InputField SecondAnswerInputField;
-    public InputField ThirdAnswerInputField;
-    public Image FurnishedImage;
-    public Toggle FirstAnswerToggle;
-    public Toggle SecondAnswerToggle;
-    public Toggle ThirdAnswerToggle;
 
     public int Index
-    {
-        get
-        {
-            return index;
-        }
-    }
+    { get {return index;} }
 
     public string Answer
-    {
-        get
-        {
-            return answer;
-        }
-    }
+    { get{ return answer; } }
 
     public void SetIndex(int i, CreatorMainSceneManager m)
     {
         parent = m;
         index = i;
+        indexText.text = "n. " + (index + 1);
+    }
+
+    public void SelectFirst()
+    {
+        if (firstAnswerToggle.isOn)
+        {
+            answer = firstAnswerInputField.text;
+            secondAnswerToggle.isOn = false;
+            thirdAnswerToggle.isOn = false;
+        }
+    }
+    public void SelectSecond()
+    {
+        if (secondAnswerToggle.isOn)
+        {
+            answer = firstAnswerInputField.text;
+            firstAnswerToggle.isOn = false;
+            thirdAnswerToggle.isOn = false;
+        }
+    }
+    public void SelectThird()
+    {
+        if (thirdAnswerToggle.isOn)
+        {
+            answer = firstAnswerInputField.text;
+            firstAnswerToggle.isOn = false;
+            secondAnswerToggle.isOn = false;
+        }
     }
 
     public void Btn_CreateNewCheckpoint()
     {
-        if (FirstAnswerToggle.isOn && !SecondAnswerToggle.isOn && !ThirdAnswerToggle.isOn)
+        if(!firstAnswerToggle.isOn && !firstAnswerToggle.isOn && !firstAnswerToggle.isOn)
         {
-            answer = FirstAnswerInputField.text;
-            parent.AddNewCheckpoint(index+1);
-            
-        }else if (!FirstAnswerToggle.isOn && SecondAnswerToggle.isOn && !ThirdAnswerToggle.isOn)
-        {
-            answer = SecondAnswerInputField.text;
-            parent.AddNewCheckpoint(index + 1);
-        }
-        else if (!FirstAnswerToggle.isOn && !SecondAnswerToggle.isOn && ThirdAnswerToggle.isOn)
-        {
-            answer = ThirdAnswerInputField.text;
-            parent.AddNewCheckpoint(index + 1);
+            Controller.Instance.Error("Veuillez selectionner une bonne réponse");
         }
         else
         {
-            Controller.Instance.Error("Vous devez sélectionner une unique solution !");
+            parent.AddNewCheckpoint(index + 1);
         }
     }
 
     public void Btn_CreateQuest()
     {
         parent.ValidateQuest();
-
     }
 
 }

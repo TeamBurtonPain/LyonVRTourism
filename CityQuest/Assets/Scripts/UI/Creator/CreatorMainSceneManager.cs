@@ -63,14 +63,14 @@ public class CreatorMainSceneManager : MonoBehaviour
         {
             List<string> choices = new List<string>
             {
-                creatorCheckpoint.FirstAnswerInputField.text,
-                creatorCheckpoint.SecondAnswerInputField.text,
-                creatorCheckpoint.ThirdAnswerInputField.text
+                creatorCheckpoint.firstAnswerInputField.text,
+                creatorCheckpoint.secondAnswerInputField.text,
+                creatorCheckpoint.thirdAnswerInputField.text
             };
 
             CheckPoint temp = new CheckPoint(
-                creatorCheckpoint.FurnishedImage.ToString(), // Pass image as string 
-                creatorCheckpoint.EnigmaInputField.text,
+                creatorCheckpoint.furnishedImage.ToString(), // Pass image as string 
+                creatorCheckpoint.enigmaInputField.text,
                 choices,
                 creatorCheckpoint.Answer);  
             MyCheckPoints.Add(temp);
