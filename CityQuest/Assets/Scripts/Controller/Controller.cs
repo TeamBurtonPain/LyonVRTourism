@@ -181,6 +181,12 @@ public class Controller : MonoBehaviour
         currentState = mapState;
         SceneManager.LoadScene("MapScene");
     }
+    public void LoadEditor()
+    {
+        // TODO un Etat Editeur ?
+        currentState = mapState;
+        SceneManager.LoadScene("CreatorMainScene");
+    }
     public void LoadInscription()
     {
         currentState = loginState;
@@ -198,6 +204,10 @@ public class Controller : MonoBehaviour
     }
 
     public void SelectMenuNewQuest()
+    {
+        LoadEditor();
+    }
+    public void SelectMenuMap()
     {
         LoadMap();
     }
@@ -244,8 +254,8 @@ public class Controller : MonoBehaviour
 
         // TODO : persistance en ligne de la quête créé si non deja existante.
 
-        // if persistance ok -> quete = quete
-        //    LoadCheckpoint
+        // if persistance ok
+        LoadMap();
 
         // else 
         // Error(message);
