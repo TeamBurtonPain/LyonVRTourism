@@ -64,13 +64,9 @@ public class Controller : MonoBehaviour
         choices.Add("a");
         choices.Add("b");
         choices.Add("c");
-<<<<<<< HEAD
         CheckPoint cp1 = new CheckPoint("pic1.png", "blablablaTextCP1", choices, "b",3);
         CheckPoint cp2 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "a",5);
-=======
-        CheckPoint cp1 = new CheckPoint("pic1.png", "blablablaTextCP1", choices, "b",1);
-        CheckPoint cp2 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "a",1);
->>>>>>> b1f7f452e22bf58a7d9ca640fdb2f0bc5cdb0e58
+
         List<CheckPoint> checkpoints = new List<CheckPoint>
         {
             cp1,
