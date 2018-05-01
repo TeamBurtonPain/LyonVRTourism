@@ -22,7 +22,7 @@ public class Quest
     private double timeLength;
     private QuestStatistics statistics;
     private bool open;
-    private Creator creator;
+    private string idCreator;
     private List<CheckPoint> checkpoints;
     private DateTime creationDate;
     private DateTime updateDate;
@@ -34,7 +34,6 @@ public class Quest
         geolocalisation = new Coordinates();
         statistics = new QuestStatistics(this);
         checkpoints = new List<CheckPoint>();
-        creator = new Creator();
         
     }
     /// <summary>
@@ -45,16 +44,30 @@ public class Quest
     /// <param name="creator">The creator.</param>
     /// <param name="checkpoints">The checkpoints.</param>
     public Quest(Coordinates geolocalisation, string title, string description, long value, 
-         Creator creator, List<CheckPoint> checkpoints)
+         string idCreator, List<CheckPoint> checkpoints)
     {
         this.title = title;
-        this.id = instanceCounter++;
         this.geolocalisation = geolocalisation;
         this.description = description;
         this.value = value;
         timeLength = -1;
         statistics = new QuestStatistics(this);
-        this.creator = creator;
+        this.idCreator = idCreator;
+        this.checkpoints = checkpoints;
+
+    }
+
+    public Quest(long id, Coordinates geolocalisation, string title, string description, long value,
+         string idCreator, List<CheckPoint> checkpoints)
+    {
+        this.id = id;
+        this.title = title;
+        this.geolocalisation = geolocalisation;
+        this.description = description;
+        this.value = value;
+        timeLength = -1;
+        statistics = new QuestStatistics(this);
+        this.idCreator = idCreator;
         this.checkpoints = checkpoints;
 
     }
@@ -110,10 +123,10 @@ public class Quest
         get { return statistics; }
     }
 
-    public Creator Creator
+    public string IdCreator
     {
-        get { return creator; }
-        set { creator = value; }
+        get { return idCreator; }
+        set { idCreator = value; }
     }
 
     public List<CheckPoint> Checkpoints

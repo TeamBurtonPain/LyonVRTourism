@@ -5884,7 +5884,7 @@
             Represents a JSON object.
             </summary>
             <example>
-              <code lang="cs" source="..\Src\Newtonsoft.Json.Tests\Documentation\LinqToJsonStringTests.cs" region="LinqToJsonStringCreateParse" title="Parsing a JSON Object from Text" />
+              <code lang="cs" source="..\Src\Newtonsoft.Json.Tests\Documentation\LinqToJsonTests.cs" region="LinqToJsonCreateParse" title="Parsing a JSON Object from Text" />
             </example>
         </member>
         <member name="M:Newtonsoft.Json.Linq.JObject.#ctor">
@@ -5943,7 +5943,7 @@
             <param name="json">A <see cref="T:System.String"/> that contains JSON.</param>
             <returns>A <see cref="T:Newtonsoft.Json.Linq.JObject"/> populated from the string that contains JSON.</returns>
             <example>
-              <code lang="cs" source="..\Src\Newtonsoft.Json.Tests\Documentation\LinqToJsonStringTests.cs" region="LinqToJsonStringCreateParse" title="Parsing a JSON Object from Text"/>
+              <code lang="cs" source="..\Src\Newtonsoft.Json.Tests\Documentation\LinqToJsonTests.cs" region="LinqToJsonCreateParse" title="Parsing a JSON Object from Text"/>
             </example>
         </member>
         <member name="M:Newtonsoft.Json.Linq.JObject.FromObject(System.Object)">
@@ -6177,7 +6177,7 @@
             Represents a JSON array.
             </summary>
             <example>
-              <code lang="cs" source="..\Src\Newtonsoft.Json.Tests\Documentation\LinqToJsonStringTests.cs" region="LinqToJsonStringCreateParseArray" title="Parsing a JSON Array from Text" />
+              <code lang="cs" source="..\Src\Newtonsoft.Json.Tests\Documentation\LinqToJsonTests.cs" region="LinqToJsonCreateParseArray" title="Parsing a JSON Array from Text" />
             </example>
         </member>
         <member name="M:Newtonsoft.Json.Linq.JArray.#ctor">
@@ -6217,7 +6217,7 @@
             <param name="json">A <see cref="T:System.String"/> that contains JSON.</param>
             <returns>A <see cref="T:Newtonsoft.Json.Linq.JArray"/> populated from the string that contains JSON.</returns>
             <example>
-              <code lang="cs" source="..\Src\Newtonsoft.Json.Tests\Documentation\LinqToJsonStringTests.cs" region="LinqToJsonStringCreateParseArray" title="Parsing a JSON Array from Text"/>
+              <code lang="cs" source="..\Src\Newtonsoft.Json.Tests\Documentation\LinqToJsonTests.cs" region="LinqToJsonCreateParseArray" title="Parsing a JSON Array from Text"/>
             </example>
         </member>
         <member name="M:Newtonsoft.Json.Linq.JArray.FromObject(System.Object)">

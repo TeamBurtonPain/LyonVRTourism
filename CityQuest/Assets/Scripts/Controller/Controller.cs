@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -62,15 +63,15 @@ public class Controller : MonoBehaviour
         choices.Add("a");
         choices.Add("b");
         choices.Add("c");
-        CheckPoint cp1 = new CheckPoint("pic1.png", "blablablaTextCP1", choices, "b");
-        CheckPoint cp2 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "a");
+        CheckPoint cp1 = new CheckPoint("pic1.png", "blablablaTextCP1", choices, "b",3);
+        CheckPoint cp2 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "a",5);
         List<CheckPoint> checkpoints = new List<CheckPoint>
         {
             cp1,
             cp2
         };
-        Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 3L, creator, checkpoints);
-        Quest quest2 = new Quest(coordinates2, "Trouver les pandas roux2", "Description des pandas roux2", 3L, creator, checkpoints);
+        Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 3L, creator.Id, checkpoints);
+        Quest quest2 = new Quest(coordinates2, "Trouver les pandas roux2", "Description des pandas roux2", 3L, creator.Id, checkpoints);
         existingQuests = new List<Quest>
         {
             quest,
