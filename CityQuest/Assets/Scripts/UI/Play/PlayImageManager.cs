@@ -8,7 +8,6 @@ class PlayImageManager : MonoBehaviour
     private void Start()
     {
         researchImage.sprite = Resources.Load<Sprite>(PlayQuestController.Instance.CurrentCheckpoint.Checkpoint.Picture);
-        //researchImage.sprite = Resources.Load < Sprite > (PlayQuestController.Instance.CurrentCheckpoint.Checkpoint.Picture);
     }
 }
 

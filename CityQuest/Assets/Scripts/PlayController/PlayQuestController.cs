@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 class PlayQuestController : MonoBehaviour
 {
@@ -7,6 +8,7 @@ class PlayQuestController : MonoBehaviour
 
     private StateQuest currentQuest;
     private StateCheckPoint currentCheckpoint;
+    private int questProgress;
 
     void Awake()
     {
@@ -36,19 +38,37 @@ class PlayQuestController : MonoBehaviour
         choices.Add("Des oeufs");
         choices.Add("Des M&M's");
         CheckPoint cp1 = new CheckPoint("TestSprites/panda", "Quel est l'aliment principal des pandas roux ? ", choices, "Du bambou");
-        CheckPoint cp2 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "a");
+        CheckPoint cp2 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "oeufs");
+        CheckPoint cp3 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "M&M");
         List<CheckPoint> checkpoints = new List<CheckPoint>
         {
             cp1,
-            cp2
+            cp2,
+            cp3
         };
         Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 3L, creator, checkpoints);
-        Quest quest2 = new Quest(coordinates2, "Trouver les pandas roux2", "Description des pandas roux2", 3L, creator, checkpoints);
         StateQuest playing = new StateQuest(quest);
         // End tests
 
         currentQuest = playing;
-        currentCheckpoint = playing.Checkpoints[0];
+        questProgress = CheckQuestProgress();
+        currentCheckpoint = playing.Checkpoints[questProgress];
+    }
+
+    public int CheckQuestProgress()
+    {
+        int progress = 0;
+        foreach(StateCheckPoint checkpoint in currentQuest.Checkpoints)
+        {
+            if(checkpoint.Status == StatusCheckPoint.FINISHED)
+            {
+                progress++;
+            } else
+            {
+                break;
+            }
+        }
+        return progress;
     }
 
     public bool CheckAnswer(string answer)
