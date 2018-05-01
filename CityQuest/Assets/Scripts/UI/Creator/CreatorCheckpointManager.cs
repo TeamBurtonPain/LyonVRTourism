@@ -81,14 +81,8 @@ public class CreatorCheckpointManager : MonoBehaviour
 
     public void Btn_CreateQuest()
     {
-            Controller.Instance.CreateNewQuest(
-                parent.QuestNameInputField.text,
-                parent.QuestDescriptionInputField.text,
-                parent.QuestValueInputField.text,
-                parent.PositionLatInputField.text,
-                parent.PositionLongInputField.text,
-                parent.AllCheckpoints); 
-                
+        parent.ValidateQuest();
+
     }
 
 }

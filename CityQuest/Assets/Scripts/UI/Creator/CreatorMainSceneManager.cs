@@ -38,4 +38,15 @@ public class CreatorMainSceneManager : MonoBehaviour
 
     }
 
+    public void ValidateQuest()
+    {
+        Controller.Instance.CreateNewQuest(
+            QuestNameInputField.text,
+            QuestDescriptionInputField.text,
+            QuestValueInputField.text,
+            PositionLatInputField.text,
+            PositionLongInputField.text,
+            AllCheckpoints); // Pass checkpoints
+    }
+
 }
