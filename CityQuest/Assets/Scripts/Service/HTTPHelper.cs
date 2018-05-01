@@ -158,7 +158,7 @@ public static class HTTPHelper
         string text = uwr.downloadHandler.text;
         Debug.Log(text);
 
-        return JSONHelper.GetAccount(text);
+        return JSONHelper.ToAccount(text);
     }
 
     public static Quest GetQuest(string id, Cookie cookie)
@@ -179,7 +179,7 @@ public static class HTTPHelper
         string text = uwr.downloadHandler.text;
         Debug.Log(text);
 
-        return JSONHelper.GetQuest(text);
+        return JSONHelper.ToQuest(text);
     }
 
     public static bool Send(Quest q)

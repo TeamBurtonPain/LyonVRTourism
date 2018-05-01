@@ -86,10 +86,39 @@ public static class JSONHelper
         return jsonQsu;
     }
 
-    public static Quest GetQuest(string json)
+    public static Quest ToQuest(string questJson)
     {
-        //TODO merge
-        return new Quest();
+        JObject parse = JObject.Parse(questJson);
+        string idCreator = (string)parse["_idCreator"];
+        Coordinates geolocalisation = new Coordinates((float)parse["geolocalisation"]["x"], (float)parse["geolocalisation"]["y"]);
+        string title = (string)parse["title"];
+        string description = (string)parse["description"];
+        List<CheckPoint> checkpoints = ToListCheckpoint((JArray)parse["checkpoints"]);
+        long value = (long)parse["value"];
+        Quest quest = new Quest(geolocalisation, title, description, value, idCreator, checkpoints);
+        return quest;
+    }
+
+
+    public static List<CheckPoint> ToListCheckpoint(JArray checkpointsArray)
+    {
+        List<CheckPoint> checkpoints = new List<CheckPoint>();
+        foreach (var item in checkpointsArray)
+        {
+            JObject parse = JObject.Parse(item.ToString());
+            string text = (string)parse["text"];
+            JArray choicesArray = (JArray)parse["choices"];
+            List<string> choices = new List<string>();
+            foreach (var choice in choicesArray)
+            {
+                choices.Add(choice.ToString());
+            }
+            string answer = (string)parse["answer"];
+            int difficulty = (int)parse["difficulty"];
+            CheckPoint checkPoint = new CheckPoint(null, text, choices, answer, difficulty);
+            checkpoints.Add(checkPoint);
+        }
+        return checkpoints;
     }
 
 
@@ -180,53 +209,6 @@ public static class JSONHelper
         return jsonQuest;
     }
 
-    //------------------------------------------------------------------------------------------
-
-    public static Quest ToQuest(string questJson)
-    {
-        JObject parse = JObject.Parse(questJson);
-        string idCreator = (string)parse["_idCreator"];
-        Coordinates geolocalisation = ToCoordinates((float)parse["geolocalisation"]["x"], (float)parse["geolocalisation"]["y"]);
-        string title = (string)parse["title"];
-        string description = (string)parse["description"];
-        List<CheckPoint> checkpoints = ToListCheckpoint((JArray)parse["checkpoints"]);
-        long value = (long)parse["value"];
-        Quest quest = new Quest(geolocalisation,title,description,value,idCreator,checkpoints);
-        return quest;
-    }
-
-    public static Coordinates ToCoordinates(float x, float y)
-    {
-        Coordinates geolocalisation = new Coordinates
-        {
-            x = x,
-            y = y
-        };
-        
-        return geolocalisation;
-    }
-
-    public static List<CheckPoint> ToListCheckpoint(JArray checkpointsArray)
-    {
-        List<CheckPoint> checkpoints = new List<CheckPoint>();
-        foreach (var item in checkpointsArray)
-        {
-            JObject parse = JObject.Parse(item.ToString());
-            string text = (string)parse["text"];
-            JArray choicesArray = (JArray)parse["choices"];
-            List<string> choices = new List<string>();
-            foreach(var choice in choicesArray)
-            {
-                choices.Add(choice.ToString());
-            }
-            string answer = (string)parse["answer"];
-            int difficulty = (int)parse["difficulty"];
-            CheckPoint checkPoint = new CheckPoint(null, text, choices, answer, difficulty);
-            checkpoints.Add(checkPoint);
-        }
-        return checkpoints;
-    }
-
     public static Account ToAccount(string accountJson)
     {
         JObject parse = JObject.Parse(accountJson);
@@ -243,6 +225,24 @@ public static class JSONHelper
         return account;
     }
 
+    public static User ToUser(string userJson)
+    {
+        JObject parse = JObject.Parse(userJson);
+        string username = (string)parse["userInformation"]["username"];
+        string id = (string)parse["_id"];
+        long xp = (long)parse["game"]["xp"];
+        List<Badge> badges = new List<Badge>();
+        Dictionary<long, StateQuest> quests = new Dictionary<long, StateQuest>();
+        User user = new User(username, id, xp, badges, quests);
+        return user;
+    }
+
+    //------------------------------------------------------------------------------------------
+
+
+
+
+
     //public static DateTime ToDateTime(string dateTimeString)
     //{
     //    CultureInfo  provider = new CultureInfo("fr-FR");
@@ -258,17 +258,7 @@ public static class JSONHelper
     //    return d;
     //}
 
-    public static User ToUser(string userJson)
-    {
-        JObject parse = JObject.Parse(userJson);
-        string username = (string)parse["userInformation"]["username"];
-        string id = (string)parse["_id"];
-        long xp = (long)parse["game"]["xp"];
-        List<Badge> badges = new List<Badge>();
-        Dictionary<long, StateQuest> quests = new Dictionary<long, StateQuest>();
-        User user = new User(username, id, xp, badges, quests);
-        return user;
-    }
+
     /*
     public static List<Badge> ToListBadge(string badgeArrayJson)
     {
@@ -289,12 +279,6 @@ public static class JSONHelper
         //Il faut déjà pouvoir réucpérer les objets Quest
     }
     */
-
-    public static Account GetAccount(string json)
-    {
-        //TODO merge : DONE (Hubert)
-        return ToAccount(json);
-    }
 
 
     //****************************** PICTURE ******************************//
