@@ -8,6 +8,7 @@ public class GeoManager : MonoBehaviour
 {
 
     public float radius = 1;
+    public float R = 6371f;
 
     protected bool loaded = false;
     protected bool failed = false;
@@ -122,15 +123,13 @@ public class GeoManager : MonoBehaviour
     /// <param name="coord1">Represents one geographical position to study</param>
     /// <param name="coord2">Represents the other geographical position to study</param>
     /// <returns>Returns a float representing the euclidian distance between the two position studied</returns>
-    private float Distance(Coordinates coord1, Coordinates coord2)
+    public float Distance(Coordinates coord1, Coordinates coord2)
     {
         float coord1Lat = coord1.x * Mathf.PI / 180;
         float coord1Long = coord1.y * Mathf.PI / 180;
 
         float coord2Lat = coord2.x * Mathf.PI / 180;
         float coord2Long = coord2.y * Mathf.PI / 180;
-
-        float R = 6371f;
 
         float distance = R * Mathf.Acos(Mathf.Cos(coord1Lat) * Mathf.Cos(coord2Lat) *
             Mathf.Cos(coord2Long - coord1Long) + Mathf.Sin(coord1Lat) * Mathf.Sin(coord2Lat));
