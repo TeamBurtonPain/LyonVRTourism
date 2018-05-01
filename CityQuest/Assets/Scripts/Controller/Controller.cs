@@ -237,7 +237,7 @@ public class Controller : MonoBehaviour
 
     }
 
-    public void CreateNewQuest(string firstName, string lastname, string mail, string password, string username, List<CreatorCheckpointManager> checkPoints)
+    public void CreateNewQuest(string firstName, string lastname, string mail, string password, string username, List<CheckPoint> checkPoints)
     {
         // TODO integrity check
         // Vérifier bon format des données

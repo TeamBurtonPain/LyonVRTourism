@@ -6,6 +6,7 @@ public class CreatorCheckpointManager : MonoBehaviour
 {
     public InputField EnigmaInputField;
     private int index;
+    private string answer;
     private CreatorMainSceneManager parent;
     public InputField FirstAnswerInputField;
     public InputField SecondAnswerInputField;
@@ -23,6 +24,14 @@ public class CreatorCheckpointManager : MonoBehaviour
         }
     }
 
+    public string Answer
+    {
+        get
+        {
+            return answer;
+        }
+    }
+
     public void SetIndex(int i, CreatorMainSceneManager m)
     {
         parent = m;
@@ -31,48 +40,21 @@ public class CreatorCheckpointManager : MonoBehaviour
 
     public void Btn_CreateNewCheckpoint()
     {
-        if (FirstAnswerToggle.isOn && !SecondAnswerToggle.isOn && !ThirdAnswerToggle.isOn ||
-            !FirstAnswerToggle.isOn && SecondAnswerToggle.isOn && !ThirdAnswerToggle.isOn ||
-            !FirstAnswerToggle.isOn && !SecondAnswerToggle.isOn && ThirdAnswerToggle.isOn)
+        if (FirstAnswerToggle.isOn && !SecondAnswerToggle.isOn && !ThirdAnswerToggle.isOn)
         {
+            answer = FirstAnswerInputField.text;
             parent.AddNewCheckpoint(index+1);
-
-        }
-       /* {
-            Controller.Instance.CreateNewCheckpoint(
-                EnigmaInputField.text,
-                FirstAnswerInputField.text,
-                SecondAnswerInputField.text,
-                ThirdAnswerInputField.text,
-                FurnishedImage.ToString(),
-                //Convert.ToBase64String(FurnishedImage), // Pass image as string 
-                FirstAnswerInputField.text);
-        }
-        else if (!FirstAnswerToggle.isOn && SecondAnswerToggle.isOn && !ThirdAnswerToggle.isOn)
-
+            
+        }else if (!FirstAnswerToggle.isOn && SecondAnswerToggle.isOn && !ThirdAnswerToggle.isOn)
         {
-            Controller.Instance.CreateNewCheckpoint(
-                EnigmaInputField.text,
-                FirstAnswerInputField.text,
-                SecondAnswerInputField.text,
-                ThirdAnswerInputField.text,
-                FurnishedImage.ToString(),
-                //Convert.ToBase64String(FurnishedImage), // Pass image as string 
-                SecondAnswerInputField.text);
+            answer = SecondAnswerInputField.text;
+            parent.AddNewCheckpoint(index + 1);
         }
-
         else if (!FirstAnswerToggle.isOn && !SecondAnswerToggle.isOn && ThirdAnswerToggle.isOn)
-
         {
-            Controller.Instance.CreateNewCheckpoint(
-                EnigmaInputField.text,
-                FirstAnswerInputField.text,
-                SecondAnswerInputField.text,
-                ThirdAnswerInputField.text,
-                FurnishedImage.ToString(),
-                //Convert.ToBase64String(FurnishedImage), // Pass image as string 
-                ThirdAnswerInputField.text);
-        }*/
+            answer = ThirdAnswerInputField.text;
+            parent.AddNewCheckpoint(index + 1);
+        }
         else
         {
             Controller.Instance.Error("Vous devez sélectionner une unique solution !");

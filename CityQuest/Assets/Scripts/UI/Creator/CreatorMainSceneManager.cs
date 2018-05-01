@@ -12,7 +12,7 @@ public class CreatorMainSceneManager : MonoBehaviour
     public InputField QuestNameInputField;
     public InputField QuestDescriptionInputField;
     public InputField QuestValueInputField;
-    public List<CreatorCheckpointManager> AllCheckpoints;
+    protected List<CreatorCheckpointManager> AllCheckpoints;
 
     public void Btn_StartNewQuest()
     {
@@ -46,7 +46,28 @@ public class CreatorMainSceneManager : MonoBehaviour
             QuestValueInputField.text,
             PositionLatInputField.text,
             PositionLongInputField.text,
-            AllCheckpoints); // Pass checkpoints
+            ToCheckPoints()); // Pass checkpoints
+    }
+
+    public List<CheckPoint> ToCheckPoints()
+    {
+        List<CheckPoint> MyCheckPoints = new List<CheckPoint>();
+        foreach (CreatorCheckpointManager creatorCheckpoint in AllCheckpoints)
+        {
+            List<string> choices = new List<string>();
+            choices.Add(creatorCheckpoint.FirstAnswerInputField.text);
+            choices.Add(creatorCheckpoint.SecondAnswerInputField.text);
+            choices.Add(creatorCheckpoint.ThirdAnswerInputField.text);
+
+            CheckPoint temp = new CheckPoint(
+                creatorCheckpoint.FurnishedImage.ToString(), // Pass image as string 
+                creatorCheckpoint.EnigmaInputField.text,
+                choices,
+                creatorCheckpoint.Answer);  
+            MyCheckPoints.Add(temp);
+        }
+
+        return MyCheckPoints;
     }
 
 }
