@@ -196,5 +196,10 @@ public static class JSONHelper
         // Convert byte[] to Base64 String
         return Convert.ToBase64String(imageBytes);
     }
+
+    public static byte[] FromBase64(string img64)
+    {
+        return Convert.FromBase64String(img64);
+    }
 }
 
