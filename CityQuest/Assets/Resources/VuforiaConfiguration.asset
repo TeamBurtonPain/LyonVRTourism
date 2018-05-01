@@ -45,12 +45,7 @@ MonoBehaviour:
   databaseLoad:
     dataSetsToLoad:
     - TestDB
-    - VuforiaMars_Images
-    - VuforiaMars_VuMark
-    dataSetsToActivate:
-    - TestDB
-    - VuforiaMars_Images
-    - VuforiaMars_VuMark
+    dataSetsToActivate: []
   videoBackground:
     clippingMode: 0
     numDivisions: 2
