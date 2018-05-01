@@ -8,9 +8,9 @@ public class CheckpointMultiAnsManager : MonoBehaviour
 
     private void Start()
     {
-        if (Controller.Instance.CurrentCheckpoint != null)
+        if (PlayQuestController.Instance.CurrentCheckpoint != null)
         {
-            FillAnswersList(Controller.Instance.CurrentCheckpoint.Checkpoint);
+            FillAnswersList(PlayQuestController.Instance.CurrentCheckpoint.Checkpoint);
         }
         else
         {
