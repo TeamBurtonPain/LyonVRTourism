@@ -95,6 +95,7 @@ class PlayQuestController : MonoBehaviour
 
     private void GoToQuestion()
     {
+        Controller.Instance.QuitVuforia();
         if (currentQuest.Checkpoints[questProgress].Checkpoint.Choices.Count == 0)
             SceneManager.LoadScene("GameQuestion");
         else
@@ -114,6 +115,7 @@ class PlayQuestController : MonoBehaviour
 
     public void OpenCamera()
     {
+        Controller.Instance.LoadVuforia();
         SceneManager.LoadScene("ImageRecognition");
     }
 
