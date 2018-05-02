@@ -6,8 +6,13 @@ public class PlayerLoc : MonoBehaviour {
 
     public MapLocalizer localizer;
 
+    public Transform radius;
+
     void Start () {
-        InvokeRepeating("CheckLoca", 0, 1);
+        InvokeRepeating("CheckLoca", 1, 1);
+        localizer.Scale(radius, GeoManager.Instance.radius); // scale radius circle.
+        CheckLoca();
+        CenterCam();
     }
 	
 
@@ -16,7 +21,8 @@ public class PlayerLoc : MonoBehaviour {
         if (GeoManager.Instance.IsLoaded())
         {
             Vector2 loca = GeoManager.Instance.GetUserPosition();
-            localizer.Localise(this.transform, loca.x, loca.y);
+            localizer.Localise(this.transform, loca.x, loca.y); // place player poit
+            localizer.Localise(radius, loca.x, loca.y); // place radius circle
         }
     }
 

@@ -1,10 +1,18 @@
 using UnityEngine;
 
-public class ButtonManager : MonoBehaviour 
+public class ButtonManager : MonoBehaviour
 {
     public void Btn_SelectMenuNewQuest()
     {
         Controller.Instance.SelectMenuNewQuest();
+    }
+    public void Btn_SelectMenuMap()
+    {
+        Controller.Instance.SelectMenuMap();
+    }
+    public void Btn_BackToMap()
+    {
+        Controller.Instance.AskBackToMap();
     }
     public void Btn_SelectMenuHistoric()
     {

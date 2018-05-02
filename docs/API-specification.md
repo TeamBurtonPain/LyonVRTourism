@@ -82,10 +82,10 @@
     picture: {
         type: String,
         required: true
-    },
+    }, // Base64 encoded. Available only on /api/quests/<id> endpoint.
     checkpoints: [
         {
-            picture: String, // Base64 encoded
+            picture: String, // Base64 encoded. Available only on /api/quests/<id> endpoint.
             text: String,
             choices: {
                 type: [String],
