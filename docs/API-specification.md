@@ -17,20 +17,19 @@
         password: {
             type: String,
             required: true,
-        },
+        }
     },
     userInformation: {
         lastName: String,
         firstName: String,
-        dateOfBirth: Date,
         username: {
             type: String,
             required: true
         }, // Pseudo
         accountType: {
             type: String,
-            enum: ['ADMIN', 'EDITOR', 'GAMER']
-            default: 'GAMER'
+            enum: ['ADMIN', 'CREATOR', 'USER']
+            default: 'USER'
         },
     },
     dates: {
@@ -67,9 +66,9 @@
 ```
 {
     _idCreator: Schema.Types.ObjectId,
-    geo: {
-        lat: Number,
-        long: Number
+    geolocalisation: {
+        x: Number,
+        y: Number
     },
     title: {
         type: String,
@@ -82,16 +81,18 @@
     picture: {
         type: String,
         required: true
-    },
+    }, // Base64 encoded. Available only on /api/quests/<id> endpoint.
     checkpoints: [
         {
-            picture: String, // Base64 encoded
+            pictureName: String, // Don't send it for picture upload. READONLY field.
+            picture: String, // Base64 encoded. Available only on /api/quests/<id> endpoint.
             text: String,
+            question: String,
             choices: {
                 type: [String],
                 required: true
             },
-            enigmAnswer: String,
+            answer: String,
             difficulty: {
                 type: Number,
                 required: true,
@@ -104,7 +105,7 @@
         createdAt: Date, // Auto (server side)
         updatedAt: Date // Auto (server side)
     },
-    feedbacks: [
+    statistics: [
         {
             _idAccount: Schema.Types.ObjectId,
             comment: {
@@ -119,13 +120,16 @@
             } // 0 < note < 10
         }
     ],
-    disable: {
+    open: {
         type: Boolean,
         required: true
     }
 }
 ```
 
+## Account types
+
+A account could be a `GAMER`, an `EDITOR` or an `ADMIN`.
 
 ## EndPoints
 
@@ -144,18 +148,18 @@ Request methods | Path | Auth | AccountType | Require body | Response | Descript
 :---: | :---: | :---: | :---: | :---: | :---: | :---:
 **POST** | `accounts` | No | * | `account model` | `account model` | Persist an account
 **GET** | `accounts/<id>` | Yes | * | _null_ | `account model` | Get account by id
-**PUT** | `accounts/<id>` | Yes | * | `account model` | `account model` | Update an account by id. **See [PUT SPECIFICATION](#PUT\ Specification).**
-**DELETE** | `accounts/<id>` | Yes | * | _null_ | _null_ | Delete an account by id.
+**PUT** | `accounts/<id>` | Yes | ME \| ADMIN | `account model` | `account model` | Update an account by id. **See [PUT SPECIFICATION](#PUT\ Specification).**
+**DELETE** | `accounts/<id>` | Yes | ME \| ADMIN | _null_ | _null_ | Delete an account by id.
 
 ### Quests
 
 Request methods | Path | Auth | AccountType | Require body | Response | Description 
 :---: | :---: | :---: | :---: | :---: | :---: | :---:
-**GET** | `quests/<id>` | Yes | * | _null_ | `quest model` | Get all quests
-**POST** | `quests` | Yes | * | `quest model` | `quest model` | Persist a quest
-**GET** | `quests/<id>` | Yes | * | _null_ | `quest model` | Get quest by id
-**PUT** | `quests/<id>` | Yes | * | `quest model` | `quest model` | Update a quest by id. Request body will erase old quest. **See [PUT SPECIFICATION](#PUT\ Specification).**
-**DELETE** | `quests/<id>` | Yes | * | _null_ | _null_ | Delete a quest and every associated pictures.
+**GET** | `quests` | No | * | _null_ | `Array<quest model>` | Get all opened quests
+**GET** | `quests/<id>` | No | * | _null_ | `quest model` | Get quest by id
+**POST** | `quests` | Yes | EDITOR \| ADMIN | `quest model` | `quest model` | Persist a quest
+**PUT** | `quests/<id>` | Yes | EDITOR \| ADMIN | `quest model` | `quest model` | Update a quest by id. Request body will erase old quest. **See [PUT SPECIFICATION](#PUT\ Specification).**
+**DELETE** | `quests/<id>` | Yes | EDITOR \| ADMIN | _null_ | _null_ | Delete a quest and every associated pictures.
 
 ## PUT Specification
 
@@ -166,11 +170,12 @@ If you update an array, the old array and new array won't be compared. It means 
 ErrorName | Code | Description
 :---: | :---: | :---:
 **BadRequest** | 400 | Your request doesn't match the require schema (description will give more information)
+**Unknow quest** | 400 | No quest found with the provided _id
+**Unknow account** | 400 | No account found with the provided _id
 **LoginError** | 400 | Wrong email/password combinaison
 
 ## Enhancement
 
-- Allow a user to update only his information
+- Privilege escalation :)
 - Client application authentification (server will only accept request from the client application and not form anybody)
 - Improve update (PUT) protocol for ARRAY UPDATE: for now, if a ADMIN want to update checkpoints of a quest, he have to send the full checkpoint ARRAY (including all pictures). Consequently, bandwidth and memory are affected.
-- Add role guard in some endpoints. For example, it could prevent GAMER to add a quest (ADMIN right).

@@ -17,7 +17,7 @@ router.use((err, req, res, next) => {
     console.log(err); // TODO: remove this line
     return res.status(500).json({
         error: 'ServerError',
-        message: err.message ? err.message : 'A problem has occurred, try again later'
+        message: err.message ? `Error detail: ${err.message}` : 'A problem has occurred, try again later'
     });
 });
 

@@ -38,3 +38,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Play/GameQuestionMulti.unity
     guid: e1c76e0b59555f44181413425c655093
+  - enabled: 1
+    path: Assets/_Scenes/Creator/CreatorMainScene.unity
+    guid: 295e954e8b2ce164c9409b701e6d4826
