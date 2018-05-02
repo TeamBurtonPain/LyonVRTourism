@@ -87,10 +87,18 @@ public static class HTTPHelper
             WaitForSecondsRealtime w = new WaitForSecondsRealtime(0.5f);
         }
         Debug.Log(uwr.ToString());
-        byte[] results = uwr.downloadHandler.data;
-        string text = uwr.downloadHandler.text;
-        Debug.Log(text);
-        return true;
+
+        if(uwr.responseCode == 200)
+        {
+            byte[] results = uwr.downloadHandler.data;
+            string text = uwr.downloadHandler.text;
+            Debug.Log(text);
+            return true;
+        }
+        else
+        {
+            return false;
+        }       
 
     }
 
