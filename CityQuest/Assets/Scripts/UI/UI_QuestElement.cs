@@ -10,8 +10,7 @@ public class UI_QuestElement : MonoBehaviour
     public Text questProgressText;
     public List<Badge> badges;
     public Image circularBar;
-
-    //public UI_BadgeElement badgePicture;
+    public UI_Badge_Icon badgeIcon;
     public Transform parent;
 
     public void LinkQuest(StateQuest sQuest)
@@ -21,6 +20,7 @@ public class UI_QuestElement : MonoBehaviour
         questProgressText.text = sQuest.Score.ToString();
         circularBar.fillAmount = (float) sQuest.Score;
         badges = Controller.Instance.User.Badges;
+        // ATTENTION CA NE DEVRAIT PAS DEPENDRE DU USER MAIS DE LA QUETE
         if (Controller.Instance.User != null && Controller.Instance.User.Badges.Count != 0)
         {
             FillBadgesList(Controller.Instance.User);
@@ -33,10 +33,11 @@ public class UI_QuestElement : MonoBehaviour
 
     public void FillBadgesList(User user)
     {
+        //ATTENTION CA DEVRAIT DEPENDRE DE LA QUETE ET PAS DU USER
         foreach (Badge badge in user.Badges)
         {
-            //UI_BadgeElement temp = Instantiate(badgePicture, this.parent);
-            //temp.LinkBadge( );
+            UI_Badge_Icon temp = Instantiate(badgeIcon, this.parent);
+            temp.LinkBadge(badge);
         }
     }
 
