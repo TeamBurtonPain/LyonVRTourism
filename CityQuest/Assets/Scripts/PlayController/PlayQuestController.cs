@@ -9,8 +9,9 @@ class PlayQuestController : MonoBehaviour
     private StateQuest currentQuest;
     private StateCheckPoint currentCheckpoint;
     private int questProgress;
+    private int checkpointProgress;
 
-    void Awake()
+    void Start()
     {
         if (instance == null)
         {
@@ -26,6 +27,7 @@ class PlayQuestController : MonoBehaviour
         currentQuest = Controller.Instance.CurrentQuest;
         questProgress = CheckQuestProgress();
         currentCheckpoint = currentQuest.Checkpoints[questProgress];
+        checkpointProgress = 0;
     }
 
     public int CheckQuestProgress()
@@ -53,8 +55,60 @@ class PlayQuestController : MonoBehaviour
         {
             return false;
         }
-        
-        // TODO : Vérifier la validité de la réponse
+    }
+
+    public void GoNextScene()
+    {
+        switch (checkpointProgress)
+        {
+            case 0:
+                GoToQuestion();
+                break;
+            case 1:
+                GoToInformations();
+                break;
+            case 2:
+                GoToNextCheckpoint();
+                break;
+            default:
+                Debug.LogError("checkpointProgress="+ checkpointProgress + ", error : not comprised between 0 and 2");
+                break;
+        }
+        checkpointProgress = (checkpointProgress + 1)%3;
+    }
+
+    public void GoToNextCheckpoint()
+    {
+        currentQuest.Checkpoints[questProgress].Status = StatusCheckPoint.FINISHED;
+        if(questProgress < currentQuest.Checkpoints.Count-1)
+        {
+            questProgress++;
+            currentCheckpoint = currentQuest.Checkpoints[questProgress];
+            SceneManager.LoadScene("GameImageScene");
+        } else
+        {
+            Debug.Log("Fini!");
+            // TODO : Scene de fin
+        }
+    }
+
+    public void GoToQuestion()
+    {
+        if (currentQuest.Checkpoints[questProgress].Checkpoint.Choices.Count == 0)
+            SceneManager.LoadScene("GameQuestion");
+        else
+            SceneManager.LoadScene("GameQuestionMulti");
+    }
+
+    public void GoToInformations()
+    {
+        SceneManager.LoadScene("GameInformations");
+    }
+
+    public void SkipCheckpoint()
+    {
+        questProgress++;
+        checkpointProgress = 0;
     }
 
     public static PlayQuestController Instance
