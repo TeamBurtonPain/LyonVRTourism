@@ -4,9 +4,30 @@ using System.Net;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Collections;
 
-public static class HTTPHelper
+public class HTTPHelper : MonoBehaviour
 {
+    protected static HTTPHelper instance;
+    public static HTTPHelper Instance
+    {
+        get { return instance; }
+    }
+
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
     //public const string SERVER = "http://192.168.43.228:3000/api/";
     public const string SERVER = "http://192.168.0.11:3000/api/";
 
@@ -241,50 +262,9 @@ public static class HTTPHelper
 
         return JSONHelper.ToQuest(text);
     }
-
-    public static List<Quest> GetAllQuests()
-    {
         
-        UnityWebRequest uwr = UnityWebRequest.Get(SERVER + "quests/");
-        uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
-
-        Debug.Log(uwr.ToString());
-        uwr.SendWebRequest();
-        Debug.Log("b1. " + System.DateTime.Now);
-        while (uwr.downloadProgress < 0.95f)
-        {
-            WaitForSecondsRealtime w = new WaitForSecondsRealtime(0.5f);
-        }
-        Debug.Log("b2. " + System.DateTime.Now);
-        Debug.Log(uwr.ToString());
-        string text = uwr.downloadHandler.text;
-        Debug.Log(text);
-
-
-        if (uwr.responseCode == 200)
-        {
-            return JSONHelper.ToQuests(text);
-
-        }
-        else
-        {
-            return new List<Quest>();
-        }
-    }
-
-    // TODO utiliser des ptain de coroutines pour pas avoir un systeme bloquant........
-    /*
-     
-        List<Quest> r;
-        StartCoroutine(TestGetAllQuests(value => r = value));
-        Debug.Log("end.");
-        return null;
-
-         */
-         /*
-    public IEnumerator TestGetAllQuests(System.Action<List<Quest>> callback)
+    public IEnumerator GetAllQuests(System.Action<List<Quest>> callback)
     {
-        Debug.Log("a1. " + System.DateTime.Now);
         UnityWebRequest uwr = UnityWebRequest.Get(SERVER + "quests/");
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
 
@@ -292,18 +272,16 @@ public static class HTTPHelper
 
         if (uwr.isNetworkError || uwr.isHttpError)
         {
-            Debug.Log(uwr.error);
+            Controller.Instance.Error(uwr.error);
             callback(null);
         }
         else
         {
-            Debug.Log("ok");
             string text = uwr.downloadHandler.text;
             callback(JSONHelper.ToQuests(text));
         }
-        Debug.Log("a2. " + System.DateTime.Now);
     }
-    */
+
     public static bool Send(Quest q)
     {
         Debug.Log(JSONHelper.ToJsonString(q));

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Security.Principal;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Net;
+using System.Collections;
 
 public enum ConnexionState
 {
@@ -61,8 +58,21 @@ public class Controller : MonoBehaviour
 
         currentState = loginState;
 
+        // a coroutine is a function that might take longer than a frame to execute.
+        StartCoroutine(InitQuests());
+    }
 
-        existingQuests = HTTPHelper.GetAllQuests();
+    IEnumerator InitQuests()
+    {
+        // yield return xxx means wait for the fcking end of this function without blocking all the system.
+        // btw we have to use a callback tu assignate value with this kind of method.
+        yield return HTTPHelper.Instance.GetAllQuests(value => existingQuests = value);
+
+        if (existingQuests == null)
+        {
+            Error("Erreur lors du chargement des données depuis notre serveur. Veuillez réessayer plus tard.");
+            yield break ;
+        }
 
         //------ Test sample ---------
 
@@ -116,7 +126,7 @@ public class Controller : MonoBehaviour
         choices.Add("Du bambou");
         choices.Add("Des oeufs");
         choices.Add("Des M&M's");
-        CheckPoint cp1 = new CheckPoint("TestSprites/panda", "", "Quel est l'aliment principal des pandas roux ? ", choices, "bambou",2);
+        CheckPoint cp1 = new CheckPoint("TestSprites/panda", "", "Quel est l'aliment principal des pandas roux ? ", choices, "bambou", 2);
         CheckPoint cp2 = new CheckPoint("pic2.png", "", "blablablaTextCP2", choices, "a", 1);
         List<CheckPoint> checkpoints = new List<CheckPoint>
         {
