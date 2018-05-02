@@ -1,6 +1,7 @@
 ﻿using System.Text;
 ﻿using System.Collections;
-using System.Collections.Generic;using System.Linq;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json.Linq;
@@ -106,8 +107,8 @@ public static class HTTPHelper
 
     public static bool Persist(Quest q, Cookie cookie)
     {
-        Debug.Log(JSONHelper.ToJsonString(q));
-        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "quests", Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(q)));
+        Debug.Log(JSONHelper.ToJsonString(q, true));
+        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "quests", Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(q, true)));
         uwr.method = "POST";
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
         uwr.SetRequestHeader("Authorization", "Bearer "+cookie.Value);
@@ -175,8 +176,8 @@ public static class HTTPHelper
 
     public static bool Update(Quest q, Cookie cookie)
     {
-        Debug.Log(JSONHelper.ToJsonString(q));
-        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "quests/" + q.Id, Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(q)));
+        Debug.Log(JSONHelper.ToJsonString(q, true));
+        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "quests/" + q.Id, Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(q, true)));
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
         uwr.SetRequestHeader("Authorization", "Bearer " + cookie.Value);
 
@@ -245,6 +246,26 @@ public static class HTTPHelper
 
         return JSONHelper.ToQuest(text);
     }
+    
+    //TODO: API : normalement pas d'authentification pour le get quest / id
+    public static Quest GetQuest(string id)
+    {
+        Debug.Log(id);
+        UnityWebRequest uwr = UnityWebRequest.Get(SERVER + "quests/" + id);
+        uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
+
+        Debug.Log(uwr.ToString());
+        uwr.SendWebRequest();
+        while (uwr.downloadProgress < 0.95f)
+        {
+            WaitForSecondsRealtime w = new WaitForSecondsRealtime(0.5f);
+        }
+        Debug.Log(uwr.ToString());
+        string text = uwr.downloadHandler.text;
+        Debug.Log(text);
+
+        return JSONHelper.ToQuest(text);
+    }
 
     public static List<Quest> GetAllQuests()
     {
@@ -275,8 +296,8 @@ public static class HTTPHelper
 
     public static bool Send(Quest q)
     {
-        Debug.Log(JSONHelper.ToJsonString(q));
-        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "quests", Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(q)));
+        Debug.Log(JSONHelper.ToJsonString(q, true));
+        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "quests", Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(q, true)));
         uwr.method = "POST";
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
 

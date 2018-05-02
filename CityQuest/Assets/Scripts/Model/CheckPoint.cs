@@ -5,7 +5,14 @@
 public class CheckPoint
 {
 
+    /// <summary>
+    /// The picture in Base64 ! Can be large.
+    /// </summary>
     private string picture;
+
+    /// <summary>
+    /// The unique picture name
+    /// </summary>
     private string pictureName;
     private string text;
     private string question;
@@ -47,6 +54,12 @@ public class CheckPoint
     {
         get { return text; }
         set { text = value; }
+    }
+
+    public string Question
+    {
+        get { return question; }
+        set { question = value; }
     }
 
     public List<string> Choices
