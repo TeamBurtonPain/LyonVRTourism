@@ -280,16 +280,17 @@ public class Controller : MonoBehaviour
     }
     public void LoadUsername()
     {
+        cookie = new Cookie("auth", "");
         currentState = loginState;
         SceneManager.LoadScene("Pseudo");
     }
 
     public void SelectMenuNewQuest()
     {
-        Account a = HTTPHelper.GetAccount(this.cookie);
-        if (a != null)
+        if (user is Account)
         {
-            if (a.Role == RoleAccount.ADMIN || a.Role == RoleAccount.CREATOR)
+            Account account = user as Account;
+            if (account.Role == RoleAccount.ADMIN || account.Role == RoleAccount.CREATOR)
             {
                 currentState = editorState;
                 SceneManager.LoadScene("CreatorMainScene");
@@ -316,13 +317,18 @@ public class Controller : MonoBehaviour
 
     public void SelectMenuSettings()
     {
-        SceneManager.LoadScene("Settings");
+        //TODO : victor à remplacer
+        //SceneManager.LoadScene("Settings");
     }
 
     public void SelectMenuLogout()
     {
+        if (user is Account)
+        {
+            HTTPHelper.AuthLogout(cookie);
+        }
         // TODO deco en local (persistance)
-        HTTPHelper.AuthLogout(cookie);
+
         currentState = loginState;
         SceneManager.LoadScene("Login");
     }
@@ -410,13 +416,17 @@ public class Controller : MonoBehaviour
     public void TryConnection(string mail, string pwd)
     {
         cookie = HTTPHelper.AuthLogin(mail, pwd);
-        if (cookie.Value != "")
+        if (cookie == null)
+        {
+            Error("Pas de connection avec le serveur distant.");
+        }
+        else if (cookie.Value != "")
         {
             Account a = HTTPHelper.GetAccount(cookie);
             if (a.Mail == "")
             {
                 Error(a.LastName);
-                //TODO : re load la page de connexion
+                LoadConnexion();
             }
             else
             {

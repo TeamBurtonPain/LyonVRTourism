@@ -29,20 +29,22 @@ public static class HTTPHelper
         byte[] results = uwr.downloadHandler.data;
         string text = uwr.downloadHandler.text;
 
-        var json = JObject.Parse(text);
-
         Cookie cookie;
 
         if (uwr.responseCode == 200)
         {
-
+            var json = JObject.Parse(text);
             cookie = new Cookie("auth", (string)json["jwt"]);//TODO à tester si erreur ???? json {error : truc, message : truc2}
+            Debug.Log(text);
         }
-        else
+        else if (uwr.responseCode == 0)
+        {
+            cookie = null;
+        }
         {
             cookie = new Cookie("auth", "");
         }
-        Debug.Log(text);
+
         Debug.Log(cookie);
         return cookie;
     }
@@ -259,7 +261,16 @@ public static class HTTPHelper
         string text = uwr.downloadHandler.text;
         Debug.Log(text);
 
-        return JSONHelper.ToQuests(text);
+
+        if (uwr.responseCode == 200)
+        {
+            return JSONHelper.ToQuests(text);
+
+        }
+        else
+        {
+            return new List<Quest>();
+        }
     }
 
     public static bool Send(Quest q)
