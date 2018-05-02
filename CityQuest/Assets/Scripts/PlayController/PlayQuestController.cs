@@ -46,7 +46,7 @@ class PlayQuestController : MonoBehaviour
             cp2,
             cp3
         };
-        Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 3L, creator.Id, checkpoints);
+        Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 30, creator.Id, checkpoints);
         StateQuest playing = new StateQuest(quest);
         // End tests
 

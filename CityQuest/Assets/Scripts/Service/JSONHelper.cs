@@ -94,8 +94,8 @@ public static class JSONHelper
         string title = (string)parse["title"];
         string description = (string)parse["description"];
         List<CheckPoint> checkpoints = ToListCheckpoint((JArray)parse["checkpoints"]);
-        long value = (long)parse["value"];
-        Quest quest = new Quest(geolocalisation, title, description, value, idCreator, checkpoints);
+        int experienceEarned = (int)parse["value"];
+        Quest quest = new Quest(geolocalisation, title, description, experienceEarned, idCreator, checkpoints);
         return quest;
     }
 

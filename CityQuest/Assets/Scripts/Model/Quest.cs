@@ -25,7 +25,7 @@ public class Quest
     private Coordinates geolocalisation;
     private string title;
     private string description;
-    private long value;
+    private int experienceEarned;
     private double timeLength;
     private QuestStatistics statistics;
     private bool open;
@@ -50,13 +50,13 @@ public class Quest
     /// <param name="description">The description.</param>
     /// <param name="creator">The creator.</param>
     /// <param name="checkpoints">The checkpoints.</param>
-    public Quest(Coordinates geolocalisation, string title, string description, long value, 
+    public Quest(Coordinates geolocalisation, string title, string description, int experienceEarned, 
          string idCreator, List<CheckPoint> checkpoints)
     {
         this.title = title;
         this.geolocalisation = geolocalisation;
         this.description = description;
-        this.value = value;
+        this.experienceEarned = experienceEarned;
         timeLength = -1;
         statistics = new QuestStatistics(this);
         this.idCreator = idCreator;
@@ -64,14 +64,14 @@ public class Quest
 
     }
 
-    public Quest(long id, Coordinates geolocalisation, string title, string description, long value,
+    public Quest(long id, Coordinates geolocalisation, string title, string description, int experienceEarned,
          string idCreator, List<CheckPoint> checkpoints)
     {
         this.id = id;
         this.title = title;
         this.geolocalisation = geolocalisation;
         this.description = description;
-        this.value = value;
+        this.experienceEarned = experienceEarned;
         timeLength = -1;
         statistics = new QuestStatistics(this);
         this.idCreator = idCreator;
@@ -111,7 +111,7 @@ public class Quest
     //BEWARE : if the value changes after constructor -> user xp may be inconsistent !
     public long Value
     {
-        get { return this.value; }
+        get { return this.experienceEarned; }
     }
 
     public double TimeLength
