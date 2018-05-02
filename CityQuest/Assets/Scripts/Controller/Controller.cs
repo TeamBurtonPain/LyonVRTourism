@@ -112,14 +112,12 @@ public class Controller : MonoBehaviour
             FirstName = "John"
         };
         List<string> choices = new List<string>();
-        choices.Add("a");
-        choices.Add("b");
-        choices.Add("c");
 
-        CheckPoint cp1 = new CheckPoint("pic1.png","", "blablablaTextCP1", choices, "b",3);
-        CheckPoint cp2 = new CheckPoint("pic2.png","", "blablablaTextCP2", choices, "a",5);
-
-
+        choices.Add("Du bambou");
+        choices.Add("Des oeufs");
+        choices.Add("Des M&M's");
+        CheckPoint cp1 = new CheckPoint("TestSprites/panda", "", "Quel est l'aliment principal des pandas roux ? ", choices, "bambou",2);
+        CheckPoint cp2 = new CheckPoint("pic2.png", "", "blablablaTextCP2", choices, "a", 1);
         List<CheckPoint> checkpoints = new List<CheckPoint>
         {
             cp1,
@@ -441,11 +439,6 @@ public class Controller : MonoBehaviour
             Error("Aucune correspondance trouvée.");
         }
 
-    }
-
-    public void OpenCamera()
-    {
-        // TODO : Ouvrir la scene Vuforia caméra
     }
 
     /*********** FIN BOUTONS ***********/

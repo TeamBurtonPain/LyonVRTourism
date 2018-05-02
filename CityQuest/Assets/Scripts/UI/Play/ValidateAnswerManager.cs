@@ -7,6 +7,8 @@ public class ValidateAnswerManager : MonoBehaviour
 {
 
     public InputField inputAnswer;
+    public Button touchToNext;
+    public Transform parent;
 
     public void ValidateAnswer()
     {
@@ -14,6 +16,11 @@ public class ValidateAnswerManager : MonoBehaviour
         if (correct)
         {
             GetComponent<Image>().color = Color.green;
+        } else
+        {
+            GetComponent<Image>().color = Color.red;
         }
+        Instantiate(touchToNext, parent);
+
     }
 }

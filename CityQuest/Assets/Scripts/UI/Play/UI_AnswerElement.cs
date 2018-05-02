@@ -5,11 +5,15 @@ public class UI_AnswerElement : MonoBehaviour
 {
     private string answer;
     public Text answerText;
+    private Button touchToNext;
+    private Transform buttonParent;
 
-    public void LinkAnswer(string ans)
+    public void LinkAnswer(string ans, Button touchToNext, Transform buttonParent)
     {
         answer = ans;
         answerText.text = answer;
+        this.touchToNext = touchToNext;
+        this.buttonParent = buttonParent;
     }
 
     public void SelectAnswer()
@@ -22,6 +26,7 @@ public class UI_AnswerElement : MonoBehaviour
         {
             GetComponent<Image>().color = Color.red;
         }
+        Instantiate(touchToNext, buttonParent);
     }
 }
 
