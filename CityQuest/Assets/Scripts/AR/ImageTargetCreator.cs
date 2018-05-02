@@ -30,7 +30,6 @@ public class ImageTargetCreator : MonoBehaviour
 
         if (dataSet.Load(dataSetName))
         {
-            Debug.Log("load activé");
             objectTracker.Stop();  // stop tracker so that we can add new dataset
 
             if (!objectTracker.ActivateDataSet(dataSet))
