@@ -154,8 +154,6 @@ public static class JSONHelper
                 new JProperty("username", a.Username),
                 new JProperty("accountType", a.Role.ToString())
             )),
-            new JProperty("createdAt", a.CreationDate.ToString("s")),
-            new JProperty("updatedAt", a.UpdateDate.ToString("s")),
             new JProperty("game", new JObject(
                 new JProperty("badges", JSONHelper.ToJson(a.Badges)),
                 new JProperty("quests", JSONHelper.ToJson(a.Quests)),
