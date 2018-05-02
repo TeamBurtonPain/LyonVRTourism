@@ -72,7 +72,8 @@ public class CreatorMainSceneManager : MonoBehaviour
                 creatorCheckpoint.furnishedImage.ToString(), // Pass image as string 
                 creatorCheckpoint.enigmaInputField.text,
                 choices,
-                creatorCheckpoint.Answer);  
+                creatorCheckpoint.Answer,
+                1);  
             MyCheckPoints.Add(temp);
         }
 

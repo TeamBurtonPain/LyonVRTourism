@@ -37,16 +37,16 @@ class PlayQuestController : MonoBehaviour
         choices.Add("Du bambou");
         choices.Add("Des oeufs");
         choices.Add("Des M&M's");
-        CheckPoint cp1 = new CheckPoint("TestSprites/panda", "Quel est l'aliment principal des pandas roux ? ", choices, "Du bambou");
-        CheckPoint cp2 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "oeufs");
-        CheckPoint cp3 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "M&M");
+        CheckPoint cp1 = new CheckPoint("TestSprites/panda", "Quel est l'aliment principal des pandas roux ? ", choices, "Du bambou", 1);
+        CheckPoint cp2 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "oeufs", 2);
+        CheckPoint cp3 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "M&M", 3);
         List<CheckPoint> checkpoints = new List<CheckPoint>
         {
             cp1,
             cp2,
             cp3
         };
-        Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 3L, creator, checkpoints);
+        Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 3L, creator.Id, checkpoints);
         StateQuest playing = new StateQuest(quest);
         // End tests
 
