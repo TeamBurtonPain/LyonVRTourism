@@ -262,10 +262,6 @@ public class Controller : MonoBehaviour
                 Error("Vous êtes trop loin pour lancer cette quête.");
             }
         }
-        else
-        {
-            //TODO : Gestion des erreurs en cas de quest ou de user null
-        }
     }
 
     public void LoadMap()
@@ -332,7 +328,6 @@ public class Controller : MonoBehaviour
         {
             HTTPHelper.AuthLogout(cookie);
         }
-        // TODO deco en local (persistance)
 
         currentState = loginState;
         SceneManager.LoadScene("Login");
@@ -340,23 +335,22 @@ public class Controller : MonoBehaviour
 
     public void CreateNewAccount(string firstName, string lastname, string mail, string password, string username)
     {
-
-        // TODO integrity check
-        bool integrity = false;
-        if (firstName == null) { Error("Entrez un prénom valide."); } else { integrity = true; }
-        if (lastname == null) { Error("Entrez un nom valide."); } else { integrity = true; }
+        bool integrity = true;
+        if (firstName == null) { Error("Entrez un prénom valide."); integrity = false; } 
+        if (lastname == null) { Error("Entrez un nom valide."); integrity = false; }
         if (mail != null)
         {
             Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
             Match match = regex.Match(mail);
-            if (match.Success)
-                integrity = true;
-            else
+            if (!match.Success)
+            {
                 Error("Entrez un mail valide.");
-        } else { Error("Entrez un mail valide."); }
-        if (password == null) { Error("Entrez un mot de passe valide."); } else { integrity = true; }
-        if (password == null) { Error("Entrez un nom d'utilisateur valide."); } else { integrity = true; }
-
+                integrity = false;
+            }
+        } else { Error("Entrez un mail valide."); integrity = false; }
+        if (password == null) { Error("Entrez un mot de passe valide."); ; integrity = false; }
+        if (password == null) { Error("Entrez un nom d'utilisateur valide."); ; integrity = false; }
+        
         if (integrity == false)
         {
             // TODO : do nothing, the user has to change what he typed
@@ -383,12 +377,12 @@ public class Controller : MonoBehaviour
          string idCreator, List<CheckPoint> checkpoints)
     {
         // TODO integrity check
-        bool integrity = false;
-        if(geolocalisation == null) { Error("Entrez une géolocalisation valide."); } else { integrity = true; }
-        if (title == null) { Error("Entrez un titre valide."); } else { integrity = true; }
-        if (description == null) { Error("Entrez une description valide."); } else { integrity = true; }
-        if (experienceEarned > 0) { Error("Entrez une valeur d'expérience gagnée valide."); } else { integrity = true; }
-        if (checkpoints == null) { Error("Entrez des checkpoints valides."); } else { integrity = true; }
+        bool integrity = true;
+        if(geolocalisation == null) { Error("Entrez une géolocalisation valide."); integrity = false; }
+        if (title == null) { Error("Entrez un titre valide."); integrity = false; }
+        if (description == null) { Error("Entrez une description valide."); integrity = false; }
+        if (experienceEarned > 0) { Error("Entrez une valeur d'expérience gagnée valide."); integrity = false; }
+        if (checkpoints == null) { Error("Entrez des checkpoints valides."); integrity = false; }
         if (integrity == false)
         {
             // TODO : do nothing, the user has to change what he typed
