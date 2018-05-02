@@ -180,7 +180,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Loading.
+  m_Text: Chargement.
 --- !u!222 &48223647
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -418,7 +418,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Try again
+  m_Text: "R\xE9essayer"
 --- !u!222 &977736121
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -573,7 +573,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: This application requiere GPS, please activate it and try again.
+  m_Text: "Cette application requiert l'usage du GPS, veuillez l'activer et r\xE9essayer."
 --- !u!222 &1088599954
 CanvasRenderer:
   m_ObjectHideFlags: 0

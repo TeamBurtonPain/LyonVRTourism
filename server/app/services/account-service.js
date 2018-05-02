@@ -1,10 +1,18 @@
 const Account = require('../models/account.js');
+const { createUserError } = require('../../helpers');
 
 async function getAccountById(accountId) {
-    return Account.findById(accountId);
+    let account = await Account.findById(accountId);
+    if (!account) throw createUserError('Unknow account', 'No account found with the provided _id.');
+    account = account.toJSON();
+    // Remove sensitive fields
+    delete account.connection.password;
+    delete account.connection.jwt;
+    return account;
 }
 
 async function getAccountByEmail(email) {
+    // No need to remove sensitive fields (this method is used only on server side)
     return Account.findOne({ 'connection.email': email });
 }
 
@@ -14,6 +22,7 @@ async function createAccount(account) {
 
 async function updateAccount(accountId, accountModif) {
     const actualAccount = await Account.findById(accountId);
+    if (!actualAccount) throw createUserError('Unknow account', 'No account found with the provided _id.');
     actualAccount.merge(accountModif);
     return actualAccount.save();
 }
