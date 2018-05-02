@@ -288,6 +288,7 @@ public class Controller : MonoBehaviour
 
     public void SelectMenuSettings()
     {
+        // TODO Recuperer infos user via backend
         SceneManager.LoadScene("Settings");
     }
 
@@ -351,11 +352,6 @@ public class Controller : MonoBehaviour
         // else 
         // Error("Aucune correspondance trouvée.");
 
-    }
-
-    public void OpenCamera()
-    {
-        // TODO : Ouvrir la scene Vuforia caméra
     }
 
     /*********** FIN BOUTONS ***********/

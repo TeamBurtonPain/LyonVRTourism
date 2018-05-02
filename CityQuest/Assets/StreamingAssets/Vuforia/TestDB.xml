@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="Spyro" size="0.200000 0.112500" />
+    <ImageTarget name="velo10" size="100.000000 75.000000" />
+    <ImageTarget name="velo9" size="100.000000 75.000000" />
+    <ImageTarget name="velo8" size="100.000000 75.000000" />
+    <ImageTarget name="velo7" size="100.000000 75.000000" />
+    <ImageTarget name="velo6" size="100.000000 75.000000" />
+    <ImageTarget name="velo5" size="100.000000 75.000000" />
+    <ImageTarget name="velo4" size="100.000000 75.000000" />
+    <ImageTarget name="velo3" size="100.000000 75.000000" />
+    <ImageTarget name="velo2" size="100.000000 75.000000" />
+    <ImageTarget name="velo1" size="100.000000 75.000000" />
+    <ImageTarget name="velo" size="150.000000 112.500000" />
+    <ImageTarget name="telechargement" size="540.000000 720.927856" />
+    <ImageTarget name="ace" size="1.000000 1.507508" />
+    <ImageTarget name="carte2" size="0.060000 0.088276" />
+    <ImageTarget name="supermariotennis" size="0.600000 1.000500" />
+    <ImageTarget name="tennis" size="0.150000 0.122794" />
+    <ImageTarget name="drone" size="0.120000 0.205657" />
+  </Tracking>
+</QCARConfig>

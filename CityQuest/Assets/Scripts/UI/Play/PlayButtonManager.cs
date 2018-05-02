@@ -11,4 +11,9 @@ public class PlayButtonManager : MonoBehaviour
     {
         PlayQuestController.Instance.SkipCheckpoint();
     }
+
+    public void Btn_OpenCamera()
+    {
+        PlayQuestController.Instance.OpenCamera();
+    }
 }
