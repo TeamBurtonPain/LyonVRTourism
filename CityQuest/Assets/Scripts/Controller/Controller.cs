@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Security.Principal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -28,6 +30,7 @@ public class Controller : MonoBehaviour
     private List<Quest> existingQuests;
 
     private User user;
+    private Cookie cookie;
 
     private Quest selectedQuest;
 
@@ -176,6 +179,7 @@ public class Controller : MonoBehaviour
 
     public void Leave()
     {
+       
         // Chose one of the 2 following (sometime it bugs on some systems)
         //Application.Quit();
         System.Diagnostics.Process.GetCurrentProcess().Kill();
@@ -300,6 +304,7 @@ public class Controller : MonoBehaviour
     public void SelectMenuLogout()
     {
         // TODO deco en local (persistance)
+        HTTPHelper.AuthLogout(cookie);
         currentState = loginState;
         SceneManager.LoadScene("Login");
     }
@@ -348,14 +353,27 @@ public class Controller : MonoBehaviour
 
     public void TryConnection(string mail, string pwd)
     {
-        // TODO le back.
-        // connexion au serveur.
-        // if connexion ok 
-        //     faire la persistance locale de la connexion au compte +
-        //     user = charger l'user depuis la bdd
-        LoadMap();
-        // else 
-        // Error("Aucune correspondance trouvée.");
+        cookie = HTTPHelper.AuthLogin(mail, pwd);
+        if (cookie.Value != "")
+        {
+            Account a = HTTPHelper.GetAccount(cookie);
+            if (a.Mail == "")
+            {
+                Error(a.LastName);
+                //TODO : re load la page de connexion
+            }
+            else
+            {
+                user = a;
+                // TODO le back.
+                LoadMap();
+            }
+            
+        }
+        else
+        {
+            Error("Aucune correspondance trouvée.");
+        }
 
     }
 

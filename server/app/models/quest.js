@@ -18,17 +18,14 @@ const Quest = new Schema({
         type: String,
         required: true
     },
-    picture: {
-        type: String,
-        required: true
-    },
     checkpoints: [
         {
-            picturePath: {
+            picture: {
                 type: String,
                 required: true
             },
             text: String,
+			question: String,
             choices: {
                 type: [String],
                 required: true
@@ -42,9 +39,14 @@ const Quest = new Schema({
             } // O < difficulty < 5
         }
     ],
+	dates: {
+        createdAt: Date, // Auto
+        updatedAt: Date // Auto
+
+    },
     statistics: [
         {
-            _idUser: Schema.Types.ObjectId,
+            _idAccount: Schema.Types.ObjectId,
             comment: {
                 type: String,
                 required: true

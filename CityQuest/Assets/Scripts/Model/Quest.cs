@@ -20,7 +20,6 @@ public class Coordinates
 
 public class Quest
 {
-    private static long instanceCounter = 0;
     private long id;
     private Coordinates geolocalisation;
     private string title;

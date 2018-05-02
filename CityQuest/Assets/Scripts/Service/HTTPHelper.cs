@@ -4,6 +4,7 @@ using System.Collections.Generic;using System.Linq;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json.Linq;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -29,11 +30,48 @@ public static class HTTPHelper
         string text = uwr.downloadHandler.text;
 
         var json = JObject.Parse(text);
-        Cookie cookie = new Cookie("auth", (string) json["jwt"]);
 
+        Cookie cookie;
+
+        if (uwr.responseCode == 200)
+        {
+
+            cookie = new Cookie("auth", (string)json["jwt"]);//TODO à tester si erreur ???? json {error : truc, message : truc2}
+        }
+        else
+        {
+            cookie = new Cookie("auth", "");
+        }
         Debug.Log(text);
         Debug.Log(cookie);
         return cookie;
+    }
+
+    public static bool AuthLogout(Cookie cookie)
+    {
+        UnityWebRequest uwr = UnityWebRequest.Get(SERVER + "auth/logout");
+        uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
+        uwr.SetRequestHeader("Authorization", "Bearer " + cookie.Value);
+        uwr.SendWebRequest();
+        while (uwr.downloadProgress < 0.95f)
+        {
+            WaitForSecondsRealtime w = new WaitForSecondsRealtime(0.5f);
+        }
+        Debug.Log(uwr.ToString());
+        byte[] results = uwr.downloadHandler.data;
+        string text = uwr.downloadHandler.text;
+
+        var json = JObject.Parse(text);
+        Debug.Log(text);
+        if (uwr.responseCode == 200)
+        {
+            return true;
+
+        }
+        else
+        {
+            return false;
+        }
     }
 
     /******************** PERSIST ********************/
@@ -156,9 +194,18 @@ public static class HTTPHelper
         }
         Debug.Log(uwr.ToString());
         string text = uwr.downloadHandler.text;
+        
         Debug.Log(text);
-
-        return JSONHelper.ToAccount(text);
+        if (uwr.responseCode == 200)
+        {
+            return JSONHelper.ToAccount(text);
+        }
+        else
+        {
+            JObject json = JObject.Parse(text);
+            //Error("Erreur " + uwr.responseCode + ", " + json["message"]);
+            return new Account(){LastName = "Erreur " + uwr.responseCode + ", " + json["message"] };
+        }
     }
 
     public static Quest GetQuest(string id, Cookie cookie)
