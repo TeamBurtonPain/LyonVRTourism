@@ -239,7 +239,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a18fb57dc5593ff49a237abaef6f150b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dataSetName: TestDB
+  dataSetName: AR_DB
+  questFilter: minion
 --- !u!4 &946123897
 Transform:
   m_ObjectHideFlags: 0

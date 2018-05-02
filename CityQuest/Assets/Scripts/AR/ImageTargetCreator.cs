@@ -6,10 +6,13 @@ using Vuforia;
 public class ImageTargetCreator : MonoBehaviour
 {
 
-    public string dataSetName = "TestDB";
+    public string dataSetName = "AR_DB";
 
-	// Use this for initialization
-	void Start () {
+    public string questFilter;
+
+    public DataSet dataSet;
+    // Use this for initialization
+    void Start () {
 	    VuforiaARController.Instance.RegisterVuforiaStartedCallback(LoadDataSet);
 	}
 
@@ -17,7 +20,7 @@ public class ImageTargetCreator : MonoBehaviour
     {
         ObjectTracker objectTracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
 
-        DataSet dataSet = objectTracker.CreateDataSet();
+        dataSet = objectTracker.CreateDataSet();
 
         if (dataSet.Load(dataSetName))
         {
@@ -40,7 +43,7 @@ public class ImageTargetCreator : MonoBehaviour
             IEnumerable<TrackableBehaviour> tbs = TrackerManager.Instance.GetStateManager().GetTrackableBehaviours();
             foreach (TrackableBehaviour tb in tbs)
             {
-                if (tb.name == "New Game Object")
+                if (tb.name == "New Game Object" && (tb.TrackableName.Contains(questFilter) || tb.TrackableName.Contains("rhino")))
                 {
 
                     // change generic name to include trackable name

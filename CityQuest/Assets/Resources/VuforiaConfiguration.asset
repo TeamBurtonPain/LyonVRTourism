@@ -44,7 +44,7 @@ MonoBehaviour:
       ContainsMagnet: 0
   databaseLoad:
     dataSetsToLoad:
-    - TestDB
+    - AR_DB
     dataSetsToActivate: []
   videoBackground:
     clippingMode: 0

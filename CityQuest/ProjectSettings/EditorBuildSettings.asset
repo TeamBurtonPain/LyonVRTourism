@@ -5,25 +5,25 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/Loading.unity
     guid: dc0e65523994ee44ead997f8c7548315
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/Connexion/Login.unity
     guid: d17bbe6d6fd381b43997bfd80c4f7c98
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/Connexion/Connexion.unity
     guid: 04cde54afd82f0c44abd6e0d4de7005c
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/Connexion/AccountCreation.unity
     guid: e9b18c7dfc358704c951bdf33b539968
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/Connexion/Pseudo.unity
     guid: 48ab13879242a7b4baf13b0818958871
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/MapScene.unity
     guid: 35fd28708f117c44b8edaf268351261b
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/MyQuests.unity
     guid: 6e641184a8bf49346891a2be259d297f
   - enabled: 1

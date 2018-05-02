@@ -53,26 +53,26 @@ public class Detection : MonoBehaviour, ITrackableEventHandler
             newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED)
         {
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
-            SceneManager.LoadScene("Loading");
-            OnTrackingFound();
+            SceneManager.LoadScene("GameImageScene");// A remplacer par un retour au controller avec un output true
+            //OnTrackingFound();
         }
         else if (previousStatus == TrackableBehaviour.Status.TRACKED &&
                  newStatus == TrackableBehaviour.Status.NOT_FOUND)
         {
-            Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
-            OnTrackingLost();
+            //Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
+            //OnTrackingLost();
         }
         else
         {
             // For combo of previousStatus=UNKNOWN + newStatus=UNKNOWN|NOT_FOUND
             // Vuforia is starting, but tracking has not been lost or found yet
             // Call OnTrackingLost() to hide the augmentations
-            OnTrackingLost();
+            //OnTrackingLost();
         }
     }
 
     #endregion // PUBLIC_METHODS
-
+    /*
     #region PROTECTED_METHODS
 
     protected virtual void OnTrackingFound()
@@ -115,4 +115,5 @@ public class Detection : MonoBehaviour, ITrackableEventHandler
     }
 
     #endregion // PROTECTED_METHODS
+    */
 }
