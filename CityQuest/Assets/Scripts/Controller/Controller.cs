@@ -30,6 +30,8 @@ public class Controller : MonoBehaviour
 
     private Quest selectedQuest;
 
+    private StateQuest currentQuest;
+
 
     void Awake()
     {
@@ -99,10 +101,10 @@ public class Controller : MonoBehaviour
             FirstName = "John"
         };
         List<string> choices = new List<string>();
-        choices.Add("a");
-        choices.Add("b");
-        choices.Add("c");
-        CheckPoint cp1 = new CheckPoint("pic1.png", "blablablaTextCP1", choices, "b");
+        choices.Add("Du bambou");
+        choices.Add("Des oeufs");
+        choices.Add("Des M&M's");
+        CheckPoint cp1 = new CheckPoint("TestSprites/panda", "Quel est l'aliment principal des pandas roux ? ", choices, "bambou");
         CheckPoint cp2 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "a");
         List<CheckPoint> checkpoints = new List<CheckPoint>
         {
@@ -128,6 +130,7 @@ public class Controller : MonoBehaviour
             q7,
             q8
         };
+        StateQuest playing = new StateQuest(quest);
 
         user = new User();
         user.AddQuest(quest);
@@ -135,6 +138,7 @@ public class Controller : MonoBehaviour
         //------ End Test sample -------
 
         selectedQuest = quest;
+        currentQuest = playing;
         currentConnexion = ConnexionState.DISCONNECTED;
     }
 
@@ -366,6 +370,12 @@ public class Controller : MonoBehaviour
     {
         get { return selectedQuest; }
         set { selectedQuest = value; }
+    }
+
+    public StateQuest CurrentQuest
+    {
+        get { return currentQuest; }
+        set { currentQuest = value; }
     }
 
     public List<Quest> ExistingQuests
