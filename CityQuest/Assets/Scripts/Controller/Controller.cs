@@ -10,9 +10,6 @@ public enum ConnexionState
 }
 public class Controller : MonoBehaviour
 {
-    public GameObject leavingWindow;
-    public GameObject cancelWindow;
-    public ErrorPopUp errorTemplate;
 
     protected static Controller instance;
 
@@ -23,6 +20,9 @@ public class Controller : MonoBehaviour
     public IState questState;
     public IState loginState;
     private ConnexionState currentConnexion;
+
+    public bool leavingWindowOpen = false;
+    public bool cancelWindowOpen = false;
 
     private List<Quest> existingQuests;
 
@@ -161,35 +161,42 @@ public class Controller : MonoBehaviour
     // Leave
     public void AskLeave()
     {
-        leavingWindow.SetActive(true);
+        if (!leavingWindowOpen)
+        {
+            leavingWindowOpen = true;
+            MNPopup p = new MNPopup("Quitter", "Voulez-vous quitter l'application ?");
+            p.AddAction("Oui", () => { Leave(); });
+            p.AddAction("Non", () => { leavingWindowOpen = false; });
+            p.AddDismissListener(() => { leavingWindowOpen = false; });
+            p.Show();
+        }
     }
 
     public void Leave()
     {
         // Chose one of the 2 following (sometime it bugs on some systems)
+
         //Application.Quit();
         System.Diagnostics.Process.GetCurrentProcess().Kill();
     }
 
-    public void CancelLeave()
-    {
-        leavingWindow.SetActive(false);
-    }
     // BackToMap
     public void AskBackToMap()
     {
-        cancelWindow.SetActive(true);
+        if (!cancelWindowOpen)
+        {
+            cancelWindowOpen = true;
+            MNPopup p = new MNPopup("Retour", "Voulez-vous retourner à la carte ?");
+            p.AddAction("Oui", () => { leavingWindowOpen = false; BackToMap(); });
+            p.AddAction("Non", () => { leavingWindowOpen = false; });
+            p.AddDismissListener(() => { leavingWindowOpen = false; });
+            p.Show();
+        }
     }
 
     public void BackToMap()
     {
-        cancelWindow.SetActive(false);
         LoadMap();
-    }
-
-    public void CancelBackToMap()
-    {
-        cancelWindow.SetActive(false);
     }
     //////////////////////////
     // end of pop-up windows
@@ -353,8 +360,10 @@ public class Controller : MonoBehaviour
 
     public void Error(string msg)
     {
-        ErrorPopUp error = Instantiate(errorTemplate, this.transform);
-        error.SetError(msg);
+        MNPopup p = new MNPopup("Erreur", msg);
+        p.AddAction("Ok", () => { });
+        p.Show();
+
     }
 
     public static Controller Instance
