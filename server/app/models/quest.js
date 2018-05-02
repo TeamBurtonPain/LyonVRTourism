@@ -6,9 +6,9 @@ const mongooseTimestamp = require('mongoose-timestamp');
 
 const Quest = new Schema({
     _idCreator: Schema.Types.ObjectId,
-    geo: {
-        lat: Number,
-        long: Number
+    geolocalisation: {
+        x: Number,
+        y: Number
     },
     title: {
         type: String,
@@ -18,22 +18,29 @@ const Quest = new Schema({
         type: String,
         required: true
     },
-    picturePath: {
-        type: String,
-        required: true
-    },
     checkpoints: [
         {
+            pictureName: {
+                type: String,
+                required: true
+            },
             picturePath: {
                 type: String,
                 required: true
             },
-            text: String,
-            choices: {
-                type: [String],
-                required: true
+            text: {
+                type: String,
+                require: true
             },
-            enigmAnswer: String,
+            question: {
+                type: String,
+                require: true
+            },
+            choices: [String],
+            enigmAnswer: {
+                type: String,
+                require: true
+            },
             difficulty: {
                 type: Number,
                 required: true,
@@ -57,7 +64,7 @@ const Quest = new Schema({
             } // 0 < note < 10
         }
     ],
-    disable: {
+    open: {
         type: Boolean,
         required: true
     }

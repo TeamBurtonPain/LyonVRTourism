@@ -20,7 +20,7 @@ async function createQuest(req, res) {
 
     if (!req.body.picture) throw createUserError('BadRequest', 'Quest must have a picture');
 
-    newQuest = await questService.createQuest(newQuest, req.body.picture, req.body.checkpoints);
+    newQuest = await questService.createQuest(newQuest, req.body.checkpoints);
 
     res.json(newQuest);
 }

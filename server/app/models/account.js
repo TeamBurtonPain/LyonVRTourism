@@ -28,7 +28,6 @@ const Account = new Schema({
     userInformation: {
         lastName: String,
         firstName: String,
-        dateOfBirth: Date,
         username: {
             type: String,
             required: true
@@ -36,10 +35,10 @@ const Account = new Schema({
         accountType: {
             type: String,
             enum: {
-                values: ['ADMIN', 'EDITOR', 'GAMER'],
-                message: '`accountType` field must be one of these value [\'ADMIN\', \'EDITOR\', \'GAMER\']'
+                values: ['ADMIN', 'CREATOR', 'USER'],
+                message: '`accountType` field must be one of these value [\'ADMIN\', \'CREATOR\', \'USER\']'
             },
-            default: 'GAMER'
+            default: 'USER'
         },
     },
     game: {
@@ -61,8 +60,14 @@ const Account = new Schema({
                 }
             }
         ],
-        xp: Number,
-        elapsedTime: Number // Second
+        xp: {
+            type: Number,
+            default: 0
+        },
+        elapsedTime: {
+            type: Number,
+            default: 0
+        }, // Second
     }
 });
 
