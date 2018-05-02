@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -308,24 +309,47 @@ public class Controller : MonoBehaviour
     {
 
         // TODO integrity check
+        bool intergrity = false;
+        if (firstName == null) { Error("Entrez un prénom valide."); } else { intergrity = true; }
+        if (lastname == null) { Error("Entrez un nom valide."); } else { intergrity = true; }
+        if (mail != null)
+        {
+            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            Match match = regex.Match(mail);
+            if (match.Success)
+                intergrity = true;
+            else
+                Error("Entrez un mail valide.");
+        } else { Error("Entrez un mail valide."); }
+        if (password == null) { Error("Entrez un mot de passe valide."); } else { intergrity = true; }
+        if (password == null) { Error("Entrez un nom d'utilisateur valide."); } else { intergrity = true; }
 
-        // récupérer les infos locales si elles existent.
-        // on se dit que s'il y a un pseudo en local, on le remplace par celui rentré ici de toutes façon. Le reste est gardé.
+        if (intergrity == false)
+        {
+            // TODO : do nothing, the user has to change what he typed
+        }
+        else
+        {
+            User user = new User(username);
+            Account account = new Account(user, mail, password, firstName, lastname, RoleAccount.USER);
 
-        // TODO : persistance en ligne + locale de la connexion.
+            //  TODO : récupérer les infos locales si elles existent.
+            // on se dit que s'il y a un pseudo en local, on le remplace par celui rentré ici de toutes façon. Le reste est gardé.
 
-        // if persistance ok -> user = user
-        LoadMap();
-
-        // else 
-        // Error(message);
-
+            // TODO : persistance en ligne + locale de la connexion.
+            bool request = HTTPHelper.Persist(account);
+            if(request)
+                LoadMap();
+            else
+                Error("Cette adresse mail est déjà utilisée");
+        }
     }
 
-    public void CreateNewQuest(string firstName, string lastname, string mail, string password, string username, List<CheckPoint> checkPoints)
+    public void CreateNewQuest(Coordinates geolocalisation, string title, string description, long value,
+         string idCreator, List<CheckPoint> checkpoints)
     {
         // TODO integrity check
-        // Vérifier bon format des données
+
 
         // TODO : persistance en ligne de la quête créé si non deja existante.
 
