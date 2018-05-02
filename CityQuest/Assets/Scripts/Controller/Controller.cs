@@ -354,11 +354,6 @@ public class Controller : MonoBehaviour
 
     }
 
-    public void OpenCamera()
-    {
-        // TODO : Ouvrir la scene Vuforia caméra
-    }
-
     /*********** FIN BOUTONS ***********/
 
     public void Error(string msg)
