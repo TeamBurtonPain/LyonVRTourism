@@ -40,11 +40,6 @@ const Account = new Schema({
             default: 'USER'
         }
     },
-    dates: {
-        createdAt: Date, // Auto
-        updatedAt: Date // Auto
-
-    },
     game: {
         badges: [Schema.Types.ObjectId], // Badges ObjectId Array
         quests: [
@@ -60,8 +55,14 @@ const Account = new Schema({
                 }
             }
         ],
-        xp: Number,
-        elapsedTime: Number // Second
+        xp: {
+            type: Number,
+            default: 0
+        },
+        elapsedTime: {
+            type: Number,
+            default: 0
+        }, // Second
     }
 });
 
