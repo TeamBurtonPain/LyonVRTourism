@@ -6,9 +6,9 @@ using Vuforia;
 public class ImageTargetCreator : MonoBehaviour
 {
 
-    public string dataSetName = "AR_DB";
+    private static string dataSetName;
 
-    public string questFilter;
+    private static string questFilter;
 
     public DataSet dataSet;
     // Use this for initialization
@@ -24,6 +24,8 @@ public class ImageTargetCreator : MonoBehaviour
 
     void LoadDataSet()
     {
+        dataSetName = "AR_DB";
+        questFilter = "ace"; //"Q"+currentQuest.Quest.Id+"C"+currentCheckpoint.Checkpoint.Id;
         ObjectTracker objectTracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
 
         dataSet = objectTracker.CreateDataSet();
