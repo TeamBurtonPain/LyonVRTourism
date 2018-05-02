@@ -4,7 +4,6 @@ public class QuestsListManager : MonoBehaviour {
 
     public UI_QuestElement questTemplate;
     public Transform parent;
-    // private List<UI_QuestElement> listElements;
 
     private void Start()
     {
@@ -14,7 +13,7 @@ public class QuestsListManager : MonoBehaviour {
         }
         else
         {
-            //TODO : Set a default error message that say or redirect to the Mapscene so the user actually does his first quest
+            //Error("Allez dans \"Voir la carte\" afin de faire votre première quête");
         }
         
     }
@@ -29,7 +28,6 @@ public class QuestsListManager : MonoBehaviour {
         {
             UI_QuestElement temp = Instantiate(questTemplate, this.parent);
             temp.LinkQuest(stateQuest);
-           // listElements.Add(temp);
         }
     }
 }
