@@ -89,6 +89,7 @@ class PlayQuestController : MonoBehaviour
         {
             Debug.Log("Fini!");
             // TODO : Scene de fin
+            // TODO : Detruire controller !!!
         }
     }
 

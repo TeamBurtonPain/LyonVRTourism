@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class CheckpointMultiAnsManager : MonoBehaviour
 {
 
     public UI_AnswerElement answerTemplate;
     public Transform parent;
+    public Button touchToNext;
+    public Transform buttonParent;
 
     private void Start()
     {
@@ -24,7 +27,7 @@ public class CheckpointMultiAnsManager : MonoBehaviour
         foreach (string text in checkpoint.Choices)
         {
             UI_AnswerElement temp = Instantiate(answerTemplate, this.parent);
-            temp.LinkAnswer(text);
+            temp.LinkAnswer(text, touchToNext, buttonParent);
         }
     }
 }

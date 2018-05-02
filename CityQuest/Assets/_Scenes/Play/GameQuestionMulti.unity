@@ -739,6 +739,9 @@ MonoBehaviour:
   answerTemplate: {fileID: 114554710681739770, guid: db6157c734f848f418f24506b7bdeaa5,
     type: 2}
   parent: {fileID: 1449860154}
+  touchToNext: {fileID: 114422690622372298, guid: 5f5d0f3ba7606fb4aaef745302d67287,
+    type: 2}
+  buttonParent: {fileID: 1490521063}
 --- !u!1 &1490521062
 GameObject:
   m_ObjectHideFlags: 0
