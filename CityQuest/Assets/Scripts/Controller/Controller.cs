@@ -353,6 +353,7 @@ public class Controller : MonoBehaviour
 
             // TODO : persistance en ligne + locale de la connexion.
             bool request = HTTPHelper.Persist(account);
+            cookie = HTTPHelper.AuthLogin(mail, password);
             if(request)
                 LoadMap();
             else
