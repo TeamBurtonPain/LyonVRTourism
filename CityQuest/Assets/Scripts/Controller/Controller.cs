@@ -61,6 +61,9 @@ public class Controller : MonoBehaviour
 
         currentState = loginState;
 
+
+        existingQuests = HTTPHelper.GetAllQuests();
+
         //------ Test sample ---------
 
         Coordinates coordinates = new Coordinates
@@ -113,8 +116,8 @@ public class Controller : MonoBehaviour
         choices.Add("b");
         choices.Add("c");
 
-        CheckPoint cp1 = new CheckPoint("pic1.png", "blablablaTextCP1", choices, "b",3);
-        CheckPoint cp2 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "a",5);
+        CheckPoint cp1 = new CheckPoint("pic1.png","", "blablablaTextCP1", choices, "b",3);
+        CheckPoint cp2 = new CheckPoint("pic2.png","", "blablablaTextCP2", choices, "a",5);
 
 
         List<CheckPoint> checkpoints = new List<CheckPoint>
@@ -131,17 +134,14 @@ public class Controller : MonoBehaviour
         Quest q6 = new Quest(coordinates6, "a", "b", 30, creator.Id, checkpoints);
         Quest q7 = new Quest(coordinates7, "a", "b", 30, creator.Id, checkpoints);
         Quest q8 = new Quest(coordinates8, "a", "b", 30, creator.Id, checkpoints);
-        existingQuests = new List<Quest>
-        {
-            quest,
-            quest2,
-            q3,
-            q4,
-            q5,
-            q6,
-            q7,
-            q8
-        };
+        existingQuests.Add(quest);
+        existingQuests.Add(quest2);
+        existingQuests.Add(q3);
+        existingQuests.Add(q4);
+        existingQuests.Add(q5);
+        existingQuests.Add(q6);
+        existingQuests.Add(q7);
+        existingQuests.Add(q8);
         StateQuest playing = new StateQuest(quest);
 
         user = new User();

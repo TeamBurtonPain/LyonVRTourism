@@ -37,9 +37,9 @@ class PlayQuestController : MonoBehaviour
         choices.Add("Du bambou");
         choices.Add("Des oeufs");
         choices.Add("Des M&M's");
-        CheckPoint cp1 = new CheckPoint("TestSprites/panda", "Quel est l'aliment principal des pandas roux ? ", choices, "Du bambou", 2);
-        CheckPoint cp2 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "oeufs", 3);
-        CheckPoint cp3 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "M&M", 4);
+        CheckPoint cp1 = new CheckPoint("TestSprites/panda", "", "Quel est l'aliment principal des pandas roux ? ", choices, "Du bambou", 2);
+        CheckPoint cp2 = new CheckPoint("pic2.png","", "blablablaTextCP2", choices, "oeufs", 3);
+        CheckPoint cp3 = new CheckPoint("pic2.png", "", "blablablaTextCP2", choices, "M&M", 4);
         List<CheckPoint> checkpoints = new List<CheckPoint>
         {
             cp1,

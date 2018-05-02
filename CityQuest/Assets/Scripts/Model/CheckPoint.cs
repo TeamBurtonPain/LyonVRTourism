@@ -6,6 +6,7 @@ public class CheckPoint
 {
 
     private string picture;
+    private string pictureName;
     private string text;
     private string question;
     private List<string> choices;
@@ -18,10 +19,11 @@ public class CheckPoint
         choices = new List<string>();
     }
 
-    public CheckPoint(string pic, string text, List<string> choices, string answer, int difficulty)
+    public CheckPoint(string pic, string picName, string text, List<string> choices, string answer, int difficulty)
 
     {
         this.picture = pic;
+        this.pictureName = picName;
         this.text = text;
         this.choices = choices;
         this.answer = answer;
@@ -33,6 +35,12 @@ public class CheckPoint
     {
         get { return picture; }
         set { picture = value; }
+    }
+
+    public string PictureName
+    {
+        get { return pictureName; }
+        set { pictureName = value; }
     }
 
     public string Text

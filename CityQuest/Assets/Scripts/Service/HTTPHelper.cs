@@ -244,6 +244,24 @@ public static class HTTPHelper
         return JSONHelper.ToQuest(text);
     }
 
+    public static List<Quest> GetAllQuests()
+    {
+        UnityWebRequest uwr = UnityWebRequest.Get(SERVER + "quests/");
+        uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
+
+        Debug.Log(uwr.ToString());
+        uwr.SendWebRequest();
+        while (uwr.downloadProgress < 0.95f)
+        {
+            WaitForSecondsRealtime w = new WaitForSecondsRealtime(0.5f);
+        }
+        Debug.Log(uwr.ToString());
+        string text = uwr.downloadHandler.text;
+        Debug.Log(text);
+
+        return JSONHelper.ToQuests(text);
+    }
+
     public static bool Send(Quest q)
     {
         Debug.Log(JSONHelper.ToJsonString(q));

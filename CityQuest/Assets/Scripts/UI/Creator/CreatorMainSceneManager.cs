@@ -73,6 +73,8 @@ public class CreatorMainSceneManager : MonoBehaviour
 
             CheckPoint temp = new CheckPoint(
                 creatorCheckpoint.furnishedImage.ToString(), // Pass image as string 
+                //TODO nom de l'image
+                " NOM BUVDUBDIV3YTGUYEVIDFUE A CHANGER",
                 creatorCheckpoint.enigmaInputField.text,
                 choices,
                 creatorCheckpoint.Answer,

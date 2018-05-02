@@ -19,7 +19,6 @@ public static class JSONHelper
             new JProperty("geolocalisation", JSONHelper.ToJson(q.Geolocalisation)),
             new JProperty("title", q.Title),
             new JProperty("description", q.Description),
-            //new JProperty("picture", q.picture64),
             new JProperty("checkpoints", JSONHelper.ToJson(q.Checkpoints)),
             new JProperty("createdAt", q.CreationDate),
             new JProperty("updatedAt", q.UpdateDate),
@@ -55,6 +54,8 @@ public static class JSONHelper
 
     public static JObject ToJson(CheckPoint c)
     {
+
+
         JObject jsonCheckpoint = new JObject(
             //new JProperty("photo", photo64),
             new JProperty("text", c.Text),
@@ -94,9 +95,21 @@ public static class JSONHelper
         string title = (string)parse["title"];
         string description = (string)parse["description"];
         List<CheckPoint> checkpoints = ToListCheckpoint((JArray)parse["checkpoints"]);
-        int experienceEarned = (int)parse["value"];
+        //int experienceEarned = (int)parse["value"];
+        int experienceEarned = 0;
         Quest quest = new Quest(geolocalisation, title, description, experienceEarned, idCreator, checkpoints);
         return quest;
+    }
+
+    public static List<Quest> ToQuests(string questJson)
+    {
+        JArray parse = JArray.Parse(questJson);
+        List<Quest> list = new List<Quest>();
+        foreach (JToken json in parse)
+        {
+            list.Add(ToQuest(JObject.Parse(json.ToString()).ToString()));
+        }
+        return list;
     }
 
 
@@ -107,6 +120,8 @@ public static class JSONHelper
         {
             JObject parse = JObject.Parse(item.ToString());
             string text = (string)parse["text"];
+            string picture = (string)parse["picture"];
+            string pictureName = (string)parse["pictureName"];
             JArray choicesArray = (JArray)parse["choices"];
             List<string> choices = new List<string>();
             foreach (var choice in choicesArray)
@@ -115,7 +130,7 @@ public static class JSONHelper
             }
             string answer = (string)parse["answer"];
             int difficulty = (int)parse["difficulty"];
-            CheckPoint checkPoint = new CheckPoint(null, text, choices, answer, difficulty);
+            CheckPoint checkPoint = new CheckPoint(picture, pictureName, text, choices, answer, difficulty);
             checkpoints.Add(checkPoint);
         }
         return checkpoints;
