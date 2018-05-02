@@ -288,6 +288,7 @@ public class Controller : MonoBehaviour
 
     public void SelectMenuSettings()
     {
+        // TODO Recuperer infos user via backend
         SceneManager.LoadScene("Settings");
     }
 
