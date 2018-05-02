@@ -47,12 +47,15 @@ public class CreatorMainSceneManager : MonoBehaviour
 
     public void ValidateQuest()
     {
+        
+        Coordinates coordinates = new Coordinates(float.Parse(positionLatInputField.text, System.Globalization.CultureInfo.InvariantCulture.NumberFormat),
+            float.Parse(positionLongInputField.text, System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
         Controller.Instance.CreateNewQuest(
+            coordinates,
             questNameInputField.text,
             questDescriptionInputField.text,
-            questValueInputField.text,
-            positionLatInputField.text,
-            positionLongInputField.text,
+            Convert.ToInt64(questValueInputField.text),
+            Controller.Instance.User.Id,
             ToCheckPoints()); // Pass checkpoints
     }
 

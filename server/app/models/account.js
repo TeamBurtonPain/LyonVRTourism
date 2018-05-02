@@ -23,12 +23,10 @@ const Account = new Schema({
             required: true,
             bcrypt: true
         },
-        jwt: String,
     },
     userInformation: {
         lastName: String,
         firstName: String,
-        dateOfBirth: Date,
         username: {
             type: String,
             required: true

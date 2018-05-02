@@ -22,7 +22,7 @@ public class Account : User
 
     public Account()
     {
-        //dateBirth = DateTime.Now;
+        mail = "";
     }
 
     /// <summary>
