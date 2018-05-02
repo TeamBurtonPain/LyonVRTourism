@@ -45,4 +45,9 @@ public class ButtonManager : MonoBehaviour
     {
         Controller.Instance.Inscription();
     }
+
+    public void Btn_OpenCamera()
+    {
+        Controller.Instance.OpenCamera();
+    }
 }
