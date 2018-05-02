@@ -6,6 +6,7 @@ using System.Security.Principal;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Net;
 
 public enum ConnexionState
 {
@@ -122,14 +123,14 @@ public class Controller : MonoBehaviour
             cp2
         };
 
-        Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 3L, creator.Id, checkpoints);
-        Quest quest2 = new Quest(coordinates2, "Trouver les pandas roux2", "Description des pandas roux2", 3L, creator.Id, checkpoints);
-        Quest q3 = new Quest(coordinates3, "a", "b", 3L, creator.Id, checkpoints);
-        Quest q4 = new Quest(coordinates4, "a", "b", 3L, creator.Id, checkpoints);
-        Quest q5 = new Quest(coordinates5, "a", "b", 3L, creator.Id, checkpoints);
-        Quest q6 = new Quest(coordinates6, "a", "b", 3L, creator.Id, checkpoints);
-        Quest q7 = new Quest(coordinates7, "a", "b", 3L, creator.Id, checkpoints);
-        Quest q8 = new Quest(coordinates8, "a", "b", 3L, creator.Id, checkpoints);
+        Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 30, creator.Id, checkpoints);
+        Quest quest2 = new Quest(coordinates2, "Trouver les pandas roux2", "Description des pandas roux2", 30, creator.Id, checkpoints);
+        Quest q3 = new Quest(coordinates3, "a", "b", 30, creator.Id, checkpoints);
+        Quest q4 = new Quest(coordinates4, "a", "b", 30, creator.Id, checkpoints);
+        Quest q5 = new Quest(coordinates5, "a", "b", 30, creator.Id, checkpoints);
+        Quest q6 = new Quest(coordinates6, "a", "b", 30, creator.Id, checkpoints);
+        Quest q7 = new Quest(coordinates7, "a", "b", 30, creator.Id, checkpoints);
+        Quest q8 = new Quest(coordinates8, "a", "b", 30, creator.Id, checkpoints);
         existingQuests = new List<Quest>
         {
             quest,
@@ -315,22 +316,22 @@ public class Controller : MonoBehaviour
     {
 
         // TODO integrity check
-        bool intergrity = false;
-        if (firstName == null) { Error("Entrez un prénom valide."); } else { intergrity = true; }
-        if (lastname == null) { Error("Entrez un nom valide."); } else { intergrity = true; }
+        bool integrity = false;
+        if (firstName == null) { Error("Entrez un prénom valide."); } else { integrity = true; }
+        if (lastname == null) { Error("Entrez un nom valide."); } else { integrity = true; }
         if (mail != null)
         {
             Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
             Match match = regex.Match(mail);
             if (match.Success)
-                intergrity = true;
+                integrity = true;
             else
                 Error("Entrez un mail valide.");
         } else { Error("Entrez un mail valide."); }
-        if (password == null) { Error("Entrez un mot de passe valide."); } else { intergrity = true; }
-        if (password == null) { Error("Entrez un nom d'utilisateur valide."); } else { intergrity = true; }
+        if (password == null) { Error("Entrez un mot de passe valide."); } else { integrity = true; }
+        if (password == null) { Error("Entrez un nom d'utilisateur valide."); } else { integrity = true; }
 
-        if (intergrity == false)
+        if (integrity == false)
         {
             // TODO : do nothing, the user has to change what he typed
         }
@@ -352,20 +353,34 @@ public class Controller : MonoBehaviour
         }
     }
 
-    public void CreateNewQuest(Coordinates geolocalisation, string title, string description, long value,
+    public void CreateNewQuest(Coordinates geolocalisation, string title, string description, int experienceEarned,
          string idCreator, List<CheckPoint> checkpoints)
     {
         // TODO integrity check
+        bool integrity = false;
+        if(geolocalisation == null) { Error("Entrez une géolocalisation valide."); } else { integrity = true; }
+        if (title == null) { Error("Entrez un titre valide."); } else { integrity = true; }
+        if (description == null) { Error("Entrez une description valide."); } else { integrity = true; }
+        if (experienceEarned > 0) { Error("Entrez une valeur d'expérience gagnée valide."); } else { integrity = true; }
+        if (checkpoints == null) { Error("Entrez des checkpoints valides."); } else { integrity = true; }
+        if (integrity == false)
+        {
+            // TODO : do nothing, the user has to change what he typed
+        }
+        else
+        {
+            Quest quest = new Quest(geolocalisation, title, description, experienceEarned, idCreator, checkpoints);
+            // TODO : persistance en ligne de la quête créé si non deja existante.
+            bool request = HTTPHelper.Persist(quest, this.cookie);
+            // if persistance ok
+            if (request)
+                LoadMap();
+            else
+                Error("Erreur lors de la création de la quête.");
 
-
-        // TODO : persistance en ligne de la quête créé si non deja existante.
-
-        // if persistance ok
-        LoadMap();
-
-        // else 
-        // Error(message);
-
+            // else 
+            // Error(message);
+        }
     }
 
  

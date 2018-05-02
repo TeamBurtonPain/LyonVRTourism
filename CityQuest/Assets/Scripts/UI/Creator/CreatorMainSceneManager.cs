@@ -54,7 +54,7 @@ public class CreatorMainSceneManager : MonoBehaviour
             coordinates,
             questNameInputField.text,
             questDescriptionInputField.text,
-            Convert.ToInt64(questValueInputField.text),
+            Convert.ToInt32(questValueInputField.text),
             Controller.Instance.User.Id,
             ToCheckPoints()); // Pass checkpoints
     }
