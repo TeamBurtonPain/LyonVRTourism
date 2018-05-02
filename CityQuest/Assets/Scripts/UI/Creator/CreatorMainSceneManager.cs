@@ -47,12 +47,15 @@ public class CreatorMainSceneManager : MonoBehaviour
 
     public void ValidateQuest()
     {
+        
+        Coordinates coordinates = new Coordinates(float.Parse(positionLatInputField.text, System.Globalization.CultureInfo.InvariantCulture.NumberFormat),
+            float.Parse(positionLongInputField.text, System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
         Controller.Instance.CreateNewQuest(
+            coordinates,
             questNameInputField.text,
             questDescriptionInputField.text,
-            questValueInputField.text,
-            positionLatInputField.text,
-            positionLongInputField.text,
+            Convert.ToInt32(questValueInputField.text),
+            Controller.Instance.User.Id,
             ToCheckPoints()); // Pass checkpoints
     }
 
@@ -70,9 +73,12 @@ public class CreatorMainSceneManager : MonoBehaviour
 
             CheckPoint temp = new CheckPoint(
                 creatorCheckpoint.furnishedImage.ToString(), // Pass image as string 
+                //TODO nom de l'image
+                " NOM BUVDUBDIV3YTGUYEVIDFUE A CHANGER",
                 creatorCheckpoint.enigmaInputField.text,
                 choices,
-                creatorCheckpoint.Answer);  
+                creatorCheckpoint.Answer,
+                4); 
             MyCheckPoints.Add(temp);
         }
 

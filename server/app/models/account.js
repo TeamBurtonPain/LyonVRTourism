@@ -23,7 +23,6 @@ const Account = new Schema({
             required: true,
             bcrypt: true
         },
-        jwt: String,
     },
     userInformation: {
         lastName: String,
@@ -39,7 +38,7 @@ const Account = new Schema({
                 message: '`accountType` field must be one of these value [\'ADMIN\', \'CREATOR\', \'USER\']'
             },
             default: 'USER'
-        },
+        }
     },
     game: {
         badges: [Schema.Types.ObjectId], // Badges ObjectId Array
@@ -52,11 +51,7 @@ const Account = new Schema({
                     default: 'IN_PROGRESS'
                 },
                 stats: {
-                    earnedXp: Number,
-                },
-                feedback: {
-                    comment: String,
-                    mark: Number
+                    earnedXp: Number
                 }
             }
         ],

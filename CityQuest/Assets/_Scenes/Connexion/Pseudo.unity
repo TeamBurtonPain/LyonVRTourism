@@ -306,6 +306,7 @@ GameObject:
   - component: {fileID: 635012983}
   - component: {fileID: 635012982}
   - component: {fileID: 635012981}
+  - component: {fileID: 635012985}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -376,6 +377,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &635012985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 635012980}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1826476478, guid: bab6fa851cf5a1a4bba3cec5f191cb8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWorldCenterMode: 1
+  mWorldCenter: {fileID: 0}
 --- !u!1 &923443854
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,13 +446,13 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 923443856}
   m_TextComponent: {fileID: 960721434}
   m_Placeholder: {fileID: 1928264650}
-  m_ContentType: 5
+  m_ContentType: 4
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 6
+  m_KeyboardType: 1
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 4
+  m_CharacterValidation: 3
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
