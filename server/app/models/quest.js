@@ -20,17 +20,27 @@ const Quest = new Schema({
     },
     checkpoints: [
         {
-            picture: {
+            pictureName: {
                 type: String,
                 required: true
             },
-            text: String,
-			question: String,
-            choices: {
-                type: [String],
+            picturePath: {
+                type: String,
                 required: true
             },
-            answer: String,
+            text: {
+                type: String,
+                require: true
+            },
+            question: {
+                type: String,
+                require: true
+            },
+            choices: [String],
+            enigmAnswer: {
+                type: String,
+                require: true
+            },
             difficulty: {
                 type: Number,
                 required: true,

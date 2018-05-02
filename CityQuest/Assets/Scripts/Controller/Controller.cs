@@ -286,8 +286,23 @@ public class Controller : MonoBehaviour
 
     public void SelectMenuNewQuest()
     {
-        currentState = editorState;
-        SceneManager.LoadScene("CreatorMainScene");
+        Account a = HTTPHelper.GetAccount(this.cookie);
+        if (a != null)
+        {
+            if (a.Role == RoleAccount.ADMIN || a.Role == RoleAccount.CREATOR)
+            {
+                currentState = editorState;
+                SceneManager.LoadScene("CreatorMainScene");
+            }
+            else
+            {
+                Error("Vous ne disposez pas des autorisations nécessaires pour passer en mode éditeur.");
+            }
+        }
+        else
+        {
+            Error("Veuillez vous connecter pour pouvoir accéder à ce service");
+        }
     }
     public void SelectMenuMap()
     {
