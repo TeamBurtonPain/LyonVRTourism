@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System;
 
 class PlayQuestController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ class PlayQuestController : MonoBehaviour
     private StateCheckPoint currentCheckpoint;
     private int questProgress;
     private int checkpointProgress;
+    private DateTime checkpointStartTime;
 
     void Start()
     {
@@ -28,9 +30,10 @@ class PlayQuestController : MonoBehaviour
         questProgress = CheckQuestProgress();
         currentCheckpoint = currentQuest.Checkpoints[questProgress];
         checkpointProgress = 0;
+        checkpointStartTime = System.DateTime.Now;
     }
 
-    public int CheckQuestProgress()
+public int CheckQuestProgress()
     {
         int progress = 0;
         foreach(StateCheckPoint checkpoint in currentQuest.Checkpoints)
@@ -79,15 +82,22 @@ class PlayQuestController : MonoBehaviour
 
     private void GoToNextCheckpoint()
     {
+        currentQuest.Checkpoints[questProgress].TimeElapsed = System.DateTime.Now.Subtract(checkpointStartTime).TotalSeconds;
         currentQuest.Checkpoints[questProgress].Status = StatusCheckPoint.FINISHED;
         if(questProgress < currentQuest.Checkpoints.Count-1)
         {
             questProgress++;
             currentCheckpoint = currentQuest.Checkpoints[questProgress];
+            checkpointStartTime = System.DateTime.Now;
             SceneManager.LoadScene("GameImageScene");
         } else
         {
             Debug.Log("Fini!");
+            currentQuest.TimeElapsed = 0;
+            foreach (StateCheckPoint checkpoint in currentQuest.Checkpoints)
+            {
+                currentQuest.TimeElapsed += checkpoint.TimeElapsed;
+            }
             // TODO : Scene de fin
             // TODO : Detruire controller !!!
         }
@@ -109,8 +119,9 @@ class PlayQuestController : MonoBehaviour
 
     public void SkipCheckpoint()
     {
-        questProgress++;
-        checkpointProgress = 0;
+        //TODO : gérer le score?
+        checkpointProgress = 1;
+        GoToQuestion();
     }
 
     public void OpenCamera()

@@ -239,6 +239,7 @@ public class Controller : MonoBehaviour
             if (GeoManager.Instance.IsUserNear(selectedQuest.Geolocalisation))
             {
                 user.AddQuest(selectedQuest);
+                currentQuest = new StateQuest(selectedQuest);
                 currentState = questState;
                 SceneManager.LoadScene("GameImageScene");
             }
