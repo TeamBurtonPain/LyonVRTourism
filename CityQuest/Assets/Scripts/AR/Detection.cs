@@ -28,12 +28,14 @@ public class Detection : MonoBehaviour, ITrackableEventHandler
         mTrackableBehaviour = GetComponent<TrackableBehaviour>();
         if (mTrackableBehaviour)
             mTrackableBehaviour.RegisterTrackableEventHandler(this);
+
     }
 
     protected virtual void OnDestroy()
     {
         if (mTrackableBehaviour)
             mTrackableBehaviour.UnregisterTrackableEventHandler(this);
+        //Debug.Log("Destroy activé");
     }
 
     #endregion // UNITY_MONOBEHAVIOUR_METHODS
@@ -53,6 +55,7 @@ public class Detection : MonoBehaviour, ITrackableEventHandler
             newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED)
         {
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
+            TrackerManager.Instance.GetStateManager().ReassociateTrackables();
             SceneManager.LoadScene("GameImageScene");// A remplacer par un retour au controller avec un output true
             //OnTrackingFound();
         }

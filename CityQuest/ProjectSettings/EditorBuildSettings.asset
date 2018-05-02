@@ -32,3 +32,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/ImageRecognition.unity
     guid: 860ad3116dc1355459fdf53c692e2462
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000

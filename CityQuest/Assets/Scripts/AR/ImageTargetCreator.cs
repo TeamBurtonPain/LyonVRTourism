@@ -14,7 +14,13 @@ public class ImageTargetCreator : MonoBehaviour
     // Use this for initialization
     void Start () {
 	    VuforiaARController.Instance.RegisterVuforiaStartedCallback(LoadDataSet);
-	}
+        CameraDevice.Instance.SetFocusMode(CameraDevice.FocusMode.FOCUS_MODE_CONTINUOUSAUTO);
+    }
+
+    protected virtual void OnDestroy()
+    {
+        VuforiaARController.Instance.UnregisterVuforiaStartedCallback(LoadDataSet);
+    }
 
     void LoadDataSet()
     {
@@ -24,7 +30,7 @@ public class ImageTargetCreator : MonoBehaviour
 
         if (dataSet.Load(dataSetName))
         {
-
+            Debug.Log("load activé");
             objectTracker.Stop();  // stop tracker so that we can add new dataset
 
             if (!objectTracker.ActivateDataSet(dataSet))
@@ -43,9 +49,8 @@ public class ImageTargetCreator : MonoBehaviour
             IEnumerable<TrackableBehaviour> tbs = TrackerManager.Instance.GetStateManager().GetTrackableBehaviours();
             foreach (TrackableBehaviour tb in tbs)
             {
-                if (tb.name == "New Game Object" && (tb.TrackableName.Contains(questFilter) || tb.TrackableName.Contains("rhino")))
+                if (tb.name == "New Game Object" && tb.TrackableName.Contains(questFilter))
                 {
-
                     // change generic name to include trackable name
                     tb.gameObject.name = ++counter + ":DynamicImageTarget-" + tb.TrackableName;
 
@@ -55,7 +60,7 @@ public class ImageTargetCreator : MonoBehaviour
 
                 }
             }
-            
+
         }
         else
         {

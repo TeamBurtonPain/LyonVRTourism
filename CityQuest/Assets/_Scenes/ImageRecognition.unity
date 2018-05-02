@@ -240,7 +240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataSetName: AR_DB
-  questFilter: minion
+  questFilter: rhino
 --- !u!4 &946123897
 Transform:
   m_ObjectHideFlags: 0
