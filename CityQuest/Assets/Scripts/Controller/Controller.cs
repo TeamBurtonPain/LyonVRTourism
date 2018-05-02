@@ -268,7 +268,7 @@ public class Controller : MonoBehaviour
     }
     public void LoadInscription()
     {
-        currentState = loginState;
+        currentState = loginState
         SceneManager.LoadScene("AccountCreation");
     }
     public void LoadConnexion()

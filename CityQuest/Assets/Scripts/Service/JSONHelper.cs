@@ -247,6 +247,8 @@ public static class JSONHelper
         //TODO Remplir ces champs !
         List<Badge> badges = new List<Badge>();
         Dictionary<long, StateQuest> quests = new Dictionary<long, StateQuest>();
+
+
         User user = new User(username, id, xp, badges, quests);
         return user;
     }
