@@ -59,7 +59,6 @@ class PlayQuestController : MonoBehaviour
 
     public void GoNextScene()
     {
-        Debug.Log("etat = " + checkpointProgress);
         switch (checkpointProgress)
         {
             case 0:
