@@ -73,7 +73,7 @@ public class CreatorMainSceneManager : MonoBehaviour
                 creatorCheckpoint.enigmaInputField.text,
                 choices,
                 creatorCheckpoint.Answer,
-                4);  
+                4); 
             MyCheckPoints.Add(temp);
         }
 
