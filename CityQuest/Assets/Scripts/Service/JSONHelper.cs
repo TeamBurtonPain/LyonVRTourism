@@ -231,6 +231,7 @@ public static class JSONHelper
         string username = (string)parse["userInformation"]["username"];
         string id = (string)parse["_id"];
         long xp = (long)parse["game"]["xp"];
+        //TODO Remplir ces champs !
         List<Badge> badges = new List<Badge>();
         Dictionary<long, StateQuest> quests = new Dictionary<long, StateQuest>();
         User user = new User(username, id, xp, badges, quests);

@@ -25,7 +25,7 @@ public class Creator : Account
 
     public void Create(Quest q)
     {
-        if (Equals(q.IdCreator))
+        if (id == q.IdCreator)
         {
             creations.Add(q);
         }

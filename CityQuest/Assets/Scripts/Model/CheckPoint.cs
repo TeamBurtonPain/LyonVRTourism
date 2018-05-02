@@ -4,13 +4,14 @@
 
 public class CheckPoint
 {
-    private static long instanceCounter = 0;
-    private long id;
+
     private string picture;
     private string text;
+    private string question;
     private List<string> choices;
     private string answer;
     private int difficulty;
+    private string idBadge;
 
     public CheckPoint()
     {
@@ -20,7 +21,6 @@ public class CheckPoint
     public CheckPoint(string pic, string text, List<string> choices, string answer, int difficulty)
 
     {
-        this.id = instanceCounter++;
         this.picture = pic;
         this.text = text;
         this.choices = choices;
@@ -28,11 +28,6 @@ public class CheckPoint
         this.difficulty = difficulty;
     }
 
-    public long Id
-    {
-        get { return id; }
-        set { id = value; }
-    }
 
     public string Picture
     {
@@ -65,6 +60,6 @@ public class CheckPoint
 
     public override string ToString()
     {
-        return "Checkpoint : id : " + id + ", text : " + text + ", answer : " + answer;
+        return "Checkpoint : text : " + text + ", answer : " + answer;
     }
 }

@@ -51,12 +51,8 @@ public class Controller : MonoBehaviour
         currentState = loginState;
 
         //------ Test sample ---------
-        Coordinates coordinates = new Coordinates();
-        coordinates.x = 42.3245f;
-        coordinates.y = 4.56978f;
-        Coordinates coordinates2 = new Coordinates();
-        coordinates2.x = 45.781732f;
-        coordinates2.y = 4.872846f;
+        Coordinates coordinates = new Coordinates(42.3245f, 4.56978f);
+        Coordinates coordinates2 = new Coordinates(45.781732f, 4.872846f);
 
         Creator creator = new Creator();
         creator.FirstName = "John";

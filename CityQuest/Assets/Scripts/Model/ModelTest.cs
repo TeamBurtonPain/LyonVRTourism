@@ -28,7 +28,6 @@ class ModelTest : MonoBehaviour
 
         CheckPoint cp1 = new CheckPoint
         {
-            Id = 1L,
             Picture = "/pic",
             Text = "Text of checkpoint",
             Choices = { "choix 1", "choix2", "choix3" },
@@ -36,7 +35,6 @@ class ModelTest : MonoBehaviour
         };
         CheckPoint cp2 = new CheckPoint
         {
-            Id = 2L,
             Picture = "/pic",
             Text = "Text of checkpoint",
             Choices = { "choix 1", "choix2", "choix3" },
@@ -44,7 +42,6 @@ class ModelTest : MonoBehaviour
         };
         CheckPoint cp3 = new CheckPoint
         {
-            Id = 3L,
             Picture = "/pic",
             Text = "Text of checkpoint",
             Choices = { "choix 1", "choix2", "choix3" },
