@@ -55,8 +55,8 @@ public class Detection : MonoBehaviour, ITrackableEventHandler
             newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED)
         {
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
-            TrackerManager.Instance.GetStateManager().ReassociateTrackables();
-            SceneManager.LoadScene("GameImageScene");// A remplacer par un retour au controller avec un output true
+            Debug.Log("coucou");
+            PlayQuestController.Instance.GoNextScene();// A remplacer par un retour au controller avec un output true
             //OnTrackingFound();
         }
         else if (previousStatus == TrackableBehaviour.Status.TRACKED &&

@@ -353,11 +353,6 @@ public class Controller : MonoBehaviour
 
     }
 
-    public void OpenCamera()
-    {
-        SceneManager.LoadScene("ImageRecognition");
-    }
-
     /*********** FIN BOUTONS ***********/
 
     public void Error(string msg)

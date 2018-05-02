@@ -59,6 +59,7 @@ class PlayQuestController : MonoBehaviour
 
     public void GoNextScene()
     {
+        Debug.Log("etat = " + checkpointProgress);
         switch (checkpointProgress)
         {
             case 0:
@@ -77,7 +78,7 @@ class PlayQuestController : MonoBehaviour
         checkpointProgress = (checkpointProgress + 1)%3;
     }
 
-    public void GoToNextCheckpoint()
+    private void GoToNextCheckpoint()
     {
         currentQuest.Checkpoints[questProgress].Status = StatusCheckPoint.FINISHED;
         if(questProgress < currentQuest.Checkpoints.Count-1)
@@ -93,7 +94,7 @@ class PlayQuestController : MonoBehaviour
         }
     }
 
-    public void GoToQuestion()
+    private void GoToQuestion()
     {
         if (currentQuest.Checkpoints[questProgress].Checkpoint.Choices.Count == 0)
             SceneManager.LoadScene("GameQuestion");
@@ -101,7 +102,7 @@ class PlayQuestController : MonoBehaviour
             SceneManager.LoadScene("GameQuestionMulti");
     }
 
-    public void GoToInformations()
+    private void GoToInformations()
     {
         SceneManager.LoadScene("GameInformations");
     }
@@ -110,6 +111,11 @@ class PlayQuestController : MonoBehaviour
     {
         questProgress++;
         checkpointProgress = 0;
+    }
+
+    public void OpenCamera()
+    {
+        SceneManager.LoadScene("ImageRecognition");
     }
 
     public static PlayQuestController Instance
