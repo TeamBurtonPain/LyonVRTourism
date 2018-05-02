@@ -11,12 +11,14 @@ public enum ConnexionState
 public class Controller : MonoBehaviour
 {
     public GameObject leavingWindow;
+    public GameObject cancelWindow;
     public ErrorPopUp errorTemplate;
 
     protected static Controller instance;
 
     private IState currentState;
     public IState mapState;
+    public IState editorState;
     public IState historicState;
     public IState questState;
     public IState loginState;
@@ -27,6 +29,8 @@ public class Controller : MonoBehaviour
     private User user;
 
     private Quest selectedQuest;
+
+    private StateQuest currentQuest;
 
 
     void Awake()
@@ -43,6 +47,7 @@ public class Controller : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         mapState = new MapState();
+        editorState = new EditorState();
         historicState = new HistoricState();
         questState = new QuestState();
         loginState = new LoginState();
@@ -50,20 +55,56 @@ public class Controller : MonoBehaviour
         currentState = loginState;
 
         //------ Test sample ---------
-        Coordinates coordinates = new Coordinates();
-        coordinates.x = 42.3245f;
-        coordinates.y = 4.56978f;
-        Coordinates coordinates2 = new Coordinates();
-        coordinates2.x = 45.781732f;
-        coordinates2.y = 4.872846f;
+        Coordinates coordinates = new Coordinates
+        {
+            x = 42.3245f,
+            y = 4.56978f
+        };
+        Coordinates coordinates2 = new Coordinates
+        {
+            x = 45.781732f,
+            y = 4.872846f
+        };
+        Coordinates coordinates3 = new Coordinates
+        {
+            x = 45.771732f,
+            y = 4.872846f
+        };
+        Coordinates coordinates4 = new Coordinates
+        {
+            x = 45.761732f,
+            y = 4.872846f
+        };
+        Coordinates coordinates5 = new Coordinates
+        {
+            x = 45.751732f,
+            y = 4.872846f
+        };
+        Coordinates coordinates6 = new Coordinates
+        {
+            x = 45.741732f,
+            y = 4.872846f
+        };
+        Coordinates coordinates7 = new Coordinates
+        {
+            x = 45.731732f,
+            y = 4.872846f
+        };
+        Coordinates coordinates8 = new Coordinates
+        {
+            x = 45.7821732f,
+            y = 4.872846f
+        };
 
-        Creator creator = new Creator();
-        creator.FirstName = "John";
+        Creator creator = new Creator
+        {
+            FirstName = "John"
+        };
         List<string> choices = new List<string>();
-        choices.Add("a");
-        choices.Add("b");
-        choices.Add("c");
-        CheckPoint cp1 = new CheckPoint("pic1.png", "blablablaTextCP1", choices, "b");
+        choices.Add("Du bambou");
+        choices.Add("Des oeufs");
+        choices.Add("Des M&M's");
+        CheckPoint cp1 = new CheckPoint("TestSprites/panda", "Quel est l'aliment principal des pandas roux ? ", choices, "bambou");
         CheckPoint cp2 = new CheckPoint("pic2.png", "blablablaTextCP2", choices, "a");
         List<CheckPoint> checkpoints = new List<CheckPoint>
         {
@@ -72,11 +113,24 @@ public class Controller : MonoBehaviour
         };
         Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 3L, creator, checkpoints);
         Quest quest2 = new Quest(coordinates2, "Trouver les pandas roux2", "Description des pandas roux2", 3L, creator, checkpoints);
+        Quest q3 = new Quest(coordinates3, "a", "b", 3L, creator, checkpoints);
+        Quest q4 = new Quest(coordinates4, "a", "b", 3L, creator, checkpoints);
+        Quest q5 = new Quest(coordinates5, "a", "b", 3L, creator, checkpoints);
+        Quest q6 = new Quest(coordinates6, "a", "b", 3L, creator, checkpoints);
+        Quest q7 = new Quest(coordinates7, "a", "b", 3L, creator, checkpoints);
+        Quest q8 = new Quest(coordinates8, "a", "b", 3L, creator, checkpoints);
         existingQuests = new List<Quest>
         {
             quest,
-            quest2
+            quest2,
+            q3,
+            q4,
+            q5,
+            q6,
+            q7,
+            q8
         };
+        StateQuest playing = new StateQuest(quest);
 
         user = new User();
         user.AddQuest(quest);
@@ -84,6 +138,7 @@ public class Controller : MonoBehaviour
         //------ End Test sample -------
 
         selectedQuest = quest;
+        currentQuest = playing;
         currentConnexion = ConnexionState.DISCONNECTED;
     }
 
@@ -106,6 +161,8 @@ public class Controller : MonoBehaviour
         }
     }
 
+    //////////////// Pop-up windows
+    // Leave
     public void AskLeave()
     {
         leavingWindow.SetActive(true);
@@ -122,7 +179,24 @@ public class Controller : MonoBehaviour
     {
         leavingWindow.SetActive(false);
     }
+    // BackToMap
+    public void AskBackToMap()
+    {
+        cancelWindow.SetActive(true);
+    }
 
+    public void BackToMap()
+    {
+        cancelWindow.SetActive(false);
+        LoadMap();
+    }
+
+    public void CancelBackToMap()
+    {
+        cancelWindow.SetActive(false);
+    }
+    //////////////////////////
+    // end of pop-up windows
     private void Update()
     {
 
@@ -162,8 +236,8 @@ public class Controller : MonoBehaviour
         {
             if (GeoManager.Instance.IsUserNear(selectedQuest.Geolocalisation))
             {
-                currentState = questState;
                 user.AddQuest(selectedQuest);
+                currentState = questState;
                 SceneManager.LoadScene("GameImageScene");
             }
             else{
@@ -198,6 +272,11 @@ public class Controller : MonoBehaviour
     }
 
     public void SelectMenuNewQuest()
+    {
+        currentState = editorState;
+        SceneManager.LoadScene("CreatorMainScene");
+    }
+    public void SelectMenuMap()
     {
         LoadMap();
     }
@@ -237,6 +316,23 @@ public class Controller : MonoBehaviour
 
     }
 
+    public void CreateNewQuest(string firstName, string lastname, string mail, string password, string username, List<CheckPoint> checkPoints)
+    {
+        // TODO integrity check
+        // Vérifier bon format des données
+
+        // TODO : persistance en ligne de la quête créé si non deja existante.
+
+        // if persistance ok
+        LoadMap();
+
+        // else 
+        // Error(message);
+
+    }
+
+ 
+
     public void ChooseUsername(string pseudo)
     {
         // TODO des trucs avec ce pseudo
@@ -251,7 +347,7 @@ public class Controller : MonoBehaviour
         // if connexion ok 
         //     faire la persistance locale de la connexion au compte +
         //     user = charger l'user depuis la bdd
-        SceneManager.LoadScene("MapScene");
+        LoadMap();
         // else 
         // Error("Aucune correspondance trouvée.");
 
@@ -279,6 +375,12 @@ public class Controller : MonoBehaviour
     {
         get { return selectedQuest; }
         set { selectedQuest = value; }
+    }
+
+    public StateQuest CurrentQuest
+    {
+        get { return currentQuest; }
+        set { currentQuest = value; }
     }
 
     public List<Quest> ExistingQuests

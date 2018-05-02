@@ -11,7 +11,4 @@ public interface IState
     void LoginServerAction();
     void InscriptionAction();
     void SelectionQuestInHistoricAction(Quest myQuest);
-
-    // TODO inutile ici ?
-    void StartQuestAction();
 }

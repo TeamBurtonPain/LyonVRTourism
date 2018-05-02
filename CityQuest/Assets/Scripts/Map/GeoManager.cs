@@ -125,14 +125,17 @@ public class GeoManager : MonoBehaviour
     /// <returns>Returns a float representing the euclidian distance between the two position studied</returns>
     public float Distance(Coordinates coord1, Coordinates coord2)
     {
-        float coord1Lat = coord1.x * Mathf.PI / 180;
-        float coord1Long = coord1.y * Mathf.PI / 180;
+        double coord1Lat = coord1.x * System.Math.PI / 180;
+        double coord1Long = coord1.y * System.Math.PI / 180;
 
-        float coord2Lat = coord2.x * Mathf.PI / 180;
-        float coord2Long = coord2.y * Mathf.PI / 180;
+        double coord2Lat = coord2.x * System.Math.PI / 180;
+        double coord2Long = coord2.y * System.Math.PI / 180;
 
-        float distance = R * Mathf.Acos(Mathf.Cos(coord1Lat) * Mathf.Cos(coord2Lat) *
-            Mathf.Cos(coord2Long - coord1Long) + Mathf.Sin(coord1Lat) * Mathf.Sin(coord2Lat));
+        double cosPart = System.Math.Cos(coord1Lat) * System.Math.Cos(coord2Lat) *
+            System.Math.Cos(coord2Long - coord1Long);
+        double sinPart = System.Math.Sin(coord1Lat) * System.Math.Sin(coord2Lat);
+        double value = cosPart + sinPart;
+        float distance = (float) (R * System.Math.Acos(value));
 
         return distance;
     }

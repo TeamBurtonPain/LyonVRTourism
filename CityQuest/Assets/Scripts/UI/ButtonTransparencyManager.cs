@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class buttonControl : MonoBehaviour {
+public class ButtonTransparencyManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
