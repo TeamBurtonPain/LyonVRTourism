@@ -89,10 +89,6 @@
         type: String,
         required: true
     },
-    picture: {
-        type: String,
-        required: true
-    }, // Base64 encoded. Available only on /api/quests/<id> endpoint.
     checkpoints: [
         {
             pictureName: String, // Don't send it for picture upload. READONLY field.
@@ -202,8 +198,10 @@ ErrorName | Code | Description
 :---: | :---: | :---:
 **BadRequest** | 400 | Your request doesn't match the require schema (description will give more information)
 **Unknow quest** | 400 | No quest found with the provided _id
+**Unknow badge** | 400 | No badge found with the provided _id
 **Unknow account** | 400 | No account found with the provided _id
 **LoginError** | 400 | Wrong email/password combinaison
+**UnauthorizedError** | 403 | Invalid token or permission denied
 
 ## Enhancement
 

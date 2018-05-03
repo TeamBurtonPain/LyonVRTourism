@@ -14,6 +14,13 @@ router.use((err, req, res, next) => {
         });
     }
 
+    if (err.name === 'UnauthorizedError') {
+        return res.status(403).json({
+            error: err.name,
+            message: err.message
+        });
+    }
+
     // eslint-disable-next-line
     console.log(err);
     return res.status(500).json({

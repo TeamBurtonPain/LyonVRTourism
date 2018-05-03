@@ -62,6 +62,14 @@ typings/
 
 yarn-error.log
 
-# pictures
+# Exlude pictures
 
 pictures/*
+
+# Except ...
+!pictures/1d415609-b632-4802-941a-d8218762dabb.png
+!pictures/5eb623c7-2b65-48f6-aaed-229628e7128f.jpg
+!pictures/de08ab57-0daa-463e-a63d-9eadb4752c43.jpg
+!pictures/7c76e426-45eb-41a0-bcba-c90b76d01c8f.jpg
+!pictures/16d83266-5f2c-49fe-8d0b-5bfe0173196e.jpg
+!pictures/b4fcf88d-40c6-4286-a41a-f01ae0281b10.jpg
