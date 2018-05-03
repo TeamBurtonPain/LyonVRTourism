@@ -30,8 +30,8 @@ public class HTTPHelper : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
-    public const string SERVER = "http://192.168.43.228:3000/api/";
-    //public const string SERVER = "http://192.168.43.126:3000/api/";
+    //public const string SERVER = "http://192.168.43.228:3000/api/";
+    public const string SERVER = "http://192.168.43.126:3000/api/";
     //public const string SERVER = "http://192.168.0.11:3000/api/";
 
     /******************** AUTHENTIFICATION ********************/

@@ -22,7 +22,9 @@ public class UI_Badge_Icon : MonoBehaviour {
             img = JSONHelper.FromBase64(picture);
         }
         Texture2D tex = new Texture2D(2, 2);
+        
         tex.LoadImage(img);
+        GetComponent<Image>().material = new Material(GetComponent<Image>().material);
         GetComponent<Image>().material.mainTexture = tex;
         Debug.Log("passage dans la redéfinition de l'élément ajouté");
     }

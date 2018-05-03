@@ -9,6 +9,7 @@ class PlayImageManager : MonoBehaviour
     private void Start()
     {
         string picture = PlayQuestController.Instance.CurrentCheckpoint.Checkpoint.Picture;
+        Debug.Log("img : " + picture);
         Char delimiter = ',';
         String[] substrings = picture.Split(delimiter);
         byte[] img;
