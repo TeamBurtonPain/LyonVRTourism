@@ -48,11 +48,22 @@
                 },
                 stats: {
                     earnedXp: Number,
-                },
+                    timeElapsed: Number			
+                },	
+				checkpoints: [
+                    {
+                        status: {
+                            type: String,
+                            enum: {values: ['FINISHED', 'BEGUN', 'UNINIT']},
+                            default: 'UNINIT'
+                        },
+                        timeElapsed: Number
+                    }
+				]
                 /* feedback: {
                     comment: String,
                     mark: Number
-                } NOT IMPLEMENTED */ 
+                } NOT IMPLEMENTED */
             }
         ],
         xp: Number,
@@ -98,7 +109,8 @@
                 required: true,
                 min: 0,
                 max: 5
-            } // O < difficulty < 5
+            }, // O < difficulty < 5
+            _idBadge: Schema.Types.ObjectId
         }
     ],
     dates: {
@@ -124,6 +136,18 @@
         type: Boolean,
         required: true
     }
+}
+```
+
+### Badges 
+
+```
+{
+    _id: Schema.Types.ObjectId,
+    name: String,
+    description: String,
+    picture: String, // Base64 encoded
+    earn: Number
 }
 ```
 
@@ -160,6 +184,13 @@ Request methods | Path | Auth | AccountType | Require body | Response | Descript
 **POST** | `quests` | Yes | EDITOR \| ADMIN | `quest model` | `quest model` | Persist a quest
 **PUT** | `quests/<id>` | Yes | EDITOR \| ADMIN | `quest model` | `quest model` | Update a quest by id. Request body will erase old quest. **See [PUT SPECIFICATION](#PUT\ Specification).**
 **DELETE** | `quests/<id>` | Yes | EDITOR \| ADMIN | _null_ | _null_ | Delete a quest and every associated pictures.
+
+### Badges
+
+Request methods | Path | Auth | AccountType | Require body | Response | Description 
+:---: | :---: | :---: | :---: | :---: | :---: | :---:
+**GET** | `badges` | No | * | _null_ | `Array<badge model>` | Get all badge id
+**GET** | `badges/<id>` | No | * | _null_ | `badge model` | Get badge by id
 
 ## PUT Specification
 
