@@ -6,7 +6,7 @@ const { isTokenRevoked } = require('../services/account-service');
 
 
 function isRevokedCallback(req, payload, done) {
-    const tokenId = payload.jit;
+    const tokenId = payload.id;
 
     isTokenRevoked(tokenId)
         .then(jit => done(null, !!jit))

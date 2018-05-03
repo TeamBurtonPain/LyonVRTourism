@@ -22,6 +22,9 @@ const Account = new Schema({
             required: true,
             bcrypt: true
         },
+        jwt: {
+            type: String,
+        }
     },
     userInformation: {
         lastName: String,
