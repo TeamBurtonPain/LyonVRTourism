@@ -117,6 +117,7 @@ public class JSONHelper : MonoBehaviour
     {
         JObject parse = JObject.Parse(questJson);
         string idCreator = (string) parse["_idCreator"];
+        string id = (string) parse["_id"];
         Coordinates geolocalisation =
             new Coordinates((float) parse["geolocalisation"]["x"], (float) parse["geolocalisation"]["y"]);
         string title = (string) parse["title"];
@@ -124,7 +125,7 @@ public class JSONHelper : MonoBehaviour
         List<CheckPoint> checkpoints = ToListCheckpoint((JArray) parse["checkpoints"]);
         //int experienceEarned = (int)parse["value"];
         int experienceEarned = 0;
-        Quest quest = new Quest(geolocalisation, title, description, experienceEarned, idCreator, checkpoints);
+        Quest quest = new Quest(id, geolocalisation, title, description, experienceEarned, idCreator, checkpoints);
         return quest;
     }
 

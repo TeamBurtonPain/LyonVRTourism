@@ -26,6 +26,7 @@ public class Controller : MonoBehaviour
     public IState historicState;
     public IState questState;
     public IState loginState;
+    public IState aRCameraState;
     //private ConnexionState currentConnexion;
 
     public bool leavingWindowOpen = false;
@@ -66,6 +67,7 @@ public class Controller : MonoBehaviour
         historicState = new HistoricState();
         questState = new QuestState();
         loginState = new LoginState();
+        aRCameraState = new ARCameraState();
 
         currentState = loadingState;
 
@@ -92,7 +94,7 @@ public class Controller : MonoBehaviour
         }
 
         //------ Test sample ---------
-
+        /*
         Coordinates coordinates = new Coordinates
         {
             x = 42.3245f,
@@ -144,7 +146,7 @@ public class Controller : MonoBehaviour
         choices.Add("Des oeufs");
         choices.Add("Des M&M's");
         CheckPoint cp1 = new CheckPoint("TestSprites/panda", "", "Quel est l'aliment principal des pandas roux ? ", choices, "bambou", 2);
-        CheckPoint cp2 = new CheckPoint("pic2.png", "", "blablablaTextCP2", choices, "a", 1);
+        CheckPoint cp2 = new CheckPoint("TestSprites/panda2", "", "Une autre petite question pour la route !", choices, "a", 1);
         List<CheckPoint> checkpoints = new List<CheckPoint>
         {
             cp1,
@@ -173,12 +175,13 @@ public class Controller : MonoBehaviour
         user.AddQuest(quest);
         user.AddQuest(quest2);
         //------ End Test sample -------
-
+        selectedQuest = quest;
+        currentQuest = playing;
+        */
 
         isLoaded = true; 
 
-        selectedQuest = quest;
-        currentQuest = playing;
+        
         //currentConnexion = ConnexionState.DISCONNECTED;
     }
 
@@ -274,11 +277,26 @@ public class Controller : MonoBehaviour
 
     public void StartQuest()
     {
+        StartCoroutine(TryStartQuest());
+    }
+
+    public IEnumerator TryStartQuest()
+    {
         if (selectedQuest != null && user != null)
         {
             if (GeoManager.Instance.IsUserNear(selectedQuest.Geolocalisation))
             {
+
+                Quest fetchedQuest = null;
+
+                SetLoaderCircle(true);
+                yield return HTTPHelper.Instance.GetQuest(selectedQuest.Id, value => fetchedQuest = value);
+                SetLoaderCircle(false);
+
+                selectedQuest = fetchedQuest;
+
                 user.AddQuest(selectedQuest);
+                currentQuest = new StateQuest(selectedQuest);
                 currentState = questState;
                 SceneManager.LoadScene("GameImageScene");
             }
@@ -309,6 +327,14 @@ public class Controller : MonoBehaviour
         cookie = new Cookie("auth", "");
         currentState = loginState;
         SceneManager.LoadScene("Pseudo");
+    }
+    public void LoadVuforia()
+    {
+        currentState = aRCameraState;
+    }
+    public void QuitVuforia()
+    {
+        currentState = questState;
     }
 
     public void SelectMenuNewQuest()
@@ -431,6 +457,7 @@ public class Controller : MonoBehaviour
     {
         // TODO des trucs avec ce pseudo
         // persistance local
+        user = new User(pseudo);
         LoadMap();
     }
 

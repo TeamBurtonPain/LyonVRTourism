@@ -236,12 +236,9 @@ public class HTTPHelper : MonoBehaviour
 	
     public IEnumerator GetQuest(string id, System.Action<Quest> callback)
     {
-        Debug.Log(id);
 
         UnityWebRequest uwr = UnityWebRequest.Get(SERVER + "quests/" + id);
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
-
-        Debug.Log(uwr.ToString());
 
         yield return uwr.SendWebRequest();
  
@@ -255,7 +252,6 @@ public class HTTPHelper : MonoBehaviour
             string text = uwr.downloadHandler.text;
             Debug.Log(uwr.ToString());
             callback(JSONHelper.ToQuest(text));
-            Debug.Log(text);
         }
     }
         
