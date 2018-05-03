@@ -47,7 +47,7 @@ Launch the NodeJS server by typing this command `yarn run dev`
 
 ### Android application
 
-You can download the android application [here](#) (Not available yet). Transfert it to your phone and launch it.
+You can download the android application [here](https://github.com/TeamBurtonPain/UrbanQuest/blob/master/UrbanQuest.apk). Transfert it to your phone and launch it.
 You can build the .apk from Unity.To run the application a server must be availabled (and its URL specified in [this file](https://github.com/TeamBurtonPain/UrbanQuest/blob/master/CityQuest/Assets/Scripts/Service/HTTPHelper.cs)).
 
 
