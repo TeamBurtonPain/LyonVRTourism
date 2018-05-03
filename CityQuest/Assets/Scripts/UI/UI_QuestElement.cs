@@ -29,10 +29,6 @@ public class UI_QuestElement : MonoBehaviour
     {
         foreach (CheckPoint checkpoint in checkpoints)
         {
-            Debug.Log("on passe dans un nouveau checkpoint = donc un putain de badge : " + checkpoint.Text);
-            //Faire une requête à l'API pour récupérer chacune des quêtes par leur ID
-            //Quest quest = null;
-            //yield return HTTPHelper.Instance.GetQuest(item.Key, value => quest = value);
             UI_Badge_Icon temp = Instantiate(badgeIcon, this.parent);
             temp.LinkBadge(checkpoint.Picture);
         }
