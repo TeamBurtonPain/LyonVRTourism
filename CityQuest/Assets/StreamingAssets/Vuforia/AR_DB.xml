@@ -1,41 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
   <Tracking>
-    <ImageTarget name="rhino32" size="100.000000 75.000000" />
-    <ImageTarget name="rhino31" size="100.000000 75.000000" />
-    <ImageTarget name="rhino30" size="100.000000 75.000000" />
-    <ImageTarget name="rhino29" size="100.000000 75.000000" />
-    <ImageTarget name="rhino28" size="100.000000 75.000000" />
-    <ImageTarget name="rhino27" size="100.000000 75.000000" />
-    <ImageTarget name="rhino26" size="100.000000 75.000000" />
-    <ImageTarget name="rhino25" size="100.000000 75.000000" />
-    <ImageTarget name="rhino24" size="100.000000 75.000000" />
-    <ImageTarget name="rhino23" size="100.000000 75.000000" />
-    <ImageTarget name="rhino22" size="100.000000 75.000000" />
-    <ImageTarget name="rhino21" size="100.000000 75.000000" />
-    <ImageTarget name="rhino20" size="100.000000 75.000000" />
-    <ImageTarget name="rhino19" size="100.000000 75.000000" />
-    <ImageTarget name="rhino18" size="100.000000 75.000000" />
-    <ImageTarget name="rhino17" size="100.000000 75.000000" />
-    <ImageTarget name="rhino16" size="100.000000 75.000000" />
-    <ImageTarget name="rhino15" size="100.000000 75.000000" />
-    <ImageTarget name="rhino14" size="100.000000 75.000000" />
-    <ImageTarget name="rhino13" size="100.000000 75.000000" />
-    <ImageTarget name="rhino12" size="100.000000 75.000000" />
-    <ImageTarget name="rhino11" size="100.000000 75.000000" />
-    <ImageTarget name="rhino10" size="100.000000 75.000000" />
-    <ImageTarget name="rhino9" size="100.000000 75.000000" />
-    <ImageTarget name="rhino8" size="100.000000 75.000000" />
-    <ImageTarget name="rhino7" size="100.000000 75.000000" />
-    <ImageTarget name="rhino6" size="100.000000 75.000000" />
-    <ImageTarget name="rhino5" size="100.000000 75.000000" />
-    <ImageTarget name="rhino4" size="100.000000 75.000000" />
-    <ImageTarget name="rhino3" size="100.000000 75.000000" />
-    <ImageTarget name="rhino2" size="100.000000 75.000000" />
-    <ImageTarget name="rhino1" size="100.000000 75.000000" />
-    <ImageTarget name="Spyro" size="0.200000 0.112500" />
+    <ImageTarget name="7c76e426-45eb-41a0-bcba-c90b76d01c8f" size="100.000000 75.000000" />
+    <ImageTarget name="de08ab57-0daa-463e-a63d-9eadb4752c43" size="100.000000 56.250000" />
+    <ImageTarget name="5eb623c7-2b65-48f6-aaed-229628e7128f" size="100.000000 56.250000" />
+    <ImageTarget name="16d83266-5f2c-49fe-8d0b-5bfe0173196e" size="100.000000 56.250000" />
+    <ImageTarget name="b4fcf88d-40c6-4286-a41a-f01ae0281b10" size="100.000000 56.250000" />
     <ImageTarget name="ace" size="1.000000 1.507508" />
     <ImageTarget name="carte2" size="0.060000 0.088276" />
-    <ImageTarget name="supermariotennis" size="0.600000 1.000500" />
   </Tracking>
 </QCARConfig>
