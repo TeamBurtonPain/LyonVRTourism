@@ -19,6 +19,9 @@ public class QuestDetails_Manager : MonoBehaviour
     private Color starRated;
     private Color starUnrated;
     private Quest quest;
+    public GameObject newQuestButton;
+    public GameObject startedQuestButtons;
+    public GameObject finishedQuestButtons;
 
     private void Start()
     {
@@ -35,6 +38,24 @@ public class QuestDetails_Manager : MonoBehaviour
         UpdateContent();
     }
 
+    private void updateButtons()
+    {
+        if (Controller.Instance.User.Quests.ContainsKey(Controller.Instance.SelectedQuest.Id)) 
+        {
+            if(Controller.Instance.User.Quests[Controller.Instance.SelectedQuest.Id].Done)
+            {
+                finishedQuestButtons.SetActive(true);
+            }
+            else
+            {
+                startedQuestButtons.SetActive(true);
+            }
+        } else
+        {
+            newQuestButton.SetActive(true);
+        }
+    }
+
     public void UpdateContent()
     {
         //Mise à jour de la fenêtre cachée avec les informations correspondantes à l'éléments cliqué
@@ -44,6 +65,7 @@ public class QuestDetails_Manager : MonoBehaviour
             StarsManager(actualQuest.Statistics);
             description.text = actualQuest.Description;
             title.text = actualQuest.Title;
+            updateButtons();
         }
         else
         {
