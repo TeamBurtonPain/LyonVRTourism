@@ -12,8 +12,8 @@ public class CameraController : MonoBehaviour
     private Texture defaultBackground;
 
     public RawImage background;
-    public Image preview;
-
+    public RawImage preview;
+    public GameObject bgCam;
     void Start()
     {
         defaultBackground = background.texture;
@@ -42,6 +42,7 @@ public class CameraController : MonoBehaviour
 
         backCam.Play();
         background.texture = backCam;
+        bgCam.SetActive(false);
 
         camAvailable = true;
     }
@@ -75,19 +76,28 @@ public class CameraController : MonoBehaviour
 
         Texture2D photo = new Texture2D(backCam.width, backCam.height);
         photo.SetPixels(backCam.GetPixels());
-
-        preview.material.mainTexture = photo;
-
         photo.Apply();
-        
+
+        preview.texture = photo;   
+
         //Encode to a PNG
         string screenShotName = "TB" + System.DateTime.Now.ToString("dd-MM-yyyy-HHmmss")+".png";
         byte[] bytes = photo.EncodeToPNG();
         //Write out the PNG. Of course you have to substitute your_path for something sensible
 
         //File.WriteAllBytes(Application.persistentDataPath+screenShotName, bytes);
+        bgCam.SetActive(false);
         Debug.Log("Photo prise.");
     }
-    
+
+    public void CancelSnapshot()
+    {
+        bgCam.SetActive(false);
+    }
+
+    public void LaunchSnapshot()
+    {
+        bgCam.SetActive(true);
+    }
 
 }
