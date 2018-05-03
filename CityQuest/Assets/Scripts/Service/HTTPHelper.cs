@@ -228,7 +228,6 @@ public class HTTPHelper : MonoBehaviour
             Account account = null;
             yield return JSONHelper.Instance.ToAccount(text, value => account = value);
             callback(account);
-            Debug.Log(text);
         }
         
     }
