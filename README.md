@@ -33,7 +33,7 @@ The main goal is to provide a mobile video game to promote tourism and culture o
 **Go to the server directory: `cd server/`**
 
 #### Install node project dependencies
-Install node dependencies by running the following command: `cd server/ && yarn install`
+Install node dependencies by running the following command: `yarn install`
 
 #### Create mongoDB database
 - Launch your mongo server by typing: `mongod --dbpath <path-to-your-databases-storage-directory>`.
@@ -41,6 +41,10 @@ Install node dependencies by running the following command: `cd server/ && yarn 
 - Create a database by typing: `use UrbanQuestDev` _Note that database name is important because it is hardcoded in `config/db.js`._
 
 ![Mongo session](http://storage4.static.itmages.com/i/18/0427/h_1524820475_4222983_08fd426f1b.png)
+
+#### Populate DB
+
+- Run the following script through: `node server/populate/populate.js`
 
 #### Launch the NodeJS server
 **Mongo server must run before. See "Create mongoDB database".**
