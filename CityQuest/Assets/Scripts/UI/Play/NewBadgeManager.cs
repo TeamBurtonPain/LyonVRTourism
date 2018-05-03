@@ -7,9 +7,9 @@ class NewBadgeManager : MonoBehaviour
     public Image BadgeImage;
 
     
-    public void GetBadge(string idBadge)
+    public void GetBadge(Badge badge)
     {
-        Debug.Log("Chargement de l'image du badge...");
+        BadgeName.text = badge.Name;
         // Appeler le serveur pour récupérer le badge correspondant à idBadge
         // Remplacer BadgeName.text par le nom du badge
         // Afficher l'image du badge sur BadgeImage

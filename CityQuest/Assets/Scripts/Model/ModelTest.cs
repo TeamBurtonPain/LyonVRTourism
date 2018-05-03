@@ -141,42 +141,6 @@ class ModelTest : MonoBehaviour
             "}," +
             "\"earn\": 42" +
             "}";
-        TestJsonToQuest(questJson);
-        TestJsonToAccount(accountJson);
-    }
-
-    public void TestJsonToQuest(string json)
-    {
-        Quest quest = JSONHelper.ToQuest(json);
-        Assert.AreEqual("0@bob", quest.IdCreator);
-        Assert.AreEqual(10.0, quest.Geolocalisation.x);
-        Assert.AreEqual(45.0, quest.Geolocalisation.y);
-        Assert.AreEqual("quete1", quest.Title);
-        Assert.AreEqual("Super quête cool", quest.Description);
-        Assert.AreEqual("Text of checkpoint 1", quest.Checkpoints[0].Text);
-        Assert.AreEqual("choix 2", quest.Checkpoints[0].Choices[1]);
-        Assert.AreEqual("choix 3",quest.Checkpoints[1].Answer);
-        Assert.AreEqual(0, quest.Checkpoints[1].Difficulty);
-        Assert.AreEqual(0, quest.Value);
-        //tuser.text = quest.Title;
-    }
-    
-    public void TestJsonToAccount(string json)
-    {
-        Account account = null;
-        JSONHelper.Instance.ToAccount(json, value => account = value);
-        Assert.AreEqual("test@mail.com", account.Mail);
-        Assert.AreEqual("test", account.Password);
-        Assert.AreEqual("test", account.LastName);
-        Assert.AreEqual("test", account.FirstName);
-        Assert.AreEqual("test", account.Username);
-        Assert.AreEqual(RoleAccount.CREATOR, account.Role);
-        Assert.AreEqual("2018-04-30T15:52:28", account.CreationDate.ToString("s"));
-        Assert.AreEqual("2018-04-30T15:52:28", account.UpdateDate.ToString("s"));
-        //Assert.AreEqual(1, account.Badges[1].Id);
-        //Assert.AreEqual(0, account.Quests.ElementAt(0).Key);
-        Assert.AreEqual(42, account.ElapsedTime);
-        Assert.AreEqual(42, account.Xp);
     }
 }
 

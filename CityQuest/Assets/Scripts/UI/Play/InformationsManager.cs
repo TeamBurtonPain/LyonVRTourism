@@ -13,10 +13,10 @@ class InformationsManager : MonoBehaviour
     }
     public void Btn_Next ()
     {
-        if (PlayQuestController.Instance.CurrentCheckpoint.Checkpoint.IdBadge != null)
+        if (PlayQuestController.Instance.CurrentCheckpoint.Checkpoint.Badge != null)
         {
             NewBadgeManager badgeManager = Instantiate(NewBadgePanel, this.Parent);
-            badgeManager.GetBadge(PlayQuestController.Instance.CurrentCheckpoint.Checkpoint.IdBadge);
+            badgeManager.GetBadge(PlayQuestController.Instance.CurrentCheckpoint.Checkpoint.Badge);
             // TODO : Afficher le nom du badge
             // TODO : demander au serveur les infos sur le badge
             // TODO : ajouter les infos à l'user

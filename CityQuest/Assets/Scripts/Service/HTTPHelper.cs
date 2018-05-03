@@ -253,7 +253,9 @@ public class HTTPHelper : MonoBehaviour
         {
             string text = uwr.downloadHandler.text;
             Debug.Log(uwr.ToString());
-            callback(JSONHelper.ToQuest(text));
+            Quest q = null;
+            yield return JSONHelper.Instance.ToQuest(text, value => q = value);
+            callback(q);
         }
     }
         
@@ -272,7 +274,9 @@ public class HTTPHelper : MonoBehaviour
         else
         {
             string text = uwr.downloadHandler.text;
-            callback(JSONHelper.ToQuests(text));
+            List<Quest> q = new List<Quest>();
+            yield return JSONHelper.Instance.ToQuests(text, value => q = value);
+            callback(q);
         }
     }
     
