@@ -206,6 +206,8 @@ class PlayQuestController : MonoBehaviour
         set { currentQuest = value; }
     }
 
+    public string Answer { get { return currentCheckpoint.Checkpoint.Answer; } }
+
     public float GetScoreMax()
     {
         float total = 0;
