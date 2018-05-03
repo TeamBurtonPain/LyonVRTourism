@@ -94,7 +94,6 @@ public class Controller : MonoBehaviour
         }
 
         isLoaded = true; 
-        
         //currentConnexion = ConnexionState.DISCONNECTED;
     }
 
@@ -209,7 +208,7 @@ public class Controller : MonoBehaviour
                 selectedQuest = fetchedQuest;
 
                 user.AddQuest(selectedQuest);
-                currentQuest = new StateQuest(selectedQuest);
+                currentQuest = user.Quests[selectedQuest.Id];
                 currentState = questState;
                 SceneManager.LoadScene("GameImageScene");
             }
@@ -219,6 +218,41 @@ public class Controller : MonoBehaviour
             }
         }
     }
+
+    public void ReStartQuest()
+    {
+        StartCoroutine(TryReStartQuest());
+    }
+
+    public IEnumerator TryReStartQuest()
+    {
+        if (selectedQuest != null && user != null)
+        {
+            if (GeoManager.Instance.IsUserNear(selectedQuest.Geolocalisation))
+            {
+
+                Quest fetchedQuest = null;
+
+                SetLoaderCircle(true);
+                yield return HTTPHelper.Instance.GetQuest(selectedQuest.Id, value => fetchedQuest = value);
+                SetLoaderCircle(false);
+
+
+                selectedQuest = fetchedQuest;
+
+                user.Quests[fetchedQuest.Id] = new StateQuest(selectedQuest);
+                currentQuest = user.Quests[fetchedQuest.Id];
+                currentState = questState;
+                SceneManager.LoadScene("GameImageScene");
+            }
+            else
+            {
+                Error("Vous êtes trop loin pour lancer cette quête.");
+            }
+        }
+    }
+
+
 
     public void LoadMap()
     {

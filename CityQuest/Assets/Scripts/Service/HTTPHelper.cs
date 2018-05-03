@@ -227,7 +227,9 @@ public class HTTPHelper : MonoBehaviour
         {
             string text = uwr.downloadHandler.text;
             Debug.Log(uwr.ToString());
-            callback(JSONHelper.ToAccount(text));
+            Account account = null;
+            yield return JSONHelper.Instance.ToAccount(text, value => account = value);
+            callback(account);
             Debug.Log(text);
         }
         
@@ -273,6 +275,32 @@ public class HTTPHelper : MonoBehaviour
             callback(JSONHelper.ToQuests(text));
         }
     }
+    
+    public IEnumerator GetBadge(string id, System.Action<Badge> callback)
+    {
+        Debug.Log(id);
+
+        UnityWebRequest uwr = UnityWebRequest.Get(SERVER + "badges/" + id);
+        uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
+
+        Debug.Log(uwr.ToString());
+
+        yield return uwr.SendWebRequest();
+
+        if (uwr.isNetworkError || uwr.isHttpError)
+        {
+            Controller.Instance.Error(uwr.error);
+            callback(null);
+        }
+        else
+        {
+            string text = uwr.downloadHandler.text;
+            Debug.Log(uwr.ToString());
+            callback(JSONHelper.ToBadge(text));
+            Debug.Log(text);
+        }
+    }
+    
 
     /******************** SEND ********************/
 
