@@ -81,7 +81,8 @@ public class JSONHelper : MonoBehaviour
             new JProperty("question", c.Question),
             new JProperty("choices", new JArray(c.Choices)),
             new JProperty("enigmAnswer", c.Answer),
-            new JProperty("difficulty", c.Difficulty)
+            new JProperty("difficulty", c.Difficulty),
+            new JProperty("_idBadge", c.Badge)
         );
         if (withPicture)
         {
@@ -113,7 +114,7 @@ public class JSONHelper : MonoBehaviour
         return jsonQsu;
     }
 
-    public static Quest ToQuest(string questJson)
+    public IEnumerator ToQuest(string questJson, System.Action<Quest> b)
     {
         JObject parse = JObject.Parse(questJson);
         string idCreator = (string) parse["_idCreator"];
@@ -123,33 +124,37 @@ public class JSONHelper : MonoBehaviour
             new Coordinates((float) parse["geolocalisation"]["x"], (float) parse["geolocalisation"]["y"]);
         string title = (string) parse["title"];
         string description = (string) parse["description"];
-        List<CheckPoint> checkpoints = ToListCheckpoint((JArray) parse["checkpoints"]);
+        List<CheckPoint> checkpoints = null;
+        yield return JSONHelper.instance.ToListCheckpoint((JArray) parse["checkpoints"], value => checkpoints = value);
         //int experienceEarned = (int)parse["value"];
         int experienceEarned = 0;
         Quest quest = new Quest(id, geolocalisation, title, description, experienceEarned, idCreator, checkpoints);
-        return quest;
+        b(quest);
     }
 
-    public static List<Quest> ToQuests(string questJson)
+    public IEnumerator ToQuests(string questJson, System.Action<List<Quest>> b)
     {
         JArray parse = JArray.Parse(questJson);
         List<Quest> list = new List<Quest>();
         foreach (JToken json in parse)
         {
-            list.Add(ToQuest(JObject.Parse(json.ToString()).ToString()));
+            Quest q = null;
+            yield return ToQuest(JObject.Parse(json.ToString()).ToString(), value => q = value);
+            list.Add(q);
         }
 
-        return list;
+        b(list);
     }
 
 
-    public static List<CheckPoint> ToListCheckpoint(JArray checkpointsArray)
+    public IEnumerator ToListCheckpoint(JArray checkpointsArray, System.Action<List<CheckPoint>> b)
     {
         List<CheckPoint> checkpoints = new List<CheckPoint>();
         foreach (var item in checkpointsArray)
         {
             JObject parse = JObject.Parse(item.ToString());
             string text = (string) parse["text"];
+            string question = (string) parse["question"];
             //TODO: est-ce que ça plante ici quand on ajoute les images (qui ne sont pas envoyées dans le cas de getAllQuests !)
             string picture = (string) parse["picture"];
             string pictureName = (string) parse["pictureName"];
@@ -162,11 +167,16 @@ public class JSONHelper : MonoBehaviour
 
             string answer = (string) parse["enigmAnswer"];
             int difficulty = (int) parse["difficulty"];
-            CheckPoint checkPoint = new CheckPoint(picture, pictureName, text, choices, answer, difficulty);
+            Badge badge = null;
+            if ((string)parse["_idBadge"] != "" && (string)parse["_idBadge"] != null)
+            {
+                yield return HTTPHelper.Instance.GetBadge((string)parse["_idBadge"], value => badge = value);
+            }
+            CheckPoint checkPoint = new CheckPoint(picture, pictureName, text, question, choices, answer, difficulty, badge);
             checkpoints.Add(checkPoint);
         }
 
-        return checkpoints;
+        b(checkpoints);
     }
 
 
@@ -387,6 +397,8 @@ public class JSONHelper : MonoBehaviour
 
         b(badges);
     }
+
+    
 
     public static Badge ToBadge(string json)
     {

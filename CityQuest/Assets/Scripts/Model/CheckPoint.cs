@@ -19,22 +19,24 @@ public class CheckPoint
     private List<string> choices;
     private string answer;
     private int difficulty;
-    private string idBadge;
+    private Badge idBadge;
 
     public CheckPoint()
     {
         choices = new List<string>();
     }
 
-    public CheckPoint(string pic, string picName, string text, List<string> choices, string answer, int difficulty)
+    public CheckPoint(string pic, string picName, string text, string question, List<string> choices, string answer, int difficulty, Badge idBadge)
 
     {
         this.picture = pic;
         this.pictureName = picName;
         this.text = text;
+        this.question = question;
         this.choices = choices;
         this.answer = answer;
         this.difficulty = difficulty;
+        this.idBadge = idBadge;
     }
 
 
@@ -73,7 +75,7 @@ public class CheckPoint
         set { answer = value; }
     }
 
-    public string IdBadge
+    public Badge Badge
     {
         get { return idBadge; }
         set { idBadge = value; }
