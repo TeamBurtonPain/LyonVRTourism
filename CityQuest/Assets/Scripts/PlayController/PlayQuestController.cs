@@ -13,24 +13,44 @@ class PlayQuestController : MonoBehaviour
     private int checkpointProgress;
     private DateTime checkpointStartTime;
 
+    private Boolean destroyOnLoad;
+
     void Start()
     {
         if (instance == null)
         {
             instance = this;
+
+            currentQuest = Controller.Instance.CurrentQuest;
+            questProgress = CheckQuestProgress();
+            currentCheckpoint = currentQuest.Checkpoints[questProgress];
+            checkpointProgress = 0;
+            checkpointStartTime = System.DateTime.Now;
         }
         else if (instance != this)
         {
             Destroy(gameObject);
         }
 
+        
         DontDestroyOnLoad(gameObject);
 
-        currentQuest = Controller.Instance.CurrentQuest;
-        questProgress = CheckQuestProgress();
-        currentCheckpoint = currentQuest.Checkpoints[questProgress];
-        checkpointProgress = 0;
-        checkpointStartTime = System.DateTime.Now;
+        
+    }
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (destroyOnLoad) Destroy(gameObject);
+        destroyOnLoad = true;
     }
 
 public int CheckQuestProgress()
@@ -89,15 +109,18 @@ public int CheckQuestProgress()
             questProgress++;
             currentCheckpoint = currentQuest.Checkpoints[questProgress];
             checkpointStartTime = System.DateTime.Now;
+            destroyOnLoad = false;
             SceneManager.LoadScene("GameImageScene");
         } else
         {
-            Debug.Log("Fini!");
             currentQuest.TimeElapsed = 0;
             foreach (StateCheckPoint checkpoint in currentQuest.Checkpoints)
             {
                 currentQuest.TimeElapsed += checkpoint.TimeElapsed;
             }
+            currentQuest.Done = true;
+            destroyOnLoad = false;
+            SceneManager.LoadScene("EndQuestScene");
             // TODO : Scene de fin
             // TODO : Detruire controller !!!
         }
@@ -107,13 +130,19 @@ public int CheckQuestProgress()
     {
         Controller.Instance.QuitVuforia();
         if (currentQuest.Checkpoints[questProgress].Checkpoint.Choices.Count == 0)
+        {
+            destroyOnLoad = false;
             SceneManager.LoadScene("GameQuestion");
-        else
+        } else
+        {
+            destroyOnLoad = false;
             SceneManager.LoadScene("GameQuestionMulti");
+        }
     }
 
     private void GoToInformations()
     {
+        destroyOnLoad = false;
         SceneManager.LoadScene("GameInformations");
     }
 
@@ -127,6 +156,7 @@ public int CheckQuestProgress()
     public void OpenCamera()
     {
         Controller.Instance.LoadVuforia();
+        destroyOnLoad = false;
         SceneManager.LoadScene("ImageRecognition");
     }
 

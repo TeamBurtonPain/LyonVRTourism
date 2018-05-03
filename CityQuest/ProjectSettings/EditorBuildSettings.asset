@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/_Scenes/Connexion/AccountCreation.unity
     guid: e9b18c7dfc358704c951bdf33b539968
   - enabled: 1
+    path: Assets/_Scenes/Play/EndQuestScene.unity
+    guid: 6316a62dd3a12cd48b572ed7985f5e4a
+  - enabled: 1
     path: Assets/_Scenes/Connexion/Pseudo.unity
     guid: 48ab13879242a7b4baf13b0818958871
   - enabled: 1
