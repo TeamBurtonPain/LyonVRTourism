@@ -1,4 +1,3 @@
-// TODO: const { createUserError } = require('../../utils');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const mongooseMerge = require('mongoose-merge-plugin');
@@ -51,21 +50,19 @@ const Account = new Schema({
                     default: 'IN_PROGRESS'
                 },
                 stats: {
-                    earnedXp: Number
-// FROM HERE
-					
-                    timeElapsed: Number			
-                },	
-				checkpoints: [
-					status: {
-						type: String,
-						enum: {values: ['FINISHED', 'BEGUN', 'UNINIT']},
-						default: 'UNINIT'
-					},
-					timeElapsed: Number
-				]
-				
-//TO HERE !
+                    earnedXp: Number,
+                    timeElapsed: Number
+                },
+                checkpoints: [
+                    {
+                        status: {
+                            type: String,
+                            enum: ['FINISHED', 'BEGUN', 'UNINIT'],
+                            default: 'UNINIT'
+                        },
+                        timeElapsed: Number
+                    }
+                ]
             }
         ],
         xp: {
