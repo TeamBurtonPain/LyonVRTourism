@@ -45,4 +45,9 @@ public class ButtonManager : MonoBehaviour
     {
         Controller.Instance.Inscription();
     }
+
+    public void Btn_ReStartQuest()
+    {
+        Controller.Instance.ReStartQuest();
+    }
 }
