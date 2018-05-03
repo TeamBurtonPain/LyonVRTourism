@@ -277,10 +277,24 @@ public class Controller : MonoBehaviour
 
     public void StartQuest()
     {
+        StartCoroutine(TryStartQuest());
+    }
+
+    public IEnumerator TryStartQuest()
+    {
         if (selectedQuest != null && user != null)
         {
             if (GeoManager.Instance.IsUserNear(selectedQuest.Geolocalisation))
             {
+
+                Quest fetchedQuest = null;
+
+                SetLoaderCircle(true);
+                yield return HTTPHelper.Instance.GetQuest(selectedQuest.Id, value => fetchedQuest = value);
+                SetLoaderCircle(false);
+
+                selectedQuest = fetchedQuest;
+
                 user.AddQuest(selectedQuest);
                 currentQuest = new StateQuest(selectedQuest);
                 currentState = questState;

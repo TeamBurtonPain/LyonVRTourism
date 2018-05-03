@@ -71,7 +71,7 @@ public int CheckQuestProgress()
 
     public bool CheckAnswer(string answer)
     {
-        if(answer.ToLower().Contains(currentCheckpoint.Checkpoint.Answer.ToLower()))
+        if (answer.ToLower().Contains(currentCheckpoint.Checkpoint.Answer.ToLower()))
         {
             return true;
         } else

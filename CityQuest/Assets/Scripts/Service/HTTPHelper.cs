@@ -1,5 +1,7 @@
 ﻿using System.Text;
+﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
@@ -109,8 +111,8 @@ public class HTTPHelper : MonoBehaviour
 
     public IEnumerator Persist(Quest q, Cookie cookie, System.Action<bool> callback)
     {
-        Debug.Log(JSONHelper.ToJsonString(q));
-        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "quests", Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(q)));
+        Debug.Log(JSONHelper.ToJsonString(q, true));
+        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "quests", Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(q, true)));
         uwr.method = "POST";
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
         uwr.SetRequestHeader("Authorization", "Bearer " + cookie.Value);
@@ -180,8 +182,8 @@ public class HTTPHelper : MonoBehaviour
 
     public IEnumerator UpdateData(Quest q, Cookie cookie)
     {
-        Debug.Log(JSONHelper.ToJsonString(q));
-        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "quests/" + q.Id, Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(q)));
+        Debug.Log(JSONHelper.ToJsonString(q, true));
+        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "quests/" + q.Id, Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(q, true)));
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
         uwr.SetRequestHeader("Authorization", "Bearer " + cookie.Value);
 
@@ -231,16 +233,12 @@ public class HTTPHelper : MonoBehaviour
         
     }
 
-    public IEnumerator GetQuest(string id, Cookie cookie, System.Action<Quest> callback)
+	
+    public IEnumerator GetQuest(string id, System.Action<Quest> callback)
     {
-        Debug.Log(cookie.Value);
-        Debug.Log(id);
 
         UnityWebRequest uwr = UnityWebRequest.Get(SERVER + "quests/" + id);
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
-        uwr.SetRequestHeader("Authorization", "Bearer " + cookie.Value);
-
-        Debug.Log(uwr.ToString());
 
         yield return uwr.SendWebRequest();
  
@@ -254,7 +252,6 @@ public class HTTPHelper : MonoBehaviour
             string text = uwr.downloadHandler.text;
             Debug.Log(uwr.ToString());
             callback(JSONHelper.ToQuest(text));
-            Debug.Log(text);
         }
     }
         
@@ -276,11 +273,39 @@ public class HTTPHelper : MonoBehaviour
             callback(JSONHelper.ToQuests(text));
         }
     }
+    /*
+    public IEnumerator GetQuest(string id, System.Action<Quest> callback)
+    {
+        Debug.Log(id);
+
+        UnityWebRequest uwr = UnityWebRequest.Get(SERVER + "quests/" + id);
+        uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
+
+        Debug.Log(uwr.ToString());
+
+        yield return uwr.SendWebRequest();
+
+        if (uwr.isNetworkError || uwr.isHttpError)
+        {
+            Controller.Instance.Error(uwr.error);
+            callback(null);
+        }
+        else
+        {
+            string text = uwr.downloadHandler.text;
+            Debug.Log(uwr.ToString());
+            callback(JSONHelper.ToQuest(text));
+            Debug.Log(text);
+        }
+    }
+    */
+
+    /******************** SEND ********************/
 
     public IEnumerator Send(Quest q)
     {
-        Debug.Log(JSONHelper.ToJsonString(q));
-        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "quests", Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(q)));
+        Debug.Log(JSONHelper.ToJsonString(q, true));
+        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "quests", Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(q, true)));
         uwr.method = "POST";
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
 
@@ -288,4 +313,7 @@ public class HTTPHelper : MonoBehaviour
         yield return uwr.SendWebRequest();
     }
 
+
+
+    
 }
