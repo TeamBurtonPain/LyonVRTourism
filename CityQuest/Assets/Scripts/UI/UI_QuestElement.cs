@@ -41,11 +41,13 @@ public class UI_QuestElement : MonoBehaviour
 
     public /*IENumerator*/ void FillBadgesList(List<CheckPoint> checkpoints)
     {
+        /*
         foreach (CheckPoint checkpoint in checkpoints)
         {
             UI_Badge_Icon temp = Instantiate(badgeIcon, this.parent);
             temp.LinkBadge(checkpoint.Picture);
         }
+        */
     }
 
     public void SelectQuestInHistoric()

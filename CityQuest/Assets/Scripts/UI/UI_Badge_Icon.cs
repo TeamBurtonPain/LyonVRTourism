@@ -9,6 +9,7 @@ public class UI_Badge_Icon : MonoBehaviour {
 
     public void LinkBadge(string picture)
     {
+        /*
         byte[] img;
         Char delimiter = ',';
         String[] substrings = picture.Split(delimiter);
@@ -27,5 +28,6 @@ public class UI_Badge_Icon : MonoBehaviour {
         GetComponent<Image>().material = new Material(GetComponent<Image>().material);
         GetComponent<Image>().material.mainTexture = tex;
         Debug.Log("passage dans la redéfinition de l'élément ajouté");
+        */
     }
 }
