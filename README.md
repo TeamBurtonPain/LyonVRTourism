@@ -37,14 +37,21 @@ Install node dependencies by running the following command: `yarn install`
 
 #### Create mongoDB database
 - Launch your mongo server by typing: `mongod --dbpath <path-to-your-databases-storage-directory>`.
-- With a new console, connect to your mongo server: `mongo` (the command use the defaut mongo server configuration: `HOST: localhost` & `PORT: 27017`).
+- With a new console, connect to your mongo server: `mongo` (the command use the defaut mongo server configuration: `HOST: localhost` & `PORT: 27017`). If you have to change it, run `mongo -h` ;) 
 - Create a database by typing: `use UrbanQuestDev` _Note that database name is important because it is hardcoded in `config/db.js`._
 
-![Mongo session](http://storage4.static.itmages.com/i/18/0427/h_1524820475_4222983_08fd426f1b.png)
+![image](https://user-images.githubusercontent.com/29222996/39594373-d478e654-4f0c-11e8-987a-5005c2ad3895.png)
 
 #### Populate DB
 
 - Run the following script through: `node server/populate/populate.js`
+
+The initial account have these credentials:
+
+```
+    email: noel@flantier.fr
+    password: noel
+```
 
 #### Launch the NodeJS server
 **Mongo server must run before. See "Create mongoDB database".**
