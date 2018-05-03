@@ -4,12 +4,7 @@ const Schema = mongoose.Schema;
 const Badge = new Schema({
     name: String,
     description: String,
-    iconPath: String,
-    require: {
-        xp: Number,
-        totalElapsedTime: Number,
-        // TODO: quests: [Schema.Types.ObjectId],
-    },
+    picturePath: String,
     earn: Number,
 });
 

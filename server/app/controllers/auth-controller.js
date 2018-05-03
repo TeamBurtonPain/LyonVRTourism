@@ -1,5 +1,3 @@
-// TODO: add expiration management
-
 const { createUserError } = require('../../helpers');
 const accountService = require('../services/account-service');
 const jwtConfig = require('../../config/jwt');
