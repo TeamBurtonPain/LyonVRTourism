@@ -227,7 +227,9 @@ public class HTTPHelper : MonoBehaviour
         {
             string text = uwr.downloadHandler.text;
             Debug.Log(uwr.ToString());
-            callback(JSONHelper.ToAccount(text));
+            Account account = null;
+            yield return JSONHelper.Instance.ToAccount(text, value => account = value);
+            callback(account);
             Debug.Log(text);
         }
         

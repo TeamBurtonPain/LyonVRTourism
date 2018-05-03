@@ -197,7 +197,6 @@ public class JSONHelper : MonoBehaviour
             new JProperty("userInformation", new JObject(
                 new JProperty("lastname", a.LastName),
                 new JProperty("firstname", a.FirstName),
-                //new JProperty("dateOfBirth", a.DateBirth.ToString("s")),
                 new JProperty("username", a.Username),
                 new JProperty("accountType", a.Role.ToString())
             )),
@@ -282,7 +281,7 @@ public class JSONHelper : MonoBehaviour
         );
     }
 
-    public static Account ToAccount(string accountJson)
+    public IEnumerator ToAccount(string accountJson, Action<Account> a)
     {
         JObject parse = JObject.Parse(accountJson);
         string mail = (string) parse["connection"]["email"];
@@ -294,13 +293,14 @@ public class JSONHelper : MonoBehaviour
         DateTime creationDate = (DateTime) parse["createdAt"];
         DateTime updateDate = (DateTime) parse["updatedAt"];
         long elapsedTime = (long) parse["game"]["elapsedTime"];
-        User user = ToUser(accountJson);
+        User user = new User();
+        yield return JSONHelper.Instance.ToUser(accountJson, value => user = value);
         Account account = new Account(user, mail, password, firstName, lastName, roleAccount, creationDate, updateDate,
             elapsedTime);
-        return account;
+        a(account);
     }
 
-    public static User ToUser(string userJson)
+    public IEnumerator ToUser(string userJson, Action<User> u)
     {
         JObject parse = JObject.Parse(userJson);
         string username = (string) parse["userInformation"]["username"];
@@ -308,32 +308,36 @@ public class JSONHelper : MonoBehaviour
         long xp = (long) parse["game"]["xp"];
         //TODO Remplir ces champs !
         List<Badge> badges = new List<Badge>();
-        Dictionary<string, StateQuest> quests = JSONHelper.ToDictState(parse.GetValue("quest").ToString());
+        yield return JSONHelper.Instance.ToListBadge(JObject.Parse(parse.GetValue("game").ToString()).GetValue("badges").ToString(), value => badges = value);
+
+        Dictionary<string, StateQuest> quests = new Dictionary<string, StateQuest>();
+        yield return JSONHelper.Instance.ToDictState(JObject.Parse(parse.GetValue("game").ToString()).GetValue("quests").ToString(), value => quests = value);
 
 
         User user = new User(username, id, xp, badges, quests);
-        return user;
+        u(user);
     }
 
-    public static Dictionary<string, StateQuest> ToDictState(string json)
+    public IEnumerator ToDictState(string json, Action<Dictionary<string, StateQuest>> d)
     {
         Dictionary<string, StateQuest> dic = new Dictionary<string, StateQuest>();
 
         JArray jsonQuest = JArray.Parse(json);
-        foreach (var tokenQuest in jsonQuest)
+        for (int i=0; i < jsonQuest.Count; i++)
         {
+            JObject tokenQuest = JObject.Parse(jsonQuest[0].ToString());
             StateQuest sq = null;
-            JSONHelper.Instance.ToStateQuest(tokenQuest.ToString(), value => sq = value);
+            yield return JSONHelper.Instance.ToStateQuest(tokenQuest.ToString(), value => sq = value);
             dic.Add(sq.Quest.Id, sq);
         }
 
-        return dic;
+        d(dic);
     }
 
     public IEnumerator ToStateQuest(string json, System.Action<StateQuest> sq)
     {
         JObject quest = JObject.Parse(json);
-        string key = (string)quest["_isQuest"];
+        string key = (string)quest["_idQuest"];
 
         //TODO: Est-ce nécessaire ?
 
@@ -342,7 +346,7 @@ public class JSONHelper : MonoBehaviour
         yield return HTTPHelper.Instance.GetQuest(key, value => q = value);
 
         bool done = ((string)quest["state"]) == "DONE";
-        double score = (double)quest["stats"]["earnedXP"];
+        double score = (double)quest["stats"]["earnedXp"];
         double timeElapsed = (double)quest["stats"]["timeElapsed"];
 
         List<StateCheckPoint> listCheckPoints = new List<StateCheckPoint>();
@@ -365,22 +369,6 @@ public class JSONHelper : MonoBehaviour
     }
 
     //------------------------------------------------------------------------------------------
-
-
-    //public static DateTime ToDateTime(string dateTimeString)
-    //{
-    //    CultureInfo  provider = new CultureInfo("fr-FR");
-    //    string format = "s"; //Correspond au format ISO 8601
-    //    //DateTime dateTime = DateTime.Parse(dateTimeString, null, DateTimeStyles.RoundtripKind);
-    //    DateTime d;
-    //    DateTime.TryParseExact(
-    //        dateTimeString,
-    //        "s",
-    //        CultureInfo.InvariantCulture,
-    //        DateTimeStyles.AssumeUniversal, out d);
-    //    //Debug.Log(d.ToString());
-    //    return d;
-    //}
 
 
     

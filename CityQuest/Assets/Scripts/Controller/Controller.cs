@@ -90,7 +90,7 @@ public class Controller : MonoBehaviour
             hasFailed = true;
             yield break;
         }
-
+        /*
         //------ Test sample ---------
 
         Coordinates coordinates = new Coordinates
@@ -173,12 +173,10 @@ public class Controller : MonoBehaviour
         user.AddQuest(quest);
         user.AddQuest(quest2);
         //------ End Test sample -------
-
+        */
 
         isLoaded = true; 
-
-        selectedQuest = quest;
-        currentQuest = playing;
+        
         //currentConnexion = ConnexionState.DISCONNECTED;
     }
 
