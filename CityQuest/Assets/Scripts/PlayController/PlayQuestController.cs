@@ -34,10 +34,10 @@ class PlayQuestController : MonoBehaviour
             Destroy(gameObject);
         }
 
-        
+
         DontDestroyOnLoad(gameObject);
 
-        
+
     }
     void OnEnable()
     {
@@ -55,15 +55,16 @@ class PlayQuestController : MonoBehaviour
         destroyOnLoad = true;
     }
 
-public int CheckQuestProgress()
+    public int CheckQuestProgress()
     {
         int progress = 0;
-        foreach(StateCheckPoint checkpoint in currentQuest.Checkpoints)
+        foreach (StateCheckPoint checkpoint in currentQuest.Checkpoints)
         {
-            if(checkpoint.Status == StatusCheckPoint.FINISHED)
+            if (checkpoint.Status == StatusCheckPoint.FINISHED)
             {
                 progress++;
-            } else
+            }
+            else
             {
                 break;
             }
@@ -75,7 +76,9 @@ public int CheckQuestProgress()
     {
         if (answer.ToLower().Contains(currentCheckpoint.Checkpoint.Answer.ToLower()))
         {
-        } else
+            isGood = true;
+        }
+        else
         {
             isGood = false;
         }
@@ -96,28 +99,29 @@ public int CheckQuestProgress()
                 GoToNextCheckpoint();
                 break;
             default:
-                Debug.LogError("checkpointProgress="+ checkpointProgress + ", error : not comprised between 0 and 2");
+                Debug.LogError("checkpointProgress=" + checkpointProgress + ", error : not comprised between 0 and 2");
                 break;
         }
-        checkpointProgress = (checkpointProgress + 1)%3;
+        checkpointProgress = (checkpointProgress + 1) % 3;
     }
 
     private void GoToNextCheckpoint()
     {
         currentQuest.Checkpoints[questProgress].TimeElapsed = System.DateTime.Now.Subtract(checkpointStartTime).TotalSeconds;
         currentQuest.Checkpoints[questProgress].Status = StatusCheckPoint.FINISHED;
-        if(PlayQuestController.Instance.CurrentCheckpoint.Checkpoint.Badge != null)
+        if (PlayQuestController.Instance.CurrentCheckpoint.Checkpoint.Badge != null)
         {
             Controller.Instance.User.Badges.Add(PlayQuestController.Instance.CurrentCheckpoint.Checkpoint.Badge);
         }
-        if(questProgress < currentQuest.Checkpoints.Count-1)
+        if (questProgress < currentQuest.Checkpoints.Count - 1)
         {
             questProgress++;
             currentCheckpoint = currentQuest.Checkpoints[questProgress];
             checkpointStartTime = System.DateTime.Now;
             destroyOnLoad = false;
             SceneManager.LoadScene("GameImageScene");
-        } else
+        }
+        else
         {
             currentQuest.TimeElapsed = 0;
             foreach (StateCheckPoint checkpoint in currentQuest.Checkpoints)
@@ -156,7 +160,8 @@ public int CheckQuestProgress()
         {
             destroyOnLoad = false;
             SceneManager.LoadScene("GameQuestion");
-        } else
+        }
+        else
         {
             destroyOnLoad = false;
             SceneManager.LoadScene("GameQuestionMulti");
@@ -203,7 +208,7 @@ public int CheckQuestProgress()
     public float GetScoreMax()
     {
         float total = 0;
-        foreach( StateCheckPoint c in currentQuest.Checkpoints)
+        foreach (StateCheckPoint c in currentQuest.Checkpoints)
         {
             total += CalculateScore(c.Checkpoint, true);
         }
