@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine.UI;
 
 public enum ConnexionState
 {
@@ -19,6 +20,7 @@ public class Controller : MonoBehaviour
     public GameObject loading;
 
     private IState currentState;
+    public IState loadingState;
     public IState mapState;
     public IState editorState;
     public IState historicState;
@@ -58,14 +60,18 @@ public class Controller : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
+        loadingState = new DefaultState();
         mapState = new MapState();
         editorState = new EditorState();
         historicState = new HistoricState();
         questState = new QuestState();
         loginState = new LoginState();
 
-        currentState = loginState;
+        currentState = loadingState;
 
+    }
+    void Start()
+    {
         // a coroutine is a function that might take longer than a frame to execute.
         StartCoroutine(InitQuests());
     }
@@ -181,16 +187,6 @@ public class Controller : MonoBehaviour
         loading.SetActive(isLoading);
     }
 
-    /// <summary>
-    /// Transitions to the specified state s
-    /// </summary>
-    /// <param name="s">The state.</param>
-    //TODO : voir quoi faire d'autre pour effectuer la transition 
-    public void Transition(IState s)
-    {
-        currentState = s;
-    }
-
     void OnApplicationPause(bool pause)
     {
         if (pause && Application.platform == RuntimePlatform.Android)
@@ -246,8 +242,7 @@ public class Controller : MonoBehaviour
     // end of pop-up windows
     private void Update()
     {
-
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKey(KeyCode.Escape) || Input.GetKey(KeyCode.A))
         {
             currentState.ReturnAction();
         }
@@ -352,13 +347,16 @@ public class Controller : MonoBehaviour
         //SceneManager.LoadScene("Settings");
     }
 
-    public IEnumerator SelectMenuLogout()
+    public void SelectMenuLogout() {
+        StartCoroutine(DoLogOut());
+    }
+
+    public IEnumerator DoLogOut()
     {
         if (user is Account)
         {
             yield return HTTPHelper.Instance.AuthLogout(cookie);
         }
-
         currentState = loginState;
         SceneManager.LoadScene("Login");
     }

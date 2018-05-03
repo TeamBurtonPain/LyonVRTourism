@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿using UnityEngine;
+/// <summary>
 /// 
 /// </summary>
 /// <seealso cref="State" />
@@ -10,7 +11,6 @@ public class DefaultState : IState
     /// <seealso cref="MapState" />
     public virtual void ReturnAction()
     {
-        Controller.Instance.Transition(Controller.Instance.mapState);
     }
 
     public virtual void OptionAction() { }

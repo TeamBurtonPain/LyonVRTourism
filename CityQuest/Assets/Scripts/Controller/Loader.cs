@@ -31,7 +31,7 @@ public class Loader : MonoBehaviour {
             // if lien avec compte en ligne trouvé
             //     SceneManager.LoadScene("MapScene");
             // else
-            SceneManager.LoadScene("Login");
+            Controller.Instance.SelectMenuLogout();
         }
     }
 
