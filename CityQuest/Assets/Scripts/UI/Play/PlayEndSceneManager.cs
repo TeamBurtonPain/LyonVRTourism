@@ -5,7 +5,7 @@ class PlayEndSceneManager : MonoBehaviour
 {
 
     public Text FinishedText;
-    public Scrollbar ScoreBar;
+    public Image ScoreBar;
     public Text DurationText;
     public GameObject BadgePanel;
 
