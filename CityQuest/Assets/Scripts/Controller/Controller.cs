@@ -383,7 +383,11 @@ public class Controller : MonoBehaviour
         if (cookie.Value != "")
         {
             Account a = null;
+
+            SetLoaderCircle(true);
             yield return HTTPHelper.Instance.GetAccount(cookie, value => a = value);
+            SetLoaderCircle(false);
+
             if (a.Mail == "")
             {
                 Error(a.LastName);
@@ -406,9 +410,16 @@ public class Controller : MonoBehaviour
 
     public void PersistUserAdvancement()
     {
-        Debug.Log("Oulala je persiste !");
+        if(user is Account)
+        {
+            StartCoroutine(TryPersistUser((Account)user));
+        }
     }
 
+    public IEnumerator TryPersistUser(Account a)
+    {
+        yield return HTTPHelper.Instance.UpdateData(a, cookie);
+    }
     /*********** FIN BOUTONS ***********/
 
     public void Error(string msg)
