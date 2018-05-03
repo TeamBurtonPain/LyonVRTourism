@@ -491,6 +491,11 @@ public class Controller : MonoBehaviour
 
     }
 
+    public void PersistUserAdvancement()
+    {
+        Debug.Log("Oulala je persiste !");
+    }
+
     /*********** FIN BOUTONS ***********/
 
     public void Error(string msg)

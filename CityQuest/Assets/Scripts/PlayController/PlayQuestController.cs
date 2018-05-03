@@ -124,6 +124,7 @@ public int CheckQuestProgress()
             // TODO : Scene de fin
             // TODO : Detruire controller !!!
         }
+        Controller.Instance.PersistUserAdvancement();
     }
 
     private void GoToQuestion()
