@@ -19,7 +19,7 @@ public class AccountCreationManager : MonoBehaviour
     {
         if (aggrement.isOn)
         {
-            Controller.Instance.CreateNewAccount(firstNameInputField.text, lastNameInputField.text, mailInputField.text, passwordInputField.text, usernameInputField.text);
+            StartCoroutine(Controller.Instance.CreateNewAccount(firstNameInputField.text, lastNameInputField.text, mailInputField.text, passwordInputField.text, usernameInputField.text));
         }
         else
         {

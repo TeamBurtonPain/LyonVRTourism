@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Security.Principal;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Net;
+using System.Collections;
+using UnityEngine.UI;
 
 public enum ConnexionState
 {
@@ -16,19 +14,22 @@ public enum ConnexionState
 }
 public class Controller : MonoBehaviour
 {
-    public GameObject leavingWindow;
-    public GameObject cancelWindow;
-    public ErrorPopUp errorTemplate;
 
     protected static Controller instance;
 
+    public GameObject loading;
+
     private IState currentState;
+    public IState loadingState;
     public IState mapState;
     public IState editorState;
     public IState historicState;
     public IState questState;
     public IState loginState;
-    private ConnexionState currentConnexion;
+    //private ConnexionState currentConnexion;
+
+    public bool leavingWindowOpen = false;
+    public bool cancelWindowOpen = false;
 
     private List<Quest> existingQuests;
 
@@ -39,9 +40,15 @@ public class Controller : MonoBehaviour
 
     private StateQuest currentQuest;
 
+    private bool isLoaded = false;
+    private bool hasFailed = false;
+    public bool IsLoaded { get { return isLoaded; } }
+    public bool HasFailed { get { return hasFailed; } }
+
 
     void Awake()
     {
+        loading.SetActive(false);
         if (instance == null)
         {
             instance = this;
@@ -53,16 +60,36 @@ public class Controller : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
+        loadingState = new DefaultState();
         mapState = new MapState();
         editorState = new EditorState();
         historicState = new HistoricState();
         questState = new QuestState();
         loginState = new LoginState();
 
-        currentState = loginState;
+        currentState = loadingState;
 
+    }
+    void Start()
+    {
+        // a coroutine is a function that might take longer than a frame to execute.
+        StartCoroutine(InitQuests());
+    }
 
-        existingQuests = HTTPHelper.GetAllQuests();
+    public IEnumerator InitQuests()
+    {
+        // yield return xxx means wait for the fcking end of this function without blocking all the system.
+        // btw we have to use a callback tu assignate value with this kind of method.
+
+        SetLoaderCircle(true);
+        yield return HTTPHelper.Instance.GetAllQuests(value => existingQuests = value);
+        SetLoaderCircle(false);
+
+        if (existingQuests == null)
+        {
+            hasFailed = true;
+            yield break;
+        }
 
         //------ Test sample ---------
 
@@ -116,7 +143,7 @@ public class Controller : MonoBehaviour
         choices.Add("Du bambou");
         choices.Add("Des oeufs");
         choices.Add("Des M&M's");
-        CheckPoint cp1 = new CheckPoint("TestSprites/panda", "", "Quel est l'aliment principal des pandas roux ? ", choices, "bambou",2);
+        CheckPoint cp1 = new CheckPoint("TestSprites/panda", "", "Quel est l'aliment principal des pandas roux ? ", choices, "bambou", 2);
         CheckPoint cp2 = new CheckPoint("pic2.png", "", "blablablaTextCP2", choices, "a", 1);
         List<CheckPoint> checkpoints = new List<CheckPoint>
         {
@@ -147,19 +174,17 @@ public class Controller : MonoBehaviour
         user.AddQuest(quest2);
         //------ End Test sample -------
 
+
+        isLoaded = true; 
+
         selectedQuest = quest;
         currentQuest = playing;
-        currentConnexion = ConnexionState.DISCONNECTED;
+        //currentConnexion = ConnexionState.DISCONNECTED;
     }
 
-    /// <summary>
-    /// Transitions to the specified state s
-    /// </summary>
-    /// <param name="s">The state.</param>
-    //TODO : voir quoi faire d'autre pour effectuer la transition 
-    public void Transition(IState s)
+    public void SetLoaderCircle(bool isLoading)
     {
-        currentState = s;
+        loading.SetActive(isLoading);
     }
 
     void OnApplicationPause(bool pause)
@@ -167,7 +192,7 @@ public class Controller : MonoBehaviour
         if (pause && Application.platform == RuntimePlatform.Android)
         {
             // TODO mettre en pause plutot genre retourner sur la scene d' accueil
-            Leave();
+            // Leave();
         }
     }
 
@@ -175,43 +200,49 @@ public class Controller : MonoBehaviour
     // Leave
     public void AskLeave()
     {
-        leavingWindow.SetActive(true);
+        if (!leavingWindowOpen)
+        {
+            leavingWindowOpen = true;
+            MNPopup p = new MNPopup("Quitter", "Voulez-vous quitter l'application ?");
+            p.AddAction("Oui", () => { Leave(); });
+            p.AddAction("Non", () => { leavingWindowOpen = false; });
+            p.AddDismissListener(() => { leavingWindowOpen = false; });
+            p.Show();
+        }
     }
 
     public void Leave()
     {
-       
+
         // Chose one of the 2 following (sometime it bugs on some systems)
+
         //Application.Quit();
         System.Diagnostics.Process.GetCurrentProcess().Kill();
     }
 
-    public void CancelLeave()
-    {
-        leavingWindow.SetActive(false);
-    }
     // BackToMap
     public void AskBackToMap()
     {
-        cancelWindow.SetActive(true);
+        if (!cancelWindowOpen)
+        {
+            cancelWindowOpen = true;
+            MNPopup p = new MNPopup("Retour", "Voulez-vous retourner à la carte ?");
+            p.AddAction("Oui", () => { leavingWindowOpen = false; BackToMap(); });
+            p.AddAction("Non", () => { leavingWindowOpen = false; });
+            p.AddDismissListener(() => { leavingWindowOpen = false; });
+            p.Show();
+        }
     }
 
     public void BackToMap()
     {
-        cancelWindow.SetActive(false);
         LoadMap();
-    }
-
-    public void CancelBackToMap()
-    {
-        cancelWindow.SetActive(false);
     }
     //////////////////////////
     // end of pop-up windows
     private void Update()
     {
-
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKey(KeyCode.Escape) || Input.GetKey(KeyCode.A))
         {
             currentState.ReturnAction();
         }
@@ -221,13 +252,13 @@ public class Controller : MonoBehaviour
 
     public void LoginLocal()
     {
-        currentConnexion = ConnexionState.CONNEXION_LOCAL;
+        //currentConnexion = ConnexionState.CONNEXION_LOCAL;
         currentState.LoginLocalAction();
     }
 
     public void LoginServer()
     {
-        currentConnexion = ConnexionState.CONNEXION_SERVER;
+        //currentConnexion = ConnexionState.CONNEXION_SERVER;
         currentState.LoginServerAction();
     }
 
@@ -251,13 +282,10 @@ public class Controller : MonoBehaviour
                 currentState = questState;
                 SceneManager.LoadScene("GameImageScene");
             }
-            else{
+            else
+            {
                 Error("Vous êtes trop loin pour lancer cette quête.");
             }
-        }
-        else
-        {
-            //TODO : Gestion des erreurs en cas de quest ou de user null
         }
     }
 
@@ -319,90 +347,85 @@ public class Controller : MonoBehaviour
         //SceneManager.LoadScene("Settings");
     }
 
-    public void SelectMenuLogout()
+    public void SelectMenuLogout() {
+        StartCoroutine(DoLogOut());
+    }
+
+    public IEnumerator DoLogOut()
     {
         if (user is Account)
         {
-            HTTPHelper.AuthLogout(cookie);
+            yield return HTTPHelper.Instance.AuthLogout(cookie);
         }
-        // TODO deco en local (persistance)
-
         currentState = loginState;
         SceneManager.LoadScene("Login");
     }
 
-    public void CreateNewAccount(string firstName, string lastname, string mail, string password, string username)
+    public IEnumerator CreateNewAccount(string firstName, string lastname, string mail, string password, string username)
     {
-
-        // TODO integrity check
-        bool integrity = false;
-        if (firstName == null) { Error("Entrez un prénom valide."); } else { integrity = true; }
-        if (lastname == null) { Error("Entrez un nom valide."); } else { integrity = true; }
+        bool integrity = true;
+        if (firstName == null) { Error("Entrez un prénom valide."); integrity = false; }
+        if (lastname == null) { Error("Entrez un nom valide."); integrity = false; }
         if (mail != null)
         {
             Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
             Match match = regex.Match(mail);
-            if (match.Success)
-                integrity = true;
-            else
+            if (!match.Success)
+            {
                 Error("Entrez un mail valide.");
-        } else { Error("Entrez un mail valide."); }
-        if (password == null) { Error("Entrez un mot de passe valide."); } else { integrity = true; }
-        if (password == null) { Error("Entrez un nom d'utilisateur valide."); } else { integrity = true; }
-
-        if (integrity == false)
-        {
-            // TODO : do nothing, the user has to change what he typed
+                integrity = false;
+            }
         }
-        else
+        else { Error("Entrez un mail valide."); integrity = false; }
+        if (password == null) { Error("Entrez un mot de passe valide."); ; integrity = false; }
+        if (password == null) { Error("Entrez un nom d'utilisateur valide."); ; integrity = false; }
+
+        if (integrity)
         {
             User user = new User(username);
             Account account = new Account(user, mail, password, firstName, lastname, RoleAccount.USER);
 
-            //  TODO : récupérer les infos locales si elles existent.
-            // on se dit que s'il y a un pseudo en local, on le remplace par celui rentré ici de toutes façon. Le reste est gardé.
+            bool request = false;
 
-            // TODO : persistance en ligne + locale de la connexion.
-            bool request = HTTPHelper.Persist(account);
-            cookie = HTTPHelper.AuthLogin(mail, password);
-            if(request)
+            SetLoaderCircle(true);
+            yield return HTTPHelper.Instance.Persist(account, value => request = value);
+            yield return HTTPHelper.Instance.AuthLogin(mail, password, value => cookie = value);
+            SetLoaderCircle(false);
+
+            if (request)
                 LoadMap();
             else
                 Error("Cette adresse mail est déjà utilisée");
         }
     }
 
-    public void CreateNewQuest(Coordinates geolocalisation, string title, string description, int experienceEarned,
+    public IEnumerator CreateNewQuest(Coordinates geolocalisation, string title, string description, int experienceEarned,
          string idCreator, List<CheckPoint> checkpoints)
     {
-        // TODO integrity check
-        bool integrity = false;
-        if(geolocalisation == null) { Error("Entrez une géolocalisation valide."); } else { integrity = true; }
-        if (title == null) { Error("Entrez un titre valide."); } else { integrity = true; }
-        if (description == null) { Error("Entrez une description valide."); } else { integrity = true; }
-        if (experienceEarned > 0) { Error("Entrez une valeur d'expérience gagnée valide."); } else { integrity = true; }
-        if (checkpoints == null) { Error("Entrez des checkpoints valides."); } else { integrity = true; }
-        if (integrity == false)
-        {
-            // TODO : do nothing, the user has to change what he typed
-        }
-        else
+        bool integrity = true;
+        if (geolocalisation == null) { Error("Entrez une géolocalisation valide."); integrity = false; }
+        if (title == null) { Error("Entrez un titre valide."); integrity = false; }
+        if (description == null) { Error("Entrez une description valide."); integrity = false; }
+        if (experienceEarned > 0) { Error("Entrez une valeur d'expérience gagnée valide."); integrity = false; }
+        if (checkpoints == null) { Error("Entrez des checkpoints valides."); integrity = false; }
+
+        if (integrity)
         {
             Quest quest = new Quest(geolocalisation, title, description, experienceEarned, idCreator, checkpoints);
-            // TODO : persistance en ligne de la quête créé si non deja existante.
-            bool request = HTTPHelper.Persist(quest, this.cookie);
-            // if persistance ok
+
+            SetLoaderCircle(true);
+            bool request = false;
+            yield return HTTPHelper.Instance.Persist(quest, this.cookie, value => request = value);
+            SetLoaderCircle(false);
+
             if (request)
                 LoadMap();
             else
                 Error("Erreur lors de la création de la quête.");
-
-            // else 
-            // Error(message);
         }
     }
 
- 
+
 
     public void ChooseUsername(string pseudo)
     {
@@ -411,16 +434,16 @@ public class Controller : MonoBehaviour
         LoadMap();
     }
 
-    public void TryConnection(string mail, string pwd)
+    public IEnumerator TryConnection(string mail, string pwd)
     {
-        cookie = HTTPHelper.AuthLogin(mail, pwd);
-        if (cookie == null)
+        SetLoaderCircle(true);
+        yield return HTTPHelper.Instance.AuthLogin(mail, pwd, value => cookie = value);
+        SetLoaderCircle(false);
+
+        if (cookie.Value != "")
         {
-            Error("Pas de connection avec le serveur distant.");
-        }
-        else if (cookie.Value != "")
-        {
-            Account a = HTTPHelper.GetAccount(cookie);
+            Account a = null;
+            yield return HTTPHelper.Instance.GetAccount(cookie, value => a = value);
             if (a.Mail == "")
             {
                 Error(a.LastName);
@@ -432,7 +455,7 @@ public class Controller : MonoBehaviour
                 // TODO le back.
                 LoadMap();
             }
-            
+
         }
         else
         {
@@ -445,8 +468,10 @@ public class Controller : MonoBehaviour
 
     public void Error(string msg)
     {
-        ErrorPopUp error = Instantiate(errorTemplate, this.transform);
-        error.SetError(msg);
+        MNPopup p = new MNPopup("Erreur", msg);
+        p.AddAction("Ok", () => { });
+        p.Show();
+
     }
 
     public static Controller Instance

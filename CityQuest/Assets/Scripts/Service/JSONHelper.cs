@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -9,8 +10,30 @@ using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public static class JSONHelper
+public class JSONHelper : MonoBehaviour
 {
+
+    protected static JSONHelper instance;
+    public static JSONHelper Instance
+    {
+        get { return instance; }
+    }
+
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+
     //****************************** QUEST ******************************//
     public static string ToJsonString(Quest q, bool withPicture)
     {
@@ -298,22 +321,24 @@ public static class JSONHelper
         JArray jsonQuest = JArray.Parse(json);
         foreach (var tokenQuest in jsonQuest)
         {
-            StateQuest sq = JSONHelper.ToStateQuest(tokenQuest.ToString());
-
+            StateQuest sq = null;
+            JSONHelper.Instance.ToStateQuest(tokenQuest.ToString(), value => sq = value);
             dic.Add(sq.Quest.Id, sq);
         }
 
         return dic;
     }
 
-    public static StateQuest ToStateQuest(string json)
+    public IEnumerator ToStateQuest(string json, System.Action<StateQuest> sq)
     {
         JObject quest = JObject.Parse(json);
         string key = (string)quest["_isQuest"];
 
         //TODO: Est-ce nécessaire ?
-        Quest q = HTTPHelper.GetQuest(key);
 
+
+        Quest q = null;
+        yield return HTTPHelper.Instance.GetQuest(key, value => q = value);
 
         bool done = ((string)quest["state"]) == "DONE";
         double score = (double)quest["stats"]["earnedXP"];
@@ -335,7 +360,7 @@ public static class JSONHelper
             i++;
         }
 
-        return new StateQuest(q, done, score, timeElapsed, listCheckPoints);
+        sq(new StateQuest(q, done, score, timeElapsed, listCheckPoints));
     }
 
     //------------------------------------------------------------------------------------------
@@ -361,16 +386,18 @@ public static class JSONHelper
     public static List<Badge> ToListBadge(string badgeArrayJson)
     {
         JArray jArray = JArray.Parse(badgeArrayJson);
-        // La récupération va se faire en deux fois : on a récupéré les ID par le User, ensuite il faut refaire une requête en envoyant les ID pour récupérer l'ensemble des infos
-        // il faut rajouter un constructeur pour qu'on ne re créer pas un nouvel Id pour un badge qui existe déjà
-        foreach (JObject item in jArray)
+        List<Badge> badges = new List<Badge>();
+        foreach (var item in jArray)
         {
+            string id = item.ToString();
+            Badge curr = null;
+            yield return HTTPHelper.Instance.GetQuest(id, value => curr = value);
             //string name = item.GetValue("name");
             //string url = item.GetValue("url");
             // ...
         }
-    }
-    */
+    }*/
+    
     /*
     public static Dictionary<long, StateQuest> ToDictionnaryQuest()
     {

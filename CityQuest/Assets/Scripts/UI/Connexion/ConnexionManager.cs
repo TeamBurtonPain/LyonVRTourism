@@ -8,7 +8,7 @@ public class ConnexionManager : MonoBehaviour {
 
     public void TryConnection()
     {
-        Controller.Instance.TryConnection(inputMail.text, inputPassword.text);
+        StartCoroutine(Controller.Instance.TryConnection(inputMail.text, inputPassword.text));
     }
 
 

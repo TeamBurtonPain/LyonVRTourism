@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
+﻿using System.Net;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
+using System.Collections;
 
 class ModelTest : MonoBehaviour
 {
     public Text tquest;
     public Text tuser;
 
-    public void Start()
+    public IEnumerator Start()
     {
         Creator c = new Creator
         {
@@ -59,16 +56,19 @@ class ModelTest : MonoBehaviour
         };
 
         //HTTPHelper.Send(c);
-        Cookie auth = HTTPHelper.AuthLogin("autremil@cndi.fkr", "pass");
+        Cookie auth = null;
+        yield return HTTPHelper.Instance.AuthLogin("autremil@cndi.fkr", "pass", value => auth = value);
         Debug.Log(auth.Value);
         string decoded = JWTHelper.DecodePayload(auth.Value);
         Debug.Log(decoded);
 
-        Account pasAccount = HTTPHelper.GetAccount(auth);
+        Account pasAccount = null;
+        yield return HTTPHelper.Instance.GetAccount(auth, value => pasAccount = value);
 
 
         //HTTPHelper.Persist(c);
-        HTTPHelper.Persist(q1, auth);
+        bool result;
+        yield return HTTPHelper.Instance.Persist(q1, auth, value => result = value);
 
         //tuser.text = JSONHelper.ToJsonString(q1);
 

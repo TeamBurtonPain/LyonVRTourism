@@ -14,11 +14,11 @@ public class Loader : MonoBehaviour {
         errorTxt.SetActive(false);
         loadingTxt.SetActive(true);
         errorBtn.SetActive(false);
-        while (! (GeoManager.Instance.IsLoaded() || GeoManager.Instance.HasFailed()) )
+        while (! (GeoManager.Instance.IsLoaded() || GeoManager.Instance.HasFailed()) || !(Controller.Instance.IsLoaded || Controller.Instance.HasFailed))
         {
             yield return null;
         }
-        if (GeoManager.Instance.HasFailed())
+        if (GeoManager.Instance.HasFailed() || Controller.Instance.HasFailed)
         {
             Debug.Log("Loading failed.");
             errorTxt.SetActive(true);
@@ -31,13 +31,14 @@ public class Loader : MonoBehaviour {
             // if lien avec compte en ligne trouvé
             //     SceneManager.LoadScene("MapScene");
             // else
-            SceneManager.LoadScene("Login");
+            Controller.Instance.SelectMenuLogout();
         }
     }
 
     public void TryAgain()
     {
         StartCoroutine(GeoManager.Instance.Init());
+        StartCoroutine(Controller.Instance.InitQuests());
         StartCoroutine(Start());
     }
 }

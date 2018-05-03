@@ -50,13 +50,13 @@ public class CreatorMainSceneManager : MonoBehaviour
         
         Coordinates coordinates = new Coordinates(float.Parse(positionLatInputField.text, System.Globalization.CultureInfo.InvariantCulture.NumberFormat),
             float.Parse(positionLongInputField.text, System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
-        Controller.Instance.CreateNewQuest(
+        StartCoroutine(Controller.Instance.CreateNewQuest(
             coordinates,
             questNameInputField.text,
             questDescriptionInputField.text,
             Convert.ToInt32(questValueInputField.text),
             Controller.Instance.User.Id,
-            ToCheckPoints()); // Pass checkpoints
+            ToCheckPoints())); // Pass checkpoints
     }
 
     public List<CheckPoint> ToCheckPoints()

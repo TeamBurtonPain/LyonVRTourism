@@ -73,6 +73,12 @@ public class CheckPoint
         set { answer = value; }
     }
 
+    public string IdBadge
+    {
+        get { return idBadge; }
+        set { idBadge = value; }
+    }
+
     public int Difficulty
     {
         get { return difficulty; }

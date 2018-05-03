@@ -3,178 +3,184 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using Newtonsoft.Json.Linq;
-//using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Collections;
 
-public static class HTTPHelper
+public class HTTPHelper : MonoBehaviour
 {
-    public const string SERVER = "http://192.168.43.228:3000/api/";
+    protected static HTTPHelper instance;
+    public static HTTPHelper Instance
+    {
+        get { return instance; }
+    }
 
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+    public const string SERVER = "http://192.168.43.228:3000/api/";
+    //public const string SERVER = "http://192.168.0.11:3000/api/";
 
     /******************** AUTHENTIFICATION ********************/
 
-    public static Cookie AuthLogin(string mail, string pwd)
+    public IEnumerator AuthLogin(string mail, string pwd, System.Action<Cookie> callback)
     {
         UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "auth/login", Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(mail, pwd)));
         uwr.method = "POST";
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
-        uwr.SendWebRequest();
-        while (uwr.downloadProgress < 0.95f)
+
+        yield return uwr.SendWebRequest();
+
+        Cookie cookie = new Cookie("auth", "");
+
+        if (uwr.isNetworkError || uwr.isHttpError)
         {
-            WaitForSecondsRealtime w = new WaitForSecondsRealtime(0.5f);
+            Controller.Instance.Error(uwr.error);
+            callback(cookie);
         }
-        Debug.Log(uwr.ToString());
-        byte[] results = uwr.downloadHandler.data;
-        string text = uwr.downloadHandler.text;
-
-        Cookie cookie;
-
-        if (uwr.responseCode == 200)
+        else
         {
+
+            byte[] results = uwr.downloadHandler.data;
+            string text = uwr.downloadHandler.text;
             var json = JObject.Parse(text);
             cookie = new Cookie("auth", (string)json["jwt"]);//TODO à tester si erreur ???? json {error : truc, message : truc2}
             Debug.Log(text);
-        }
-        else if (uwr.responseCode == 0)
-        {
-            cookie = null;
-        }
-        {
-            cookie = new Cookie("auth", "");
-        }
 
-        Debug.Log(cookie);
-        return cookie;
+            callback(cookie);
+
+            Debug.Log(cookie);
+        }
     }
 
-    public static bool AuthLogout(Cookie cookie)
+    public IEnumerator AuthLogout(Cookie cookie)
     {
         UnityWebRequest uwr = UnityWebRequest.Get(SERVER + "auth/logout");
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
         uwr.SetRequestHeader("Authorization", "Bearer " + cookie.Value);
-        uwr.SendWebRequest();
-        while (uwr.downloadProgress < 0.95f)
-        {
-            WaitForSecondsRealtime w = new WaitForSecondsRealtime(0.5f);
-        }
-        Debug.Log(uwr.ToString());
-        byte[] results = uwr.downloadHandler.data;
-        string text = uwr.downloadHandler.text;
 
-        var json = JObject.Parse(text);
-        Debug.Log(text);
-        if (uwr.responseCode == 200)
-        {
-            return true;
+        yield return uwr.SendWebRequest();
 
+        if (uwr.isNetworkError || uwr.isHttpError)
+        {
+            Controller.Instance.Error(uwr.error);
         }
         else
         {
-            return false;
+            byte[] results = uwr.downloadHandler.data;
+            string text = uwr.downloadHandler.text;
+            Debug.Log(text);
         }
     }
 
     /******************** PERSIST ********************/
-    public static bool Persist(Account a)
+    public IEnumerator Persist(Account a, System.Action<bool> callback)
     {
         Debug.Log(JSONHelper.ToJsonString(a));
         UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "accounts", Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(a)));
         uwr.method = "POST";
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
-        uwr.SendWebRequest();
-        while (uwr.downloadProgress < 0.95f)
-        {
-            WaitForSecondsRealtime w = new WaitForSecondsRealtime(0.5f);
-        }
-        Debug.Log(uwr.ToString());
 
-        if(uwr.responseCode == 200)
+        yield return uwr.SendWebRequest();
+
+        if (uwr.isNetworkError || uwr.isHttpError)
+        {
+            Controller.Instance.Error(uwr.error);
+            callback(false);
+        }
+        else
         {
             byte[] results = uwr.downloadHandler.data;
             string text = uwr.downloadHandler.text;
             Debug.Log(text);
-            return true;
+            callback(true);
         }
-        else
-        {
-            return false;
-        }       
-
     }
 
-    public static bool Persist(Quest q, Cookie cookie)
+    public IEnumerator Persist(Quest q, Cookie cookie, System.Action<bool> callback)
     {
         Debug.Log(JSONHelper.ToJsonString(q, true));
         UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "quests", Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(q, true)));
         uwr.method = "POST";
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
-        uwr.SetRequestHeader("Authorization", "Bearer "+cookie.Value);
+        uwr.SetRequestHeader("Authorization", "Bearer " + cookie.Value);
 
         Debug.Log(uwr.ToString());
-        uwr.SendWebRequest();
-        while (uwr.downloadProgress < 0.95f)
+
+        yield return uwr.SendWebRequest();
+
+        if (uwr.isNetworkError || uwr.isHttpError)
         {
-            WaitForSecondsRealtime w = new WaitForSecondsRealtime(0.5f);
+            Controller.Instance.Error(uwr.error);
+            callback(false);
         }
-        Debug.Log(uwr.ToString());
-        if (uwr.responseCode == 200)
+        else
         {
             byte[] results = uwr.downloadHandler.data;
             string text = uwr.downloadHandler.text;
             Debug.Log(text);
-            return true;
-        }
-        else
-        {
-            return false;
+            callback(true);
         }
     }
 
 
     /******************** DELETE ********************/
 
-    public static bool Delete(Account a, Cookie cookie)
+    public IEnumerator Delete(Account a, Cookie cookie)
     {
-        UnityWebRequest uwr = UnityWebRequest.Delete(SERVER + "accounts/"+a.Id);
+        UnityWebRequest uwr = UnityWebRequest.Delete(SERVER + "accounts/" + a.Id);
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
         Debug.Log(uwr.ToString());
         uwr.SendWebRequest();
-        return true;
+
+        yield return uwr.SendWebRequest();
     }
 
-    public static bool Delete(Quest q, Cookie cookie)
+    public IEnumerator Delete(Quest q, Cookie cookie)
     {
         UnityWebRequest uwr = UnityWebRequest.Delete(SERVER + "quests/" + q.Id);
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
         Debug.Log(uwr.ToString());
-        uwr.SendWebRequest();
-        return true;
+
+        yield return uwr.SendWebRequest();
     }
 
     /******************** UPDATE ********************/
 
-    public static bool Update(Account a, Cookie cookie)
+    public IEnumerator UpdateData(Account a, Cookie cookie)
     {
         Debug.Log(JSONHelper.ToJsonString(a));
-        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "accounts/"+a.Id, Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(a)));
+        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "accounts/" + a.Id, Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(a)));
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
         uwr.SetRequestHeader("Authorization", "Bearer " + cookie.Value);
-        uwr.SendWebRequest();
-        while (uwr.downloadProgress < 0.95f)
+
+        yield return uwr.SendWebRequest();
+
+        if (uwr.isNetworkError || uwr.isHttpError)
         {
-            WaitForSecondsRealtime w = new WaitForSecondsRealtime(0.5f);
+            Controller.Instance.Error(uwr.error);
         }
-        Debug.Log(uwr.ToString());
-        string text = uwr.downloadHandler.text;
-        Debug.Log(text);
-        return true;
+        else
+        {
+            string text = uwr.downloadHandler.text;
+            Debug.Log(text);
+        }
 
     }
 
-    public static bool Update(Quest q, Cookie cookie)
+    public IEnumerator UpdateData(Quest q, Cookie cookie)
     {
         Debug.Log(JSONHelper.ToJsonString(q, true));
         UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "quests/" + q.Id, Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(q, true)));
@@ -182,20 +188,22 @@ public static class HTTPHelper
         uwr.SetRequestHeader("Authorization", "Bearer " + cookie.Value);
 
         Debug.Log(uwr.ToString());
-        uwr.SendWebRequest();
-        while (uwr.downloadProgress < 0.95f)
+        yield return uwr.SendWebRequest();
+
+        if (uwr.isNetworkError || uwr.isHttpError)
         {
-            WaitForSecondsRealtime w = new WaitForSecondsRealtime(0.5f);
+            Controller.Instance.Error(uwr.error);
         }
-        Debug.Log(uwr.ToString());
-        string text = uwr.downloadHandler.text;
-        Debug.Log(text);
-        return true;
+        else
+        {
+            string text = uwr.downloadHandler.text;
+            Debug.Log(text);
+        }
     }
 
     /******************** GET ********************/
 
-    public static Account GetAccount(Cookie cookie)
+    public IEnumerator GetAccount(Cookie cookie, System.Action<Account> callback)
     {
         Debug.Log(cookie.Value);
         string id = JWTHelper.DecodePayload(cookie.Value);
@@ -205,96 +213,72 @@ public static class HTTPHelper
         uwr.SetRequestHeader("Authorization", "Bearer " + cookie.Value);
 
         Debug.Log(uwr.ToString());
-        uwr.SendWebRequest();
-        while (uwr.downloadProgress < 0.95f)
+
+        yield return uwr.SendWebRequest();
+
+        if (uwr.isNetworkError || uwr.isHttpError)
         {
-            WaitForSecondsRealtime w = new WaitForSecondsRealtime(0.5f);
-        }
-        Debug.Log(uwr.ToString());
-        string text = uwr.downloadHandler.text;
-        
-        Debug.Log(text);
-        if (uwr.responseCode == 200)
-        {
-            return JSONHelper.ToAccount(text);
+            //Controller.Instance.Error(uwr.error);
+            string text = uwr.downloadHandler.text;
+            JObject json = JObject.Parse(text);
+            callback(new Account() { LastName = "Erreur " + uwr.responseCode + ", " + json["message"] });
         }
         else
         {
-            JObject json = JObject.Parse(text);
-            //Error("Erreur " + uwr.responseCode + ", " + json["message"]);
-            return new Account(){LastName = "Erreur " + uwr.responseCode + ", " + json["message"] };
+            string text = uwr.downloadHandler.text;
+            Debug.Log(uwr.ToString());
+            callback(JSONHelper.ToAccount(text));
+            Debug.Log(text);
         }
+        
     }
 
-    public static Quest GetQuest(string id, Cookie cookie)
-    {
-        Debug.Log(cookie.Value);
-        Debug.Log(id);
-        UnityWebRequest uwr = UnityWebRequest.Get(SERVER + "quests/" + id);
-        uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
-        uwr.SetRequestHeader("Authorization", "Bearer " + cookie.Value);
-
-        Debug.Log(uwr.ToString());
-        uwr.SendWebRequest();
-        while (uwr.downloadProgress < 0.95f)
-        {
-            WaitForSecondsRealtime w = new WaitForSecondsRealtime(0.5f);
-        }
-        Debug.Log(uwr.ToString());
-        string text = uwr.downloadHandler.text;
-        Debug.Log(text);
-
-        return JSONHelper.ToQuest(text);
-    }
-    
-    //TODO: API : normalement pas d'authentification pour le get quest / id
-    public static Quest GetQuest(string id)
+	
+    public IEnumerator GetQuest(string id, System.Action<Quest> callback)
     {
         Debug.Log(id);
+
         UnityWebRequest uwr = UnityWebRequest.Get(SERVER + "quests/" + id);
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
 
         Debug.Log(uwr.ToString());
-        uwr.SendWebRequest();
-        while (uwr.downloadProgress < 0.95f)
+
+        yield return uwr.SendWebRequest();
+ 
+        if (uwr.isNetworkError || uwr.isHttpError)
         {
-            WaitForSecondsRealtime w = new WaitForSecondsRealtime(0.5f);
+            Controller.Instance.Error(uwr.error);
+            callback(null);
         }
-        Debug.Log(uwr.ToString());
-        string text = uwr.downloadHandler.text;
-        Debug.Log(text);
-
-        return JSONHelper.ToQuest(text);
+        else
+        {
+            string text = uwr.downloadHandler.text;
+            Debug.Log(uwr.ToString());
+            callback(JSONHelper.ToQuest(text));
+            Debug.Log(text);
+        }
     }
-
-    public static List<Quest> GetAllQuests()
+        
+    public IEnumerator GetAllQuests(System.Action<List<Quest>> callback)
     {
         UnityWebRequest uwr = UnityWebRequest.Get(SERVER + "quests/");
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
 
-        Debug.Log(uwr.ToString());
-        uwr.SendWebRequest();
-        while (uwr.downloadProgress < 0.95f)
+        yield return uwr.SendWebRequest();
+
+        if (uwr.isNetworkError || uwr.isHttpError)
         {
-            WaitForSecondsRealtime w = new WaitForSecondsRealtime(0.5f);
-        }
-        Debug.Log(uwr.ToString());
-        string text = uwr.downloadHandler.text;
-        Debug.Log(text);
-
-
-        if (uwr.responseCode == 200)
-        {
-            return JSONHelper.ToQuests(text);
-
+            Controller.Instance.Error(uwr.error);
+            callback(null);
         }
         else
         {
-            return new List<Quest>();
+            string text = uwr.downloadHandler.text;
+            callback(JSONHelper.ToQuests(text));
         }
     }
 
-    public static bool Send(Quest q)
+    public IEnumerator Send(Quest q)
     {
         Debug.Log(JSONHelper.ToJsonString(q, true));
         UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "quests", Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(q, true)));
@@ -302,8 +286,7 @@ public static class HTTPHelper
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
 
         Debug.Log(uwr.ToString());
-        uwr.SendWebRequest();
-        return true;
+        yield return uwr.SendWebRequest();
     }
-    
+
 }
