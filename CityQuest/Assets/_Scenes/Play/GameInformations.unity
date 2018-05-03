@@ -502,7 +502,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 988066959}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &322906819
 MonoBehaviour:
@@ -761,8 +761,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 267684944}
-  - {fileID: 1705610109}
   - {fileID: 322906818}
+  - {fileID: 1705610109}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1012,7 +1012,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InformationText: {fileID: 1187723110}
   Parent: {fileID: 267684944}
-  NewBadgePanel: {fileID: 223788974178039026, guid: 2b9d89bcbc27f8a488e944c8896ccb2f,
+  NewBadgePanel: {fileID: 114583964926373190, guid: 2b9d89bcbc27f8a488e944c8896ccb2f,
     type: 2}
 --- !u!1001 &1675026172
 Prefab:
@@ -1101,7 +1101,7 @@ Prefab:
     - target: {fileID: 224143028993509086, guid: 72ffd337d70297247b7b9afdbb545cc6,
         type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 224143028993509086, guid: 72ffd337d70297247b7b9afdbb545cc6,
         type: 2}
