@@ -161,7 +161,6 @@ public class HTTPHelper : MonoBehaviour
 
     public IEnumerator UpdateData(Account a, Cookie cookie)
     {
-        Debug.Log(JSONHelper.ToJsonString(a));
         UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "accounts/" + a.Id, Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(a)));
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
         uwr.SetRequestHeader("Authorization", "Bearer " + cookie.Value);
@@ -207,7 +206,6 @@ public class HTTPHelper : MonoBehaviour
     {
         Debug.Log(cookie.Value);
         string id = JWTHelper.DecodePayload(cookie.Value);
-        Debug.Log(id);
         UnityWebRequest uwr = UnityWebRequest.Get(SERVER + "accounts/" + id);
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
         uwr.SetRequestHeader("Authorization", "Bearer " + cookie.Value);
@@ -282,7 +280,6 @@ public class HTTPHelper : MonoBehaviour
     
     public IEnumerator GetBadge(string id, System.Action<Badge> callback)
     {
-        Debug.Log(id);
 
         UnityWebRequest uwr = UnityWebRequest.Get(SERVER + "badges/" + id);
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
@@ -301,7 +298,6 @@ public class HTTPHelper : MonoBehaviour
             string text = uwr.downloadHandler.text;
             Debug.Log(uwr.ToString());
             callback(JSONHelper.ToBadge(text));
-            Debug.Log(text);
         }
     }
     
