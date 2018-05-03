@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 const Account = require('./app/models/account');
 const Quest = require('./app/models/quest');
+const Badge = require('./app/models/badge');
 const accountService = require('./app/services/account-service');
 const questService = require('./app/services/quest-service');
+const badgeService = require('./app/services/badge-service');
 const DB_CONFIG = require('./config/db.js');
+const { exec } = require('child_process');
 
 mongoose.connect(DB_CONFIG.host);
 const db = mongoose.connection;
@@ -21,27 +24,25 @@ db.once('open', async () => {
     console.log('Drop existing documents...');
     await Account.remove({});
     await Quest.remove({});
+
+    // eslint-disable-next-line
+    console.log('Drop existing pictures...');
+    await new Promise(resolve => exec('rm -Rf pictures', res => resolve(res)));
+
     // eslint-disable-next-line
     console.log('Dropped.');
 
     // eslint-disable-next-line
     console.log('Data generation ...');
 
-    const adminAccount = await accountService.createAccount(new Account({
-        userInformation: {
-            firstName: 'Corentin',
-            lastName: 'Giraud',
-            accountType: 'ADMIN',
-            username: 'xX-cocoDu34-Xx'
-        },
-        connection: {
-            email: 'coco@gmail.com',
-            password: 'coco'
-        }
-    }));
+    const badge = await badgeService.createBadge(new Badge({
+        name: 'Sex addict',
+        description: '8=======>',
+        earn: 10
+    }), 'data:image/png;base64,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');
 
-    const questAccount = await questService.createQuest(new Quest({
-        _idCreator: adminAccount._id,
+    const quest = await questService.createQuest(new Quest({
+        _idCreator: '5ae98dc75a1158588b71d082',
         geolocalisation: {
             x: 45.783882,
             y: 4.874695
@@ -50,7 +51,7 @@ db.once('open', async () => {
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer bibendum quis enim quis congue. Duis ac maximus ligula. Vestibulum consequat faucibus consectetur. Donec interdum nisi eros, a ullamcorper nulla convallis at. Nunc sagittis nisl augue, in commodo diam placerat sit amet. Fusce quis enim ipsum. Sed ac magna fermentum, tristique risus eget, laoreet urna. Donec neque turpis, porttitor nec feugiat sed, egestas vitae ligula. Aenean at augue quis ipsum cursus rhoncus at non magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean tempus varius iaculis. Nunc vehicula pellentesque nisi, in sagittis elit consectetur eget. Nam quis turpis varius, interdum magna non, scelerisque nibh. Vivamus accumsan lacus in nibh ullamcorper, eu eleifend odio rhoncus. Fusce ac vestibulum est, at maximus lectus.',
         statistics: [
             {
-                _idAccount: adminAccount._id,
+                _idAccount: '5ae98dc75a1158588b71d082',
                 comment: 'Le commentaire de l\'admin',
                 mark: 7
             }
@@ -59,14 +60,16 @@ db.once('open', async () => {
             {
                 text: 'Premier checkpoint',
                 question: 'Ceci est la première question ?',
-                answer: 'Ceci est la première réponse :)',
+                enigmAnswer: 'ceci',
                 difficulty: 4
             },
             {
                 text: 'Deuxième checkpoint',
                 question: 'Ceci est la deuxième question ?',
-                answer: 'Ceci est la deuxième réponse :)',
-                difficulty: 4
+                choices: ['Ceci1', 'Ceci2', 'Ceci3'],
+                enigmAnswer: 'Ceci1',
+                difficulty: 4,
+                _idBadge: badge._id
             }
         ],
         open: true
@@ -87,10 +90,48 @@ db.once('open', async () => {
         }
     ]);
 
+    const adminAccount = await accountService.createAccount(new Account({
+        userInformation: {
+            firstName: 'Corentin',
+            lastName: 'Giraud',
+            accountType: 'ADMIN',
+            username: 'xX-cocoDu34-Xx'
+        },
+        connection: {
+            email: 'coco@gmail.com',
+            password: 'coco'
+        },
+        game: {
+            badges: [badge._id],
+            quests: [
+                {
+                    _idQuest: quest._id,
+                    state: 'IN_PROGRESS',
+                    stats: {
+                        earnedXp: 0,
+                        timeElapsed: 10
+                    },
+                    checkpoints: [
+                        {
+                            status: 'BEGUN',
+                            timeElapsed: 10
+                        },
+                        {
+                            status: 'UNINIT',
+                            timeElapsed: 0
+                        }
+                    ]
+                }
+            ]
+        }
+    }));
+
     // eslint-disable-next-line
     console.log('Admin account: ' + adminAccount);
     // eslint-disable-next-line
-    console.log('Admin account: ' + questAccount);
+    console.log('Quest: ' + quest);
+    // eslint-disable-next-line
+    console.log('Badge: ' + badge);
 
     process.exit(0);
 });
