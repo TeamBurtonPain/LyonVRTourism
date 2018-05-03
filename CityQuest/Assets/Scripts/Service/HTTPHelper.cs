@@ -90,7 +90,7 @@ public class HTTPHelper : MonoBehaviour
     public IEnumerator Persist(Account a, System.Action<bool> callback)
     {
         Debug.Log(JSONHelper.ToJsonString(a));
-        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "accounts", Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(a)));
+        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "accounts", Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(a, true)));
         uwr.method = "POST";
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
 
@@ -162,7 +162,7 @@ public class HTTPHelper : MonoBehaviour
 
     public IEnumerator UpdateData(Account a, Cookie cookie)
     {
-        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "accounts/" + a.Id, Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(a)));
+        UnityWebRequest uwr = UnityWebRequest.Put(SERVER + "accounts/" + a.Id, Encoding.UTF8.GetBytes(JSONHelper.ToJsonString(a, false)));
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
         uwr.SetRequestHeader("Authorization", "Bearer " + cookie.Value);
 

@@ -33,12 +33,16 @@ The main goal is to provide a mobile video game to promote tourism and culture o
 **Go to the server directory: `cd server/`**
 
 #### Install node project dependencies
-Install node dependencies by running the following command: `cd server/ && yarn install`
+Install node dependencies by running the following command: `yarn install`
 
 #### Create mongoDB database
 - Launch your mongo server by typing: `mongod --dbpath <path-to-your-databases-storage-directory>`.
 - With a new console, connect to your mongo server: `mongo` (the command use the defaut mongo server configuration: `HOST: localhost` & `PORT: 27017`).
 - Create a database by typing: `use UrbanQuestDev` _Note that database name is important because it is hardcoded in `config/db.js`._
+
+#### Populate DB
+
+- Run the following script through: `node server/populate/populate.js`
 
 #### Launch the NodeJS server
 **Mongo server must run before. See "Create mongoDB database".**
@@ -47,7 +51,7 @@ Launch the NodeJS server by typing this command `yarn run dev`
 
 ### Android application
 
-You can download the android application [here](#) (Not available yet). Transfert it to your phone and launch it.
+You can download the android application [here](https://github.com/TeamBurtonPain/UrbanQuest/blob/master/UrbanQuest.apk). Transfert it to your phone and launch it.
 You can build the .apk from Unity.To run the application a server must be availabled (and its URL specified in [this file](https://github.com/TeamBurtonPain/UrbanQuest/blob/master/CityQuest/Assets/Scripts/Service/HTTPHelper.cs)).
 
 

@@ -47,7 +47,7 @@ public class CreatorMainSceneManager : MonoBehaviour
 
     public void ValidateQuest()
     {
-        
+        /*
         Coordinates coordinates = new Coordinates(float.Parse(positionLatInputField.text, System.Globalization.CultureInfo.InvariantCulture.NumberFormat),
             float.Parse(positionLongInputField.text, System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
         StartCoroutine(Controller.Instance.CreateNewQuest(
@@ -57,6 +57,8 @@ public class CreatorMainSceneManager : MonoBehaviour
             Convert.ToInt32(questValueInputField.text),
             Controller.Instance.User.Id,
             ToCheckPoints())); // Pass checkpoints
+            */
+        Controller.Instance.LoadMap();
     }
 
     public List<CheckPoint> ToCheckPoints()
