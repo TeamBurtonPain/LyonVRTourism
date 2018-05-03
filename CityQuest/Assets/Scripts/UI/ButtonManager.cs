@@ -24,7 +24,7 @@ public class ButtonManager : MonoBehaviour
     }
     public void Btn_LogOut()
     {
-        Controller.Instance.SelectMenuLogout();
+        StartCoroutine(Controller.Instance.SelectMenuLogout());
     }
     public void Btn_AskLeave()
     {

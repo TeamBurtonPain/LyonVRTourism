@@ -22,6 +22,7 @@ public class LoginState : DefaultState
     }
     public override void ReturnAction()
     {
+        //StartCoroutine(Controller.Instance.SelectMenuLogout());
         Controller.Instance.SelectMenuLogout();
     }
 
