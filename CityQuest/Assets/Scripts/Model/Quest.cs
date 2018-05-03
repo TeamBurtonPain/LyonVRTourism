@@ -20,7 +20,7 @@ public class Coordinates
 
 public class Quest
 {
-    private long id;
+    private string id;
     private Coordinates geolocalisation;
     private string title;
     private string description;
@@ -63,7 +63,7 @@ public class Quest
 
     }
 
-    public Quest(long id, Coordinates geolocalisation, string title, string description, int experienceEarned,
+    public Quest(string id, Coordinates geolocalisation, string title, string description, int experienceEarned,
          string idCreator, List<CheckPoint> checkpoints)
     {
         this.id = id;
@@ -84,7 +84,7 @@ public class Quest
 
     }
 
-    public long Id
+    public string Id
     {
         get { return id; }
     }

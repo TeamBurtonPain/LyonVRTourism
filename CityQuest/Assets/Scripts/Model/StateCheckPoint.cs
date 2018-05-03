@@ -2,7 +2,7 @@
 
 public enum StatusCheckPoint
 {
-    FINISHED,
+    FINISHED = 0,
     BEGUN,
     UNINIT
 }
@@ -15,19 +15,27 @@ public class StateCheckPoint
 
     public StateCheckPoint(CheckPoint cp)
     {
-        this.checkpoint = cp;
+        checkpoint = cp;
         status = StatusCheckPoint.UNINIT;
+    }
+
+    public StateCheckPoint(CheckPoint cp, StatusCheckPoint status, double timeElapsed)
+    {
+        checkpoint = cp;
+        this.status = status;
+        this.timeElapsed = timeElapsed;
     }
 
     public StateCheckPoint(CheckPoint cp, StatusCheckPoint status)
     {
-        this.checkpoint = cp;
+        checkpoint = cp;
         this.status = status;
     }
 
     public CheckPoint Checkpoint
     {
         get { return checkpoint; }
+        set { checkpoint = value; }
     }
 
     public StatusCheckPoint Status

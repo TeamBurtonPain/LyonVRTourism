@@ -27,6 +27,7 @@ public class QuestsListManager : MonoBehaviour {
     {
         foreach(StateQuest stateQuest in user.Quests.Values)
         {
+            Debug.Log("on passe dans une quête");
             UI_QuestElement temp = Instantiate(questTemplate, this.parent);
             temp.LinkQuest(stateQuest);
         }

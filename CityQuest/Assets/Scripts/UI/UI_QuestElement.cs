@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class UI_QuestElement : MonoBehaviour
 {
@@ -20,24 +21,20 @@ public class UI_QuestElement : MonoBehaviour
         questProgressText.text = sQuest.Score.ToString();
         circularBar.fillAmount = (float) sQuest.Score;
         badges = Controller.Instance.User.Badges;
-        // ATTENTION CA NE DEVRAIT PAS DEPENDRE DU USER MAIS DE LA QUETE
-        if (Controller.Instance.User != null && Controller.Instance.User.Badges.Count != 0)
-        {
-            FillBadgesList(Controller.Instance.User);
-        }
-        else
-        {
-            // TODO : Do nothing or error message ? 
-        }
+        List<CheckPoint> checkpoints = myQuest.Checkpoints;
+        FillBadgesList(checkpoints);
     }
 
-    public void FillBadgesList(User user)
+    public /*IENumerator*/ void FillBadgesList(List<CheckPoint> checkpoints)
     {
-        //ATTENTION CA DEVRAIT DEPENDRE DE LA QUETE ET PAS DU USER
-        foreach (Badge badge in user.Badges)
+        foreach (CheckPoint checkpoint in checkpoints)
         {
+            Debug.Log("on passe dans un nouveau checkpoint = donc un putain de badge : " + checkpoint.Text);
+            //Faire une requête à l'API pour récupérer chacune des quêtes par leur ID
+            //Quest quest = null;
+            //yield return HTTPHelper.Instance.GetQuest(item.Key, value => quest = value);
             UI_Badge_Icon temp = Instantiate(badgeIcon, this.parent);
-            temp.LinkBadge(badge);
+            temp.LinkBadge(checkpoint.Picture);
         }
     }
 
