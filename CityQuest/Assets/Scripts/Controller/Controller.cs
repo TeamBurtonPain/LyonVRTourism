@@ -219,6 +219,38 @@ public class Controller : MonoBehaviour
         }
     }
 
+    public void SeeFinishedQuest()
+    {
+        StartCoroutine(TrySeeFinishedQuest());
+    }
+
+    public IEnumerator TrySeeFinishedQuest()
+    {
+        if (selectedQuest != null && user != null)
+        {
+            if (GeoManager.Instance.IsUserNear(selectedQuest.Geolocalisation))
+            {
+
+                Quest fetchedQuest = null;
+
+                SetLoaderCircle(true);
+                yield return HTTPHelper.Instance.GetQuest(selectedQuest.Id, value => fetchedQuest = value);
+                SetLoaderCircle(false);
+
+                selectedQuest = fetchedQuest;
+
+                user.AddQuest(selectedQuest);
+                currentQuest = user.Quests[selectedQuest.Id];
+                currentState = questState;
+                SceneManager.LoadScene("EndQuestScene");
+            }
+            else
+            {
+                Error("Vous êtes trop loin pour lancer cette quête.");
+            }
+        }
+    }
+
     public void ReStartQuest()
     {
         StartCoroutine(TryReStartQuest());
@@ -317,7 +349,7 @@ public class Controller : MonoBehaviour
     public void SelectMenuSettings()
     {
         //TODO : victor à remplacer
-        //SceneManager.LoadScene("Settings");
+        SceneManager.LoadScene("Profile");
     }
 
     public void SelectMenuLogout() {

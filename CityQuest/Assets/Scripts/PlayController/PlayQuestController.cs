@@ -106,7 +106,10 @@ public int CheckQuestProgress()
     {
         currentQuest.Checkpoints[questProgress].TimeElapsed = System.DateTime.Now.Subtract(checkpointStartTime).TotalSeconds;
         currentQuest.Checkpoints[questProgress].Status = StatusCheckPoint.FINISHED;
-        //TODO incremente
+        if(PlayQuestController.Instance.CurrentCheckpoint.Checkpoint.Badge != null)
+        {
+            Controller.Instance.User.Badges.Add(PlayQuestController.Instance.CurrentCheckpoint.Checkpoint.Badge);
+        }
         if(questProgress < currentQuest.Checkpoints.Count-1)
         {
             questProgress++;

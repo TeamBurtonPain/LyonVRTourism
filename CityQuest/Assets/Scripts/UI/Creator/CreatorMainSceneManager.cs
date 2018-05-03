@@ -76,9 +76,11 @@ public class CreatorMainSceneManager : MonoBehaviour
                 //TODO nom de l'image
                 " NOM BUVDUBDIV3YTGUYEVIDFUE A CHANGER",
                 creatorCheckpoint.enigmaInputField.text,
+                "Question ?",
                 choices,
                 creatorCheckpoint.Answer,
-                4); 
+                4,
+                null); 
             MyCheckPoints.Add(temp);
         }
 
