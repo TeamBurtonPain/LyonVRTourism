@@ -69,7 +69,7 @@ public class QuestDetails_Manager : MonoBehaviour
         }
         else
         {
-            title.text = "No Quest selected";
+            title.text = "Aucune quête sélectionnée.";
         }
     }
 
