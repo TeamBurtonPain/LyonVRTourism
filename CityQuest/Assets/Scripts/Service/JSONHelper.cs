@@ -81,7 +81,8 @@ public class JSONHelper : MonoBehaviour
             new JProperty("question", c.Question),
             new JProperty("choices", new JArray(c.Choices)),
             new JProperty("enigmAnswer", c.Answer),
-            new JProperty("difficulty", c.Difficulty)
+            new JProperty("difficulty", c.Difficulty),
+            new JProperty("_idBadge", c.IdBadge)
         );
         if (withPicture)
         {
@@ -162,7 +163,8 @@ public class JSONHelper : MonoBehaviour
 
             string answer = (string) parse["enigmAnswer"];
             int difficulty = (int) parse["difficulty"];
-            CheckPoint checkPoint = new CheckPoint(picture, pictureName, text, choices, answer, difficulty);
+            string badge = (string) parse["_idBadge"];
+            CheckPoint checkPoint = new CheckPoint(picture, pictureName, text, choices, answer, difficulty, badge);
             checkpoints.Add(checkPoint);
         }
 
