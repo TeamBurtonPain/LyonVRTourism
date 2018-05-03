@@ -9,10 +9,13 @@ public class UI_Badge_Image : MonoBehaviour {
     public void LinkImage(Badge badge)
     {
         string picture = badge.IconPath;
+        Char delimiter = ',';
+        String[] substrings = picture.Split(delimiter);
+        Debug.Log(substrings[1]);
         byte[] img;
         try
         {
-            img = JSONHelper.FromBase64(picture);
+            img = JSONHelper.FromBase64(substrings[1]);
         }
         catch (Exception e)
         {

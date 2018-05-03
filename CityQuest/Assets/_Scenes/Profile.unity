@@ -465,7 +465,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 741537213}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.8940678
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -619,6 +619,7 @@ GameObject:
   - component: {fileID: 872880398}
   - component: {fileID: 872880397}
   - component: {fileID: 872880400}
+  - component: {fileID: 872880401}
   m_Layer: 5
   m_Name: "Liste des \xE9l\xE9ments"
   m_TagString: Untagged
@@ -641,7 +642,6 @@ RectTransform:
   - {fileID: 1798805652}
   - {fileID: 14988393}
   - {fileID: 1264412593}
-  - {fileID: 1414176838}
   m_Father: {fileID: 1455993900}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -714,6 +714,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a386fe6f4b46d94abc93ab4e912c838, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  username: {fileID: 916721096}
+  experience: {fileID: 1798805653}
+--- !u!114 &872880401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 872880395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64a7d8de74b87f94e942f4230e345aad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   username: {fileID: 916721096}
@@ -1149,6 +1162,7 @@ GameObject:
   - component: {fileID: 1264412595}
   - component: {fileID: 1264412594}
   - component: {fileID: 1264412597}
+  - component: {fileID: 1264412598}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -1254,6 +1268,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   template: {fileID: 114057146466663152, guid: 2c6bb44559ce94042b354816c445a4cc, type: 2}
   parent: {fileID: 1386126845}
+--- !u!114 &1264412598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1264412592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5c00ce5798652843a699fdb4f51c0f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  template: {fileID: 114057146466663152, guid: 2c6bb44559ce94042b354816c445a4cc, type: 2}
+  parent: {fileID: 1414176838}
 --- !u!1 &1356502856
 GameObject:
   m_ObjectHideFlags: 0
@@ -1441,7 +1468,8 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1414176838}
   m_Father: {fileID: 1356502857}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1513,13 +1541,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 872880396}
-  m_RootOrder: 5
+  m_Father: {fileID: 1386126845}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1080, y: 279.1}
+  m_SizeDelta: {x: 1080, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1414176839
 MonoBehaviour:

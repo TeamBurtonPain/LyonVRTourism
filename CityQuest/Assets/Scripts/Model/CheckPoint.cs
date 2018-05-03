@@ -26,7 +26,7 @@ public class CheckPoint
         choices = new List<string>();
     }
 
-    public CheckPoint(string pic, string picName, string text, List<string> choices, string answer, int difficulty)
+    public CheckPoint(string pic, string picName, string text, List<string> choices, string answer, int difficulty, string idBadge)
 
     {
         this.picture = pic;
@@ -35,6 +35,7 @@ public class CheckPoint
         this.choices = choices;
         this.answer = answer;
         this.difficulty = difficulty;
+        this.idBadge = idBadge;
     }
 
 
