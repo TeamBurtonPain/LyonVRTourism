@@ -4,6 +4,8 @@ using UnityEngine.UI;
 public class UI_AnswerElement : MonoBehaviour
 {
     private string answer;
+    public Color successColor = Color.green;
+    public Color failColor = Color.red;
     public Text answerText;
     private Button touchToNext;
     private Transform buttonParent;
@@ -21,12 +23,13 @@ public class UI_AnswerElement : MonoBehaviour
         // TODO : Lancer la scene suivante
         if(PlayQuestController.Instance.CheckAnswer(answer))
         {
-            GetComponent<Image>().color = Color.green;
+            GetComponent<Image>().color = successColor;
         } else
         {
-            GetComponent<Image>().color = Color.red;
+            GetComponent<Image>().color = failColor;
         }
-        Instantiate(touchToNext, buttonParent);
+        Button temp = Instantiate(touchToNext, buttonParent);
+        temp.GetComponentInChildren<Text>().text = "Réponse : \r\n" + PlayQuestController.Instance.Answer;
     }
 }
 

@@ -143,6 +143,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8d7dfe1e96348e428162ba1b14f7d6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  successColor: {r: 0.35618514, g: 0.89705884, b: 0.35618514, a: 1}
+  failColor: {r: 0.9264706, g: 0.49729672, b: 0.49729672, a: 1}
   answerText: {fileID: 114329925797025944}
 --- !u!114 &114913939650979366
 MonoBehaviour:
