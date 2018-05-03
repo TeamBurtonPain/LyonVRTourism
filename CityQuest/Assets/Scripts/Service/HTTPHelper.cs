@@ -277,12 +277,12 @@ public class HTTPHelper : MonoBehaviour
             callback(JSONHelper.ToQuests(text));
         }
     }
-    /*
-    public IEnumerator GetQuest(string id, System.Action<Quest> callback)
+    
+    public IEnumerator GetBadge(string id, System.Action<Badge> callback)
     {
         Debug.Log(id);
 
-        UnityWebRequest uwr = UnityWebRequest.Get(SERVER + "quests/" + id);
+        UnityWebRequest uwr = UnityWebRequest.Get(SERVER + "badges/" + id);
         uwr.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
 
         Debug.Log(uwr.ToString());
@@ -298,11 +298,11 @@ public class HTTPHelper : MonoBehaviour
         {
             string text = uwr.downloadHandler.text;
             Debug.Log(uwr.ToString());
-            callback(JSONHelper.ToQuest(text));
+            callback(JSONHelper.ToBadge(text));
             Debug.Log(text);
         }
     }
-    */
+    
 
     /******************** SEND ********************/
 

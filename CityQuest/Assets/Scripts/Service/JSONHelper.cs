@@ -117,6 +117,7 @@ public class JSONHelper : MonoBehaviour
     {
         JObject parse = JObject.Parse(questJson);
         string idCreator = (string) parse["_idCreator"];
+        string id = (string)parse["_id"];
         Coordinates geolocalisation =
             new Coordinates((float) parse["geolocalisation"]["x"], (float) parse["geolocalisation"]["y"]);
         string title = (string) parse["title"];
@@ -124,7 +125,7 @@ public class JSONHelper : MonoBehaviour
         List<CheckPoint> checkpoints = ToListCheckpoint((JArray) parse["checkpoints"]);
         //int experienceEarned = (int)parse["value"];
         int experienceEarned = 0;
-        Quest quest = new Quest(geolocalisation, title, description, experienceEarned, idCreator, checkpoints);
+        Quest quest = new Quest(id, geolocalisation, title, description, experienceEarned, idCreator, checkpoints);
         return quest;
     }
 
@@ -381,9 +382,9 @@ public class JSONHelper : MonoBehaviour
     //    return d;
     //}
 
-/*
+
     
-    public static List<Badge> ToListBadge(string badgeArrayJson)
+    public  IEnumerator ToListBadge(string badgeArrayJson, System.Action< List<Badge> > b)
     {
         JArray jArray = JArray.Parse(badgeArrayJson);
         List<Badge> badges = new List<Badge>();
@@ -392,18 +393,25 @@ public class JSONHelper : MonoBehaviour
             string id = item.ToString();
             Badge curr = null;
             yield return HTTPHelper.Instance.GetBadge(id, value => curr = value);
-            //string name = item.GetValue("name");
-            //string url = item.GetValue("url");
-            // ...
+            badges.Add(curr);
         }
+
+        b(badges);
     }
-    */
-    /*
-    public static Dictionary<long, StateQuest> ToDictionnaryQuest()
+
+    public static Badge ToBadge(string json)
     {
-        //Il faut déjà pouvoir réucpérer les objets Quest
+        JObject parse = JObject.Parse(json);
+        string name = (string) parse["name"];
+        string description = (string) parse["description"];
+        string icon = (string) parse["picture"];
+        string id = (string) parse["_id"];
+        long xp = (long) parse["earn"];
+
+
+        Badge badge = new Badge(id, name, description, xp, icon);
+        return badge;
     }
-    */
 
 
     //****************************** PICTURE ******************************//
