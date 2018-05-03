@@ -381,8 +381,8 @@ public class JSONHelper : MonoBehaviour
     //    return d;
     //}
 
-
-    /*
+/*
+    
     public static List<Badge> ToListBadge(string badgeArrayJson)
     {
         JArray jArray = JArray.Parse(badgeArrayJson);
@@ -391,13 +391,13 @@ public class JSONHelper : MonoBehaviour
         {
             string id = item.ToString();
             Badge curr = null;
-            yield return HTTPHelper.Instance.GetQuest(id, value => curr = value);
+            yield return HTTPHelper.Instance.GetBadge(id, value => curr = value);
             //string name = item.GetValue("name");
             //string url = item.GetValue("url");
             // ...
         }
-    }*/
-    
+    }
+    */
     /*
     public static Dictionary<long, StateQuest> ToDictionnaryQuest()
     {
