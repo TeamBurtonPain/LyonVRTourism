@@ -4,7 +4,6 @@ using UnityEngine.UI;
 class NewBadgeManager : MonoBehaviour
 {
     public Text BadgeName;
-    public RawImage BadgeImage;
 
     
     public void GetBadge(Badge badge)

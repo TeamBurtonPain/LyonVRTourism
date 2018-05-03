@@ -7,7 +7,8 @@ class PlayEndSceneManager : MonoBehaviour
     public Text FinishedText;
     public Image ScoreBar;
     public Text DurationText;
-    public GameObject BadgePanel;
+    public Transform BadgePanel;
+    public Image BadgeImage;
 
     private void Start()
     {
@@ -27,5 +28,13 @@ class PlayEndSceneManager : MonoBehaviour
         ScoreBar.fillAmount = (float)PlayQuestController.Instance.CurrentQuest.Score / PlayQuestController.Instance.GetScoreMax() ;
 
         // Badges
+        foreach(StateCheckPoint cp in PlayQuestController.Instance.CurrentQuest.Checkpoints)
+        {
+            if(cp.Checkpoint.Badge != null)
+            {
+                Instantiate(BadgeImage, BadgePanel);
+            }
+            
+        }
     }
 }
