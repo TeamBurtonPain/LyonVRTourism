@@ -6,7 +6,7 @@ const Badge = require('../app/models/badge');
 const DB_CONFIG = require('../config/db.js');
 
 // Data
-const accountData = require('./data/account');
+const accountsData = require('./data/accounts');
 const questData = require('./data/quest');
 const badgesData = require('./data/badges');
 
@@ -34,7 +34,9 @@ db.once('open', async () => {
     /*  PERSIST */
     // eslint-disable-next-line
     console.log('Data generation ...');
-    await Account.create(new Account(accountData));
+    for (const accountData of accountsData) {
+        await Account.create(accountData);
+    }
     for (const badgeData of badgesData) {
         await Badge.create(badgeData);
     }
