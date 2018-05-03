@@ -6,12 +6,14 @@ using System;
 class PlayQuestController : MonoBehaviour
 {
     protected static PlayQuestController instance;
+    protected static float coef = 10;
 
     private StateQuest currentQuest;
     private StateCheckPoint currentCheckpoint;
     private int questProgress;
     private int checkpointProgress;
     private DateTime checkpointStartTime;
+    private bool isGood = false;
 
     private Boolean destroyOnLoad;
 
@@ -73,11 +75,11 @@ public int CheckQuestProgress()
     {
         if (answer.ToLower().Contains(currentCheckpoint.Checkpoint.Answer.ToLower()))
         {
-            return true;
         } else
         {
-            return false;
+            isGood = false;
         }
+        return isGood;
     }
 
     public void GoNextScene()
@@ -104,6 +106,7 @@ public int CheckQuestProgress()
     {
         currentQuest.Checkpoints[questProgress].TimeElapsed = System.DateTime.Now.Subtract(checkpointStartTime).TotalSeconds;
         currentQuest.Checkpoints[questProgress].Status = StatusCheckPoint.FINISHED;
+        //TODO incremente
         if(questProgress < currentQuest.Checkpoints.Count-1)
         {
             questProgress++;
@@ -121,11 +124,27 @@ public int CheckQuestProgress()
             currentQuest.Done = true;
             destroyOnLoad = false;
             SceneManager.LoadScene("EndQuestScene");
-            // TODO : Scene de fin
-            // TODO : Detruire controller !!!
         }
         Controller.Instance.PersistUserAdvancement();
     }
+
+    private void IncrementeScore()
+    {
+        currentQuest.Score += CalculateScore(currentCheckpoint.Checkpoint, isGood);
+    }
+
+    private float CalculateScore(CheckPoint c, bool isSuccess)
+    {
+        if (isSuccess)
+        {
+            return c.Difficulty * coef;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
 
     private void GoToQuestion()
     {
@@ -176,5 +195,15 @@ public int CheckQuestProgress()
     {
         get { return currentQuest; }
         set { currentQuest = value; }
+    }
+
+    public float GetScoreMax()
+    {
+        float total = 0;
+        foreach( StateCheckPoint c in currentQuest.Checkpoints)
+        {
+            total += CalculateScore(c.Checkpoint, true);
+        }
+        return total;
     }
 }

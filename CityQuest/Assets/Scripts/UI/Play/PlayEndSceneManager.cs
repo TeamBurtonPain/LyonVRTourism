@@ -12,6 +12,8 @@ class PlayEndSceneManager : MonoBehaviour
     private void Start()
     {
         FinishedText.text = "Vous avez terminé la quête " + PlayQuestController.Instance.CurrentQuest.Quest.Title + " !";
+
+        // Durée
         int hour = (int) Mathf.Round((float)PlayQuestController.Instance.CurrentQuest.TimeElapsed / 3600);
         int min = (int)Mathf.Round(((float)PlayQuestController.Instance.CurrentQuest.TimeElapsed % 3600) / 60);
         DurationText.text = "";
@@ -20,5 +22,10 @@ class PlayEndSceneManager : MonoBehaviour
             DurationText.text = hour + "h et ";
         }
         DurationText.text += min + "min";
+
+        // Score
+        ScoreBar.fillAmount = (float)PlayQuestController.Instance.CurrentQuest.Score / PlayQuestController.Instance.GetScoreMax() ;
+
+        // Badges
     }
 }
