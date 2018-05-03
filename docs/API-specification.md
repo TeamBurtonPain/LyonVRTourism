@@ -189,6 +189,7 @@ Request methods | Path | Auth | AccountType | Require body | Response | Descript
 
 Request methods | Path | Auth | AccountType | Require body | Response | Description 
 :---: | :---: | :---: | :---: | :---: | :---: | :---:
+**GET** | `badges` | No | * | _null_ | `Array<badge model>` | Get all badge id
 **GET** | `badges/<id>` | No | * | _null_ | `badge model` | Get badge by id
 
 ## PUT Specification
