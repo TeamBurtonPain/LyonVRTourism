@@ -9,7 +9,7 @@ public class badgesManager : MonoBehaviour {
 
     private void Start()
     {
-        if (Controller.Instance.User != null && Controller.Instance.User.Badges.Count != 0)
+        if (Controller.Instance.User != null)
         {
             FillBadgesList(Controller.Instance.User);
         }
@@ -24,6 +24,7 @@ public class badgesManager : MonoBehaviour {
     {
         foreach (Badge badge in user.Badges)
         {
+            Debug.Log("on est passé dans les badges du user");
             UI_Badge temp = Instantiate(template, this.parent);
             temp.LinkBadge(badge);
         }
