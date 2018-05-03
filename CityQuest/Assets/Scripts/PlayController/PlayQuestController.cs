@@ -82,6 +82,7 @@ class PlayQuestController : MonoBehaviour
         {
             isGood = false;
         }
+        IncrementeScore();
         return isGood;
     }
 
