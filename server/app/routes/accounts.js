@@ -11,6 +11,4 @@ router.get('/:id', am(accountController.getAccountById));
 router.put('/:id', roleGuard('ME'), am(accountController.updateAccount));
 router.delete('/:id', roleGuard('ME'), am(accountController.deleteAccount));
 
-// TODO: add ADMIN right update
-
 module.exports = router;
