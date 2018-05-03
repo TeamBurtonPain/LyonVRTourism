@@ -296,7 +296,7 @@ public class Controller : MonoBehaviour
                 selectedQuest = fetchedQuest;
 
                 user.AddQuest(selectedQuest);
-                currentQuest = new StateQuest(selectedQuest);
+                currentQuest = user.Quests[selectedQuest.Id];
                 currentState = questState;
                 SceneManager.LoadScene("GameImageScene");
             }
