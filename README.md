@@ -60,4 +60,16 @@ Launch the NodeJS server by typing this command `yarn run dev`
 
 ### Android application
 
-You can download the android application [here](#). Transfert it to your phone and launch it.
+You can download the android application [here](https://github.com/TeamBurtonPain/UrbanQuest/blob/master/UrbanQuest.apk). Transfert it to your phone and launch it.
+You can build the .apk from Unity.To run the application a server must be availabled (and its URL specified in [this file](https://github.com/TeamBurtonPain/UrbanQuest/blob/master/CityQuest/Assets/Scripts/Service/HTTPHelper.cs)).
+
+
+## Possible improvements
+- Add a personnal feedback on a quest and mark it (/5).
+- Add statistical Badges (the only badges we can have for the moment are the one we get on a specific checkpoint.) as "play 200 quest in Lyon"...
+- Editor : quest created in the editor and parsed, ready to be sent to the server, but it's not effective yet.
+- Editor : add an interface to allow free-text answer (not a multiple choices answer)
+- Add other minigames than the "question" one.
+- Add a Quest Manager for Editors.
+- Find an automatical solution or alternative to manually convert Images (editor photographs) to markers db (use for image recognition).
+- Have a better managment for each checkpoint difficulty and add quest difficulty.

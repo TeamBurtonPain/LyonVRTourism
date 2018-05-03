@@ -25,7 +25,8 @@ public class ImageTargetCreator : MonoBehaviour
     void LoadDataSet()
     {
         dataSetName = "AR_DB";
-        questFilter = "ace"; //"Q"+currentQuest.Quest.Id+"C"+currentCheckpoint.Checkpoint.Id;
+        //questFilter = "ace"; //"Q"+currentQuest.Quest.Id+"C"+currentCheckpoint.Checkpoint.Id;
+        questFilter = PlayQuestController.Instance.CurrentCheckpoint.Checkpoint.PictureName;
         ObjectTracker objectTracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
 
         dataSet = objectTracker.CreateDataSet();

@@ -7,7 +7,7 @@ class PlayQuestionManager : MonoBehaviour
 
     private void Start()
     {
-        questionText.text = PlayQuestController.Instance.CurrentCheckpoint.Checkpoint.Text;
+        questionText.text = PlayQuestController.Instance.CurrentCheckpoint.Checkpoint.Question;
     }
 }
 

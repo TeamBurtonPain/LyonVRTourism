@@ -6,12 +6,14 @@ using System;
 class PlayQuestController : MonoBehaviour
 {
     protected static PlayQuestController instance;
+    protected static float coef = 10;
 
     private StateQuest currentQuest;
     private StateCheckPoint currentCheckpoint;
     private int questProgress;
     private int checkpointProgress;
     private DateTime checkpointStartTime;
+    private bool isGood = false;
 
     private Boolean destroyOnLoad;
 
@@ -32,10 +34,10 @@ class PlayQuestController : MonoBehaviour
             Destroy(gameObject);
         }
 
-        
+
         DontDestroyOnLoad(gameObject);
 
-        
+
     }
     void OnEnable()
     {
@@ -53,15 +55,16 @@ class PlayQuestController : MonoBehaviour
         destroyOnLoad = true;
     }
 
-public int CheckQuestProgress()
+    public int CheckQuestProgress()
     {
         int progress = 0;
-        foreach(StateCheckPoint checkpoint in currentQuest.Checkpoints)
+        foreach (StateCheckPoint checkpoint in currentQuest.Checkpoints)
         {
-            if(checkpoint.Status == StatusCheckPoint.FINISHED)
+            if (checkpoint.Status == StatusCheckPoint.FINISHED)
             {
                 progress++;
-            } else
+            }
+            else
             {
                 break;
             }
@@ -73,11 +76,13 @@ public int CheckQuestProgress()
     {
         if (answer.ToLower().Contains(currentCheckpoint.Checkpoint.Answer.ToLower()))
         {
-            return true;
-        } else
-        {
-            return false;
+            isGood = true;
         }
+        else
+        {
+            isGood = false;
+        }
+        return isGood;
     }
 
     public void GoNextScene()
@@ -94,24 +99,29 @@ public int CheckQuestProgress()
                 GoToNextCheckpoint();
                 break;
             default:
-                Debug.LogError("checkpointProgress="+ checkpointProgress + ", error : not comprised between 0 and 2");
+                Debug.LogError("checkpointProgress=" + checkpointProgress + ", error : not comprised between 0 and 2");
                 break;
         }
-        checkpointProgress = (checkpointProgress + 1)%3;
+        checkpointProgress = (checkpointProgress + 1) % 3;
     }
 
     private void GoToNextCheckpoint()
     {
         currentQuest.Checkpoints[questProgress].TimeElapsed = System.DateTime.Now.Subtract(checkpointStartTime).TotalSeconds;
         currentQuest.Checkpoints[questProgress].Status = StatusCheckPoint.FINISHED;
-        if(questProgress < currentQuest.Checkpoints.Count-1)
+        if (PlayQuestController.Instance.CurrentCheckpoint.Checkpoint.Badge != null)
+        {
+            Controller.Instance.User.Badges.Add(PlayQuestController.Instance.CurrentCheckpoint.Checkpoint.Badge);
+        }
+        if (questProgress < currentQuest.Checkpoints.Count - 1)
         {
             questProgress++;
             currentCheckpoint = currentQuest.Checkpoints[questProgress];
             checkpointStartTime = System.DateTime.Now;
             destroyOnLoad = false;
             SceneManager.LoadScene("GameImageScene");
-        } else
+        }
+        else
         {
             currentQuest.TimeElapsed = 0;
             foreach (StateCheckPoint checkpoint in currentQuest.Checkpoints)
@@ -121,11 +131,27 @@ public int CheckQuestProgress()
             currentQuest.Done = true;
             destroyOnLoad = false;
             SceneManager.LoadScene("EndQuestScene");
-            // TODO : Scene de fin
-            // TODO : Detruire controller !!!
         }
         Controller.Instance.PersistUserAdvancement();
     }
+
+    private void IncrementeScore()
+    {
+        currentQuest.Score += CalculateScore(currentCheckpoint.Checkpoint, isGood);
+    }
+
+    private float CalculateScore(CheckPoint c, bool isSuccess)
+    {
+        if (isSuccess)
+        {
+            return c.Difficulty * coef;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
 
     private void GoToQuestion()
     {
@@ -134,7 +160,8 @@ public int CheckQuestProgress()
         {
             destroyOnLoad = false;
             SceneManager.LoadScene("GameQuestion");
-        } else
+        }
+        else
         {
             destroyOnLoad = false;
             SceneManager.LoadScene("GameQuestionMulti");
@@ -176,5 +203,15 @@ public int CheckQuestProgress()
     {
         get { return currentQuest; }
         set { currentQuest = value; }
+    }
+
+    public float GetScoreMax()
+    {
+        float total = 0;
+        foreach (StateCheckPoint c in currentQuest.Checkpoints)
+        {
+            total += CalculateScore(c.Checkpoint, true);
+        }
+        return total;
     }
 }

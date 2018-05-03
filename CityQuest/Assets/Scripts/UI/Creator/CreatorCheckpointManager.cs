@@ -11,7 +11,7 @@ public class CreatorCheckpointManager : MonoBehaviour
     public InputField secondAnswerInputField;
     public InputField thirdAnswerInputField;
 
-    public Image furnishedImage;
+    public RawImage furnishedImage;
 
     public Toggle firstAnswerToggle;
     public Toggle secondAnswerToggle;
