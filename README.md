@@ -37,12 +37,21 @@ Install node dependencies by running the following command: `yarn install`
 
 #### Create mongoDB database
 - Launch your mongo server by typing: `mongod --dbpath <path-to-your-databases-storage-directory>`.
-- With a new console, connect to your mongo server: `mongo` (the command use the defaut mongo server configuration: `HOST: localhost` & `PORT: 27017`).
+- With a new console, connect to your mongo server: `mongo` (the command use the defaut mongo server configuration: `HOST: localhost` & `PORT: 27017`). If you have to change it, run `mongo -h` ;) 
 - Create a database by typing: `use UrbanQuestDev` _Note that database name is important because it is hardcoded in `config/db.js`._
+
+![image](https://user-images.githubusercontent.com/29222996/39594373-d478e654-4f0c-11e8-987a-5005c2ad3895.png)
 
 #### Populate DB
 
 - Run the following script through: `node server/populate/populate.js`
+
+The initial account have these credentials:
+
+```
+    email: noel@flantier.fr
+    password: noel
+```
 
 #### Launch the NodeJS server
 **Mongo server must run before. See "Create mongoDB database".**
@@ -64,4 +73,3 @@ You can build the .apk from Unity.To run the application a server must be availa
 - Add a Quest Manager for Editors.
 - Find an automatical solution or alternative to manually convert Images (editor photographs) to markers db (use for image recognition).
 - Have a better managment for each checkpoint difficulty and add quest difficulty.
-- 
