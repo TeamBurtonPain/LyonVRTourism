@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System;
 
 class PlayQuestController : MonoBehaviour
 {
@@ -10,57 +11,49 @@ class PlayQuestController : MonoBehaviour
     private StateCheckPoint currentCheckpoint;
     private int questProgress;
     private int checkpointProgress;
+    private DateTime checkpointStartTime;
+
+    private Boolean destroyOnLoad;
 
     void Start()
     {
         if (instance == null)
         {
             instance = this;
+
+            currentQuest = Controller.Instance.CurrentQuest;
+            questProgress = CheckQuestProgress();
+            currentCheckpoint = currentQuest.Checkpoints[questProgress];
+            checkpointProgress = 0;
+            checkpointStartTime = System.DateTime.Now;
         }
         else if (instance != this)
         {
             Destroy(gameObject);
         }
 
+        
         DontDestroyOnLoad(gameObject);
 
-
-        // Tests
-        Coordinates coordinates = new Coordinates();
-        coordinates.x = 42.3245f;
-        coordinates.y = 4.56978f;
-        Coordinates coordinates2 = new Coordinates();
-        coordinates2.x = 45.781732f;
-        coordinates2.y = 4.872846f;
-
-        Creator creator = new Creator();
-        creator.FirstName = "John";
-        List<string> choices = new List<string>();
-        choices.Add("Du bambou");
-        choices.Add("Des oeufs");
-        choices.Add("Des M&M's");
-        CheckPoint cp1 = new CheckPoint("TestSprites/panda", "", "Quel est l'aliment principal des pandas roux ? ", choices, "Du bambou", 2);
-        CheckPoint cp2 = new CheckPoint("pic2.png","", "blablablaTextCP2", choices, "oeufs", 3);
-        CheckPoint cp3 = new CheckPoint("pic2.png", "", "blablablaTextCP2", choices, "M&M", 4);
-        List<CheckPoint> checkpoints = new List<CheckPoint>
-        {
-            cp1,
-            cp2,
-            cp3
-        };
-        Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 30, creator.Id, checkpoints);
-        StateQuest playing = new StateQuest(quest);
-        // End tests
-
-        currentQuest = playing;
-
-        //currentQuest = Controller.Instance.CurrentQuest;
-        questProgress = CheckQuestProgress();
-        currentCheckpoint = currentQuest.Checkpoints[questProgress];
-        checkpointProgress = 0;
+        
+    }
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    public int CheckQuestProgress()
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (destroyOnLoad) Destroy(gameObject);
+        destroyOnLoad = true;
+    }
+
+public int CheckQuestProgress()
     {
         int progress = 0;
         foreach(StateCheckPoint checkpoint in currentQuest.Checkpoints)
@@ -78,7 +71,7 @@ class PlayQuestController : MonoBehaviour
 
     public bool CheckAnswer(string answer)
     {
-        if(answer.ToLower().Contains(currentCheckpoint.Checkpoint.Answer.ToLower()))
+        if (answer.ToLower().Contains(currentCheckpoint.Checkpoint.Answer.ToLower()))
         {
             return true;
         } else
@@ -109,15 +102,25 @@ class PlayQuestController : MonoBehaviour
 
     private void GoToNextCheckpoint()
     {
+        currentQuest.Checkpoints[questProgress].TimeElapsed = System.DateTime.Now.Subtract(checkpointStartTime).TotalSeconds;
         currentQuest.Checkpoints[questProgress].Status = StatusCheckPoint.FINISHED;
         if(questProgress < currentQuest.Checkpoints.Count-1)
         {
             questProgress++;
             currentCheckpoint = currentQuest.Checkpoints[questProgress];
+            checkpointStartTime = System.DateTime.Now;
+            destroyOnLoad = false;
             SceneManager.LoadScene("GameImageScene");
         } else
         {
-            Debug.Log("Fini!");
+            currentQuest.TimeElapsed = 0;
+            foreach (StateCheckPoint checkpoint in currentQuest.Checkpoints)
+            {
+                currentQuest.TimeElapsed += checkpoint.TimeElapsed;
+            }
+            currentQuest.Done = true;
+            destroyOnLoad = false;
+            SceneManager.LoadScene("EndQuestScene");
             // TODO : Scene de fin
             // TODO : Detruire controller !!!
         }
@@ -125,25 +128,35 @@ class PlayQuestController : MonoBehaviour
 
     private void GoToQuestion()
     {
+        Controller.Instance.QuitVuforia();
         if (currentQuest.Checkpoints[questProgress].Checkpoint.Choices.Count == 0)
+        {
+            destroyOnLoad = false;
             SceneManager.LoadScene("GameQuestion");
-        else
+        } else
+        {
+            destroyOnLoad = false;
             SceneManager.LoadScene("GameQuestionMulti");
+        }
     }
 
     private void GoToInformations()
     {
+        destroyOnLoad = false;
         SceneManager.LoadScene("GameInformations");
     }
 
     public void SkipCheckpoint()
     {
-        questProgress++;
-        checkpointProgress = 0;
+        //TODO : gérer le score?
+        checkpointProgress = 1;
+        GoToQuestion();
     }
 
     public void OpenCamera()
     {
+        Controller.Instance.LoadVuforia();
+        destroyOnLoad = false;
         SceneManager.LoadScene("ImageRecognition");
     }
 

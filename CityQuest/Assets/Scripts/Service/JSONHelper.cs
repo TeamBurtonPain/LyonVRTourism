@@ -117,7 +117,8 @@ public class JSONHelper : MonoBehaviour
     {
         JObject parse = JObject.Parse(questJson);
         string idCreator = (string) parse["_idCreator"];
-        string id = (string)parse["_id"];
+
+        string id = (string) parse["_id"];
         Coordinates geolocalisation =
             new Coordinates((float) parse["geolocalisation"]["x"], (float) parse["geolocalisation"]["y"]);
         string title = (string) parse["title"];
