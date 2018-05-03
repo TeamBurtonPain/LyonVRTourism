@@ -38,6 +38,11 @@ public class Badge
         get { return description; }
     }
 
+    public string IconPath
+    {
+        get { return iconPath;  }
+    }
+
     public long Xp
     {
         get { return xp; }

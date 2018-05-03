@@ -74,7 +74,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eceba0e206fdb464badf271b9dbae14a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 114921975190511796}
   title: {fileID: 114398975881699042}
 --- !u!114 &114398975881699042
 MonoBehaviour:

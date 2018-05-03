@@ -195,6 +195,7 @@ GameObject:
   - component: {fileID: 44612908}
   - component: {fileID: 44612907}
   - component: {fileID: 44612906}
+  - component: {fileID: 44612910}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -265,6 +266,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &44612910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 44612905}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1826476478, guid: bab6fa851cf5a1a4bba3cec5f191cb8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWorldCenterMode: 1
+  mWorldCenter: {fileID: 0}
 --- !u!1 &51028084
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,7 +594,7 @@ Prefab:
     - target: {fileID: 224577172035064430, guid: abcd3b821723cae4eb56023c70dc1e68,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 224577172035064430, guid: abcd3b821723cae4eb56023c70dc1e68,
         type: 2}
@@ -629,12 +643,6 @@ GameObject:
   m_PrefabParentObject: {fileID: 1206994800960248, guid: abcd3b821723cae4eb56023c70dc1e68,
     type: 2}
   m_PrefabInternal: {fileID: 228307274}
---- !u!114 &228307277 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114788161404451848, guid: abcd3b821723cae4eb56023c70dc1e68,
-    type: 2}
-  m_PrefabInternal: {fileID: 228307274}
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!114 &228307278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -646,7 +654,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebef50101d21871478eec782c7fa4637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  badgeIcon: {fileID: 228307277}
 --- !u!1 &252558522
 GameObject:
   m_ObjectHideFlags: 0
@@ -1694,12 +1701,6 @@ GameObject:
   m_PrefabParentObject: {fileID: 1206994800960248, guid: abcd3b821723cae4eb56023c70dc1e68,
     type: 2}
   m_PrefabInternal: {fileID: 885369480}
---- !u!114 &885369483 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114788161404451848, guid: abcd3b821723cae4eb56023c70dc1e68,
-    type: 2}
-  m_PrefabInternal: {fileID: 885369480}
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!114 &885369484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1711,7 +1712,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebef50101d21871478eec782c7fa4637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  badgeIcon: {fileID: 885369483}
 --- !u!224 &895627437 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224143028993509086, guid: 72ffd337d70297247b7b9afdbb545cc6,
@@ -2103,7 +2103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2114,7 +2114,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 0.85
+  m_FillAmount: 0.87
   m_FillClockwise: 1
   m_FillOrigin: 2
 --- !u!222 &1163170936
@@ -2134,12 +2134,6 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224577172035064430, guid: abcd3b821723cae4eb56023c70dc1e68,
     type: 2}
   m_PrefabInternal: {fileID: 385964998}
---- !u!114 &1473017835 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114788161404451848, guid: abcd3b821723cae4eb56023c70dc1e68,
-    type: 2}
-  m_PrefabInternal: {fileID: 385964998}
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!114 &1473017836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2151,7 +2145,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebef50101d21871478eec782c7fa4637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  badgeIcon: {fileID: 1473017835}
 --- !u!1 &1477694279
 GameObject:
   m_ObjectHideFlags: 0
@@ -2426,12 +2419,6 @@ GameObject:
   m_PrefabParentObject: {fileID: 1206994800960248, guid: abcd3b821723cae4eb56023c70dc1e68,
     type: 2}
   m_PrefabInternal: {fileID: 1739235887}
---- !u!114 &1739235890 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114788161404451848, guid: abcd3b821723cae4eb56023c70dc1e68,
-    type: 2}
-  m_PrefabInternal: {fileID: 1739235887}
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!114 &1739235891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2443,7 +2430,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebef50101d21871478eec782c7fa4637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  badgeIcon: {fileID: 1739235890}
 --- !u!1 &1880796731
 GameObject:
   m_ObjectHideFlags: 0

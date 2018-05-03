@@ -344,7 +344,7 @@ public class Controller : MonoBehaviour
     public void SelectMenuSettings()
     {
         //TODO : victor à remplacer
-        //SceneManager.LoadScene("Settings");
+        SceneManager.LoadScene("Profile");
     }
 
     public void SelectMenuLogout() {

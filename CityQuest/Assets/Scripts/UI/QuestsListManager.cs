@@ -7,6 +7,7 @@ public class QuestsListManager : MonoBehaviour {
 
     private void Start()
     {
+        Debug.Log("création des éléments de quête dans la liste, nombre de quête : " + Controller.Instance.User.Quests.Count);
         if (Controller.Instance.User != null && Controller.Instance.User.Quests.Count != 0)
         {
             FillQuestsList(Controller.Instance.User);
