@@ -3,21 +3,27 @@
 
 public class Badge
 {
-    private static long instanceCounter = 0;
-    private long id;
+    private string id;
     private string name;
     private string description;
-    private long earn;
+    private string iconPath;
+
+    private long xp;
 
     public Badge(string n, string d, long v)
     {
-        id = instanceCounter++;
         name = n;
         description = d;
-        earn = v;
+        xp = v;
+    }public Badge(string id, string n, string d, long v)
+    {
+        this.id = id;
+        name = n;
+        description = d;
+        xp = v;
     }
 
-    public long Id
+    public string Id
     {
         get { return id; }
     }
@@ -32,13 +38,13 @@ public class Badge
         get { return description; }
     }
 
-    public long Earn
+    public long Xp
     {
-        get { return earn; }
+        get { return xp; }
     }
     public override string ToString()
     {
-        return "Badge : id : " + id + ", name : " + name + ", description : " + description + ", earn : " + earn;
+        return "Badge : id : " + id + ", name : " + name + ", description : " + description + ", xp : " + xp;
     }
 
 }

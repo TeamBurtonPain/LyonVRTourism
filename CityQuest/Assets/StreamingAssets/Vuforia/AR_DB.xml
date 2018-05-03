@@ -33,20 +33,6 @@
     <ImageTarget name="rhino3" size="100.000000 75.000000" />
     <ImageTarget name="rhino2" size="100.000000 75.000000" />
     <ImageTarget name="rhino1" size="100.000000 75.000000" />
-    <ImageTarget name="minion14" size="0.300000 0.225000" />
-    <ImageTarget name="minion13" size="0.300000 0.225000" />
-    <ImageTarget name="minion12" size="0.300000 0.225000" />
-    <ImageTarget name="minion11" size="0.300000 0.225000" />
-    <ImageTarget name="minion10" size="0.300000 0.225000" />
-    <ImageTarget name="minion9" size="0.300000 0.225000" />
-    <ImageTarget name="minion8" size="0.300000 0.225000" />
-    <ImageTarget name="minion7" size="0.300000 0.225000" />
-    <ImageTarget name="minion6" size="0.300000 0.225000" />
-    <ImageTarget name="minion5" size="0.300000 0.225000" />
-    <ImageTarget name="minion4" size="0.300000 0.225000" />
-    <ImageTarget name="minion3" size="0.300000 0.225000" />
-    <ImageTarget name="minion2" size="0.300000 0.225000" />
-    <ImageTarget name="minion1" size="0.300000 0.225000" />
     <ImageTarget name="Spyro" size="0.200000 0.112500" />
     <ImageTarget name="ace" size="1.000000 1.507508" />
     <ImageTarget name="carte2" size="0.060000 0.088276" />

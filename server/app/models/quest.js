@@ -49,7 +49,12 @@ const Quest = new Schema({
             } // O < difficulty < 5
         }
     ],
-    feedbacks: [
+	dates: {
+        createdAt: Date, // Auto
+        updatedAt: Date // Auto
+
+    },
+    statistics: [
         {
             _idAccount: Schema.Types.ObjectId,
             comment: {

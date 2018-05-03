@@ -14,13 +14,15 @@ public class Account : User
     private string password;
     private string firstName;
     private string lastName;
-    private DateTime dateBirth;
     private RoleAccount role;
+    private DateTime creationDate;
+    private DateTime updateDate;
+    private long elapsedTime;
 
 
     public Account()
     {
-        dateBirth = DateTime.Now;
+        mail = "";
     }
 
     /// <summary>
@@ -30,15 +32,29 @@ public class Account : User
     /// <param name="mail">The mail.</param>
     /// <param name="password">The hash of password.</param>
     /// <param name="r">The role.</param>   
-    public Account(User u, string mail, string password, string firstName, string lastName, DateTime dateBirth, RoleAccount r) 
+    public Account(User u, string mail, string password, string firstName, string lastName, RoleAccount r) 
         : base(u)
     {
         this.mail = mail;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.dateBirth = dateBirth;
+        //this.dateBirth = dateBirth;
         this.role = r;
+    }
+
+    public Account(User u, string mail, string password, string firstName, string lastName, RoleAccount r, DateTime creationDate, DateTime updateDate, long elapsedTime)
+        : base(u)
+    {
+        this.mail = mail;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        //this.dateBirth = dateBirth;
+        this.role = r;
+        this.creationDate = creationDate;
+        this.updateDate = updateDate;
+        this.elapsedTime = elapsedTime;
     }
 
     public string Mail
@@ -65,16 +81,31 @@ public class Account : User
         set { lastName = value; }
     }
 
-    public DateTime DateBirth
-    {
-        get { return dateBirth; }
-        set { dateBirth = value; }
-    }
+    //public DateTime DateBirth
+    //{
+    //    get { return dateBirth; }
+    //    set { dateBirth = value; }
+    //}
 
     public RoleAccount Role
     {
         get { return role; }
         set { role = value; }
+    }
+
+    public DateTime CreationDate
+    {
+        get { return creationDate; }
+    }
+
+    public DateTime UpdateDate
+    {
+        get { return updateDate; }
+    }
+
+    public long ElapsedTime
+    {
+        get { return elapsedTime; }
     }
 
     public override string ToString()

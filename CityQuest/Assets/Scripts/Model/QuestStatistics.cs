@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
 
-
 public class QuestStatistics
 {
     private Quest quest;
+
     private HashSet<QuestStatisticsUnit> marks;
 
     public QuestStatistics(Quest q)
