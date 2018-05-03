@@ -46,10 +46,11 @@ const Quest = new Schema({
                 required: true,
                 min: 0,
                 max: 5
-            } // O < difficulty < 5
+            }, // O < difficulty < 5
+            _idBadge: Schema.Types.ObjectId
         }
     ],
-	dates: {
+    dates: {
         createdAt: Date, // Auto
         updatedAt: Date // Auto
 

@@ -163,7 +163,8 @@ class ModelTest : MonoBehaviour
     
     public void TestJsonToAccount(string json)
     {
-        Account account = JSONHelper.ToAccount(json);
+        Account account = null;
+        JSONHelper.Instance.ToAccount(json, value => account = value);
         Assert.AreEqual("test@mail.com", account.Mail);
         Assert.AreEqual("test", account.Password);
         Assert.AreEqual("test", account.LastName);

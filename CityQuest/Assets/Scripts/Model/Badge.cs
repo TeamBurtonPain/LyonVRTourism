@@ -15,12 +15,13 @@ public class Badge
         name = n;
         description = d;
         xp = v;
-    }public Badge(string id, string n, string d, long v)
+    }public Badge(string id, string n, string d, long v, string pic)
     {
         this.id = id;
         name = n;
         description = d;
         xp = v;
+        iconPath = pic;
     }
 
     public string Id

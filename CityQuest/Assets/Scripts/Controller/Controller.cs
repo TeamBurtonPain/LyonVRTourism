@@ -93,95 +93,7 @@ public class Controller : MonoBehaviour
             yield break;
         }
 
-        //------ Test sample ---------
-        /*
-        Coordinates coordinates = new Coordinates
-        {
-            x = 42.3245f,
-            y = 4.56978f
-        };
-        Coordinates coordinates2 = new Coordinates
-        {
-            x = 45.781732f,
-            y = 4.872846f
-        };
-        Coordinates coordinates3 = new Coordinates
-        {
-            x = 45.771732f,
-            y = 4.872846f
-        };
-        Coordinates coordinates4 = new Coordinates
-        {
-            x = 45.761732f,
-            y = 4.872846f
-        };
-        Coordinates coordinates5 = new Coordinates
-        {
-            x = 45.751732f,
-            y = 4.872846f
-        };
-        Coordinates coordinates6 = new Coordinates
-        {
-            x = 45.741732f,
-            y = 4.872846f
-        };
-        Coordinates coordinates7 = new Coordinates
-        {
-            x = 45.731732f,
-            y = 4.872846f
-        };
-        Coordinates coordinates8 = new Coordinates
-        {
-            x = 45.7821732f,
-            y = 4.872846f
-        };
-
-        Creator creator = new Creator
-        {
-            FirstName = "John"
-        };
-        List<string> choices = new List<string>();
-
-        choices.Add("Du bambou");
-        choices.Add("Des oeufs");
-        choices.Add("Des M&M's");
-        CheckPoint cp1 = new CheckPoint("TestSprites/panda", "", "Quel est l'aliment principal des pandas roux ? ", choices, "bambou", 2);
-        CheckPoint cp2 = new CheckPoint("TestSprites/panda2", "", "Une autre petite question pour la route !", choices, "a", 1);
-        List<CheckPoint> checkpoints = new List<CheckPoint>
-        {
-            cp1,
-            cp2
-        };
-
-        Quest quest = new Quest(coordinates, "Trouver les pandas roux", "Description des pandas roux", 30, creator.Id, checkpoints);
-        Quest quest2 = new Quest(coordinates2, "Trouver les pandas roux2", "Description des pandas roux2", 30, creator.Id, checkpoints);
-        Quest q3 = new Quest(coordinates3, "a", "b", 30, creator.Id, checkpoints);
-        Quest q4 = new Quest(coordinates4, "a", "b", 30, creator.Id, checkpoints);
-        Quest q5 = new Quest(coordinates5, "a", "b", 30, creator.Id, checkpoints);
-        Quest q6 = new Quest(coordinates6, "a", "b", 30, creator.Id, checkpoints);
-        Quest q7 = new Quest(coordinates7, "a", "b", 30, creator.Id, checkpoints);
-        Quest q8 = new Quest(coordinates8, "a", "b", 30, creator.Id, checkpoints);
-        existingQuests.Add(quest);
-        existingQuests.Add(quest2);
-        existingQuests.Add(q3);
-        existingQuests.Add(q4);
-        existingQuests.Add(q5);
-        existingQuests.Add(q6);
-        existingQuests.Add(q7);
-        existingQuests.Add(q8);
-        StateQuest playing = new StateQuest(quest);
-
-        user = new User();
-        user.AddQuest(quest);
-        user.AddQuest(quest2);
-        //------ End Test sample -------
-        selectedQuest = quest;
-        currentQuest = playing;
-        */
-
         isLoaded = true; 
-
-        
         //currentConnexion = ConnexionState.DISCONNECTED;
     }
 
@@ -296,7 +208,7 @@ public class Controller : MonoBehaviour
                 selectedQuest = fetchedQuest;
 
                 user.AddQuest(selectedQuest);
-                currentQuest = new StateQuest(selectedQuest);
+                currentQuest = user.Quests[selectedQuest.Id];
                 currentState = questState;
                 SceneManager.LoadScene("GameImageScene");
             }
@@ -306,6 +218,41 @@ public class Controller : MonoBehaviour
             }
         }
     }
+
+    public void ReStartQuest()
+    {
+        StartCoroutine(TryReStartQuest());
+    }
+
+    public IEnumerator TryReStartQuest()
+    {
+        if (selectedQuest != null && user != null)
+        {
+            if (GeoManager.Instance.IsUserNear(selectedQuest.Geolocalisation))
+            {
+
+                Quest fetchedQuest = null;
+
+                SetLoaderCircle(true);
+                yield return HTTPHelper.Instance.GetQuest(selectedQuest.Id, value => fetchedQuest = value);
+                SetLoaderCircle(false);
+
+
+                selectedQuest = fetchedQuest;
+
+                user.Quests[fetchedQuest.Id] = new StateQuest(selectedQuest);
+                currentQuest = user.Quests[fetchedQuest.Id];
+                currentState = questState;
+                SceneManager.LoadScene("GameImageScene");
+            }
+            else
+            {
+                Error("Vous êtes trop loin pour lancer cette quête.");
+            }
+        }
+    }
+
+
 
     public void LoadMap()
     {
@@ -470,7 +417,11 @@ public class Controller : MonoBehaviour
         if (cookie.Value != "")
         {
             Account a = null;
+
+            SetLoaderCircle(true);
             yield return HTTPHelper.Instance.GetAccount(cookie, value => a = value);
+            SetLoaderCircle(false);
+
             if (a.Mail == "")
             {
                 Error(a.LastName);
@@ -491,6 +442,18 @@ public class Controller : MonoBehaviour
 
     }
 
+    public void PersistUserAdvancement()
+    {
+        if(user is Account)
+        {
+            StartCoroutine(TryPersistUser((Account)user));
+        }
+    }
+
+    public IEnumerator TryPersistUser(Account a)
+    {
+        yield return HTTPHelper.Instance.UpdateData(a, cookie);
+    }
     /*********** FIN BOUTONS ***********/
 
     public void Error(string msg)
