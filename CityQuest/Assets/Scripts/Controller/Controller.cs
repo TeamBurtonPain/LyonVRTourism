@@ -398,7 +398,11 @@ public class Controller : MonoBehaviour
             SetLoaderCircle(false);
 
             if (request)
+            {
+                yield return HTTPHelper.Instance.GetAccount(cookie, value => Controller.Instance.User = value);
                 LoadMap();
+                
+            }
             else
                 Error("Cette adresse mail est déjà utilisée");
         }
@@ -478,7 +482,7 @@ public class Controller : MonoBehaviour
     {
         if(user is Account)
         {
-            StartCoroutine(TryPersistUser((Account)user));
+            StartCoroutine(TryPersistUser((Account) user));
         }
     }
 

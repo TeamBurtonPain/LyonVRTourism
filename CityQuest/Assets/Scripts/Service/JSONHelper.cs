@@ -197,17 +197,21 @@ public class JSONHelper : MonoBehaviour
         return jsonConnect.ToString();
     }
 
-    public static string ToJsonString(Account a)
+    public static string ToJsonString(Account a, bool creation)
     {
+        JObject connection = new JObject(
+            new JProperty("email", a.Mail)
+        );
+        if (creation)
+        {
+            connection.Add("password", a.Password);
+        }
         JObject jsonAccount = new JObject(
             //new JProperty("_id", a.Id),
-            new JProperty("connection", new JObject(
-                new JProperty("email", a.Mail),
-                new JProperty("password", a.Password)
-            )),
+            new JProperty("connection", connection),
             new JProperty("userInformation", new JObject(
-                new JProperty("lastname", a.LastName),
-                new JProperty("firstname", a.FirstName),
+                new JProperty("lastName", a.LastName),
+                new JProperty("firstName", a.FirstName),
                 new JProperty("username", a.Username),
                 new JProperty("accountType", a.Role.ToString())
             )),
@@ -252,13 +256,7 @@ public class JSONHelper : MonoBehaviour
         JArray jsonQuest = new JArray();
         foreach (var quest in quests)
         {
-            jsonQuest.Add(new JObject(
-                new JProperty("_idQuest", quest.Key),
-                new JProperty("state", quest.Value.Done ? "DONE" : "IN_PROGRESS"),
-                new JProperty("stats", new JObject(
-                    new JProperty("earnedXP", quest.Value.Score)
-                ))
-            ));
+            jsonQuest.Add(JSONHelper.ToJson(quest.Value));
         }
 
         return jsonQuest;
@@ -273,7 +271,7 @@ public class JSONHelper : MonoBehaviour
         }
 
         JObject jsonState = new JObject(
-            new JProperty("_idQuest", quest.Quest),
+            new JProperty("_idQuest", quest.Quest.Id),
             new JProperty("state", quest.Done ? "DONE" : "IN_PROGRESS"),
             new JProperty("stats", new JObject(
                 new JProperty("earnedXP", quest.Score),
@@ -297,8 +295,8 @@ public class JSONHelper : MonoBehaviour
         JObject parse = JObject.Parse(accountJson);
         string mail = (string) parse["connection"]["email"];
         string password = (string) parse["connection"]["password"];
-        string firstName = (string) parse["userInformation"]["firstname"];
-        string lastName = (string) parse["userInformation"]["lastname"];
+        string firstName = (string) parse["userInformation"]["firstName"];
+        string lastName = (string) parse["userInformation"]["lastName"];
         RoleAccount roleAccount =
             (RoleAccount) Enum.Parse(typeof(RoleAccount), (string) parse["userInformation"]["accountType"]);
         DateTime creationDate = (DateTime) parse["createdAt"];
