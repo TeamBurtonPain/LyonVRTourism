@@ -92,7 +92,7 @@ public class Controller : MonoBehaviour
             hasFailed = true;
             yield break;
         }
-
+        /*
         //------ Test sample ---------
         /*
         Coordinates coordinates = new Coordinates
@@ -175,11 +175,11 @@ public class Controller : MonoBehaviour
         user.AddQuest(quest);
         user.AddQuest(quest2);
         //------ End Test sample -------
-        selectedQuest = quest;
-        currentQuest = playing;
         */
 
         isLoaded = true; 
+
+
 
         
         //currentConnexion = ConnexionState.DISCONNECTED;
@@ -296,7 +296,7 @@ public class Controller : MonoBehaviour
                 selectedQuest = fetchedQuest;
 
                 user.AddQuest(selectedQuest);
-                currentQuest = new StateQuest(selectedQuest);
+                currentQuest = user.Quests[selectedQuest.Id];
                 currentState = questState;
                 SceneManager.LoadScene("GameImageScene");
             }
