@@ -52,7 +52,20 @@ const Account = new Schema({
                 },
                 stats: {
                     earnedXp: Number
-                }
+// FROM HERE
+					
+                    timeElapsed: Number			
+                },	
+				checkpoints: [
+					status: {
+						type: String,
+						enum: {values: ['FINISHED', 'BEGUN', 'UNINIT']},
+						default: 'UNINIT'
+					},
+					timeElapsed: Number
+				]
+				
+//TO HERE !
             }
         ],
         xp: {

@@ -23,10 +23,19 @@ public class StateQuest
 
         //init checkpoints state to 0%
         checkpoints = new List<StateCheckPoint>();
-        for (int i = 0; i < quest.Checkpoints.Count; ++i)
+        for (int i = 0; i < q.Checkpoints.Count; ++i)
         {
             checkpoints.Add(new StateCheckPoint(q.Checkpoints[i]));
         }
+    }
+
+    public StateQuest(Quest q, bool done, double score, double time, List<StateCheckPoint> checkpoints)
+    {
+        quest = q;
+        this.done = done;
+        this.score = score;
+        timeElapsed = time;
+        this.checkpoints = checkpoints;
     }
 
     /// <summary>
@@ -68,6 +77,7 @@ public class StateQuest
     public Quest Quest
     {
         get { return quest; }
+        set { quest = value; }
     }
 
     public bool Done

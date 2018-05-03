@@ -15,13 +15,13 @@ public class User
     /// The Status of the quests began by the user.
     /// The key is the ID of the quest, the value is the state associated to this quest.
     /// </summary>
-    private Dictionary<long, StateQuest> quests;
+    private Dictionary<string, StateQuest> quests;
 
 
     public User()
     {
         badges = new List<Badge>();
-        quests = new Dictionary<long, StateQuest>();
+        quests = new Dictionary<string, StateQuest>();
     }
 
     public User(string name)
@@ -30,7 +30,7 @@ public class User
         id = instanceCounter++.ToString() + "@" + username;
         xp = 0;
         badges = new List<Badge>();
-        quests = new Dictionary<long, StateQuest>();
+        quests = new Dictionary<string, StateQuest>();
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ public class User
     /// <param name="xp">The xp.</param>
     /// <param name="b">The badges.</param>
     /// <param name="q">The quests.</param>
-    public User(string n, string id, long xp, List<Badge> b, Dictionary<long, StateQuest> q)
+    public User(string n, string id, long xp, List<Badge> b, Dictionary<string, StateQuest> q)
     {
         this.username = n;
         this.id = id;
@@ -87,10 +87,13 @@ public class User
         }
     }
 
+
+    //TODO: clean up
     /// <summary>
     /// Checks the quest and modifies the users xp accordingly to the status of the quest.
     /// </summary>
     /// <param name="q">The quest.</param>
+    /// deprecated do not use
     public void CheckQuest(Quest q)
     {
         if (quests.ContainsKey(q.Id))
@@ -103,7 +106,7 @@ public class User
             if (sq.Done != sq.CheckQuest())
             //if the status has changed xp must change
             {
-                xp += sq.Quest.Value * done_coeff;
+                //xp += sq.Quest.Value * done_coeff;
             }
         }
     }
@@ -132,7 +135,7 @@ public class User
         set { badges = value; }
     }
 
-    public Dictionary<long, StateQuest> Quests
+    public Dictionary<string, StateQuest> Quests
     {
         get { return quests; }
         set { quests = value; }
