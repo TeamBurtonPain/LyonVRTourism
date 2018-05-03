@@ -115,4 +115,14 @@ public class QuestDetails_Manager : MonoBehaviour
     {
         Controller.Instance.StartQuest();
     }
+
+    public void RestartButtonListener()
+    {
+        Controller.Instance.ReStartQuest();
+    }
+
+    public void SeeFinishedButtonListener()
+    {
+        Controller.Instance.SeeFinishedQuest();
+    }
 }
