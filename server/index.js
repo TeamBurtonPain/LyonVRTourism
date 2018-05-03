@@ -14,14 +14,39 @@ const routes = require('./app/routes');
 
 const app = express();
 
+// Configue custom morgan token
+
+// eslint-disable-next-line
+morgan.token('ip', (req, res) => {
+    return req.connection.remoteAddress;
+});
+
 // Log requests with beautifull colors
-app.use(
-    morgan((tokens, req, res) => {
-        return `${chalk.blue(tokens.method(req, res))} ${chalk.green(
-            tokens.url(req, res)
-        )} ${chalk.red(tokens['response-time'](req, res))}`;
-    })
-);
+app.use(morgan((tokens, req, res) => {
+    var status = tokens.status(req, res);
+    var statusColor = status >= 500 ?
+        'red' : status >= 400 ?
+            'yellow' : status >= 300 ?
+                'cyan' : 'green';
+
+    return `${chalk[statusColor](padRight(`${tokens.method(req, res) } ${ tokens.url(req, res)}`, 60))
+    } ${ chalk[statusColor](status)
+    } ${ chalk.blue(padLeft(tokens['remote-addr'](req, res) || '-', 8))
+    } ${ chalk.green('-')
+    } ${ chalk.green(tokens.res(req, res, 'content-length') || '-')
+    } ${ chalk.yellow(`${tokens['response-time'](req, res) } ms`)}`;
+}));
+
+function padLeft(str, len) {
+    return len > str.length ?
+        (new Array(len - str.length + 1)).join(' ') + str :
+        str;
+}
+function padRight(str, len) {
+    return len > str.length ?
+        str + (new Array(len - str.length + 1)).join(' ') :
+        str;
+}
 
 //Parse the request to JSON
 app.use(bodyParser.json({ limit: '10mb' }));
