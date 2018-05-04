@@ -228,7 +228,7 @@ Prefab:
     - target: {fileID: 224892500634240280, guid: 72ffd337d70297247b7b9afdbb545cc6,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -145
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224892500634240280, guid: 72ffd337d70297247b7b9afdbb545cc6,
         type: 2}
@@ -253,7 +253,7 @@ Prefab:
     - target: {fileID: 224523695405435438, guid: 72ffd337d70297247b7b9afdbb545cc6,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -240
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224523695405435438, guid: 72ffd337d70297247b7b9afdbb545cc6,
         type: 2}
@@ -278,7 +278,7 @@ Prefab:
     - target: {fileID: 224150915535983698, guid: 72ffd337d70297247b7b9afdbb545cc6,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -335
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224150915535983698, guid: 72ffd337d70297247b7b9afdbb545cc6,
         type: 2}
@@ -303,7 +303,7 @@ Prefab:
     - target: {fileID: 224909476915155476, guid: 72ffd337d70297247b7b9afdbb545cc6,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -430
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224909476915155476, guid: 72ffd337d70297247b7b9afdbb545cc6,
         type: 2}
@@ -328,7 +328,7 @@ Prefab:
     - target: {fileID: 224913613613448128, guid: 72ffd337d70297247b7b9afdbb545cc6,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -525
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224913613613448128, guid: 72ffd337d70297247b7b9afdbb545cc6,
         type: 2}
@@ -357,7 +357,7 @@ Prefab:
     - target: {fileID: 224995529037904270, guid: 72ffd337d70297247b7b9afdbb545cc6,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224995529037904270, guid: 72ffd337d70297247b7b9afdbb545cc6,
         type: 2}
@@ -428,12 +428,12 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 50
+    m_Font: {fileID: 12800000, guid: 120179e850a102d4aa77dad50bd36ccf, type: 3}
+    m_FontSize: 55
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 50
+    m_MaxSize: 55
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
